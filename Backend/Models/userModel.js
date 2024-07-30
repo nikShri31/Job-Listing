@@ -17,6 +17,7 @@ const userSchema = new Schema({
         enum : ['employee', 'employer', 'admin'],
         required : true
     },
+    //profile may include : experience, short description, skillset, achievements, resumeLink
     profile : {
         type : Map,
         required : true
@@ -24,6 +25,10 @@ const userSchema = new Schema({
     conversation : [{
         type : Schema.Types.ObjectId,
         ref : 'Conversation'
+    }],
+    applications : [{
+        type : Schema.Types.ObjectId,
+        ref : 'Application'
     }]
 })
 

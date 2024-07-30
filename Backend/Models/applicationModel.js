@@ -23,6 +23,11 @@ const ApplicationSchema = new Schema({
     applicationDate: {
       type: Date,
       default: Date.now
+    },
+    status : {
+      type : String,
+      enum : ['pending', 'accepted', 'rejected'],
+      default : 'pending'
     }
   });
 

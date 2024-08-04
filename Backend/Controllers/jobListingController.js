@@ -50,8 +50,7 @@ exports.getJobsByEmployer = async (req, res, next) => {
     res.status(200).json({ jobs });
 }
 
-//Employee
-exports.filterJobs = async (req, res, next) => {
+exports.getAllJobs = async (req, res, next) => {
     const { title, location, salary, experience, skills } = req.body;
     const filter = {};
     if (title) filter.title = { $regex: title, $options: 'i' };
@@ -63,11 +62,5 @@ exports.filterJobs = async (req, res, next) => {
         if(requirements.skills) filter['requirements.skills'] = { $in : requirements.skills.split(',')};
     }
     const jobs = await JobListing.find(filter);
-    res.status(200).json({ jobs });
-}
-
-//Admin
-exports.getAllJobs = async (req, res, next) => {
-    const jobs = await JobListing.find();
     res.status(200).json({ jobs });
 }

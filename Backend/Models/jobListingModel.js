@@ -43,5 +43,5 @@ const jobListingSchema = new Schema({
     }
 })
 
-const JobListing = mongoose.Model('JobListing', jobListingSchema)
+const JobListing = mongoose.model('JobListing', jobListingSchema)
 module.exports = JobListing;

@@ -18,5 +18,5 @@ const conversationSchema = new Schema({
     }
 })
 
-const Conversation = mongoose.Model('Conversation', conversationSchema);
+const Conversation = mongoose.model('Conversation', conversationSchema);
 module.exports = Conversation;

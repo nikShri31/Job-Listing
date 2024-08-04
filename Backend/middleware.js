@@ -1,38 +1,38 @@
 const jwt = require('jsonwebtoken')
-const isLogin = () => {
+const expressError = require('./utils/expressError')
+
+module.exports.isLogin = () => {
     return (req, res, next) => {
         const token = req.header('Authorization')?.split(' ')[1];
         if (!token) return res.status(401).json({ status: 'fail', message: 'You are not logged in' });
-
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = decoded;
             next();
         } catch (err) {
-            next(new expressError(401, 'Invalid Token'));
+            return res.status(401).json({ status: 'fail', message: 'Invalid Token' });
         }
     }
 }
 
-const isAdmin = () => {
+module.exports.isAdmin = () => {
     return (req, res, next) => {
-        if (req.user.role !== 'admin') return res.status(403).json({ status: 'fail', message: 'You are not authorized to perform this action' });
+        if (req.user.role !== 'admin') next(new expressError('You are not authorized to perform this action', 403));
         next();
     }
 }
 
-const isEmployee = () => {
+module.exports.isEmployee = () => {
     return (req, res, next) => {
-        if (req.user.role !== 'employee') return res.status(403).json({ status: 'fail', message: 'You are not authorized to perform this action' });
+        if (req.user.role !== 'employee') next(new expressError('You are not authorized to perform this action', 403));
         next();
     }
 }
 
-const isEmployer = () => {
+module.exports.isEmployer = () => {
     return (req, res, next) => {
-        if (req.user.role !== 'employer') return res.status(403).json({ status: 'fail', message: 'You are not authorized to perform this action' });
+        if (req.user.role !== 'employer') next(new expressError('You are not authorized to perform this action', 403));
         next();
     }
 }
 
-exports = {isLogin, isAdmin, isEmployee, isEmployer};

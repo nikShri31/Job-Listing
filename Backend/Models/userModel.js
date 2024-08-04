@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
     userName : {
@@ -17,7 +17,7 @@ const userSchema = new Schema({
         enum : ['employee', 'employer', 'admin'],
         required : true
     },
-    //profile may include : experience, short description, skillset, achievements, resumeLink
+    //profile may include : experience, short description, skillset, achievements
     profile : {
         type : Map,
         required : true
@@ -40,9 +40,9 @@ userSchema.pre('save', async function(next) {
     next();
 })
 
-userSchema.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 }
 
-const User = mongoose.Model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, Container, createTheme, Grid, Link, Typography } from "@mui/material";
+import { Box, Container, createTheme, Divider, Grid, Link, Typography } from "@mui/material";
 import React from "react";
 
 const boxStyle ={
@@ -51,6 +51,7 @@ const Footer = () => {
       sx={{
         backgroundColor: "rgba(25, 25, 112, 1)",
         minHeight: "100vh",
+        minWidth:'100vh',
         display: "flex",
         justifyContent: "space-between",
         py:15,
@@ -72,7 +73,7 @@ const Footer = () => {
       <Typography gutterBottom variant="h4" color="primary.main" component="div" sx={{ mb: 2 }}>
         Contact Info
       </Typography>
-      <Typography variant="body2" color="secondary.main" sx={{ my: 9,}}>
+      <Typography variant="body2" color="secondary.main" sx={{ mb: 5,}}>
         Address: Your address goes here, your demo address.
         Phone: +8880 44338899
         Email: info@colorlib.com
@@ -99,8 +100,12 @@ const Footer = () => {
                 mb: 1,
                 transition: 'transform 0.2s, box-shadow 0.2s',
                 '&:hover': {
+                  fontWeight:'bold',
+                  color:'white',
+                  textDecoration:'none',
                   transform: 'translateY(-5px)',
                   boxShadow: 3,
+                  
                 },
               }}
             >
@@ -120,8 +125,10 @@ const Footer = () => {
         Heaven fruitful doesn't cover lesser days appear creeping seasons so behold.
       </Typography>
     </Box>
+   
     </Container>
     </Grid>
+    
     </ThemeProvider>
   );
 };

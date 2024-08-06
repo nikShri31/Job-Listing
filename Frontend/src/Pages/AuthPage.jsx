@@ -25,7 +25,7 @@ const AuthPage = () => {
      <Grid container 
      flexDirection={"column"} 
      alignItems={"flex-start"} 
-     sx={{backgroundColor: "rgba(192, 192, 192, 1)",}}>
+     sx={{backgroundColor: "rgba(192, 192, 220, 1)",}}>
       
      {/* Headlines */  }
         <Grid

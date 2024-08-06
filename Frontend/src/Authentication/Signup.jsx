@@ -21,7 +21,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const emails = ["username@gmail.com", "user02@gmail.com"];
+
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);

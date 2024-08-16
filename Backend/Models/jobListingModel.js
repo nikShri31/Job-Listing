@@ -12,24 +12,24 @@ const jobListingSchema = new Schema({
     },
     requirements : {
         experience : {
-            type : String,
+            type : Number,
             required : true
         },
         education : {
             type : String,
             required : true
         },
-        skills : {
+        skills : [{
             type : String,
             required : true
-        }
+        }]
     },
     location : {
         type : String,
         required : true
     },
     salary : {
-        type : String,
+        type : Number,
         required : true
     },
     postedDate : {
@@ -40,6 +40,10 @@ const jobListingSchema = new Schema({
         type : Schema.Types.ObjectId,
         required : true,
         ref : 'User'
+    },
+    company : {
+        type : String,
+        required : true
     }
 })
 

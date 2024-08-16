@@ -1,57 +1,51 @@
 const Application = require('../Models/applicationModel')
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const s3 = require('../aws-config')
-
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'job-docss',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
-        acl: 'private',
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString() + '-' + file.originalname);
-        }
-    })
-})
+const expressError = require('../utils/expressError');
+const { getDownloadUrl } = require('../utils/utilityFunctions');
 
 //employee
-module.exports.apply =
-    [upload.fields([{ name: 'resume', maxCount: 1 }, { name: 'coverLetter', maxCount: 1 }]),
-    async (req, res, next) => {
-        try {
-            const { jobId } = req.params;
-            const userId = req.user.id;
+module.exports.apply = async (req, res, next) => {
+    try {
+        const { jobId } = req.params;
+        const userId = req.user.id;
 
-            if (!req.files || !req.files.resume || !req.files.coverLetter) {
-                next(new expressError(400, 'Please upload both resume and cover letter'));
-            }
-
-            const resumeUrl = req.files.resume[0].location;
-            const coverLetterUrl = req.files.coverLetter[0].location;
-
-            const application = new Application(
-                {
-                    job: jobId,
-                    applicant: userId,
-                    coverLetter: coverLetterUrl,
-                    resume: resumeUrl
-                }
-            );
-            await application.save();
-            res.status(201).json({ message: 'Application submitted successfully', application });
-        } catch (error) {
-            next(new expressError(400, error.message))
+        if (!req.files || !req.files.resume || !req.files.coverLetter) {
+            return next(new expressError('Please upload both resume and cover letter', 400));
         }
-    }];
+
+        const resume = req.files.resume[0].key;
+        const coverLetter = req.files.coverLetter[0].key;
+
+        const application = new Application(
+            {
+                job: jobId,
+                applicant: userId,
+                coverLetter: {
+                    key: coverLetter
+                },
+                resume: {
+                    key: resume
+                }
+            }
+        );
+        await application.save();
+        res.status(201).json({ message: 'Application submitted successfully', application });
+    } catch (error) {
+        return next(new expressError(error.message, 400))
+    }
+};
 
 //employer and employee
 module.exports.getApplicationById = async (req, res, next) => {
     const { applicationId } = req.params;
     const application = await Application.findById(applicationId).populate('job').populate('applicant');
+
+    const resumeUrl = await getDownloadUrl(application.resume.key);
+    const coverLetterUrl = await getDownloadUrl(application.coverLetter.key);
+
+    application.resume.downloadUrl = resumeUrl;
+    application.coverLetter.downloadUrl = coverLetterUrl;
+    application.save();
+
     res.status(200).json({ application });
 }
 

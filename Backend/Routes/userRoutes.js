@@ -9,6 +9,6 @@ router.route('/profile')
 
 router.route('/all').get(isLogin(), isAdmin(), catchAsync(userMethods.getAllUsers));
 
-router.route('/:id').get(isLogin(), catchAsync(userMethods.searchUser));
+router.route('/:username').get(isLogin(), catchAsync(userMethods.searchUser));
 
 module.exports = router;

@@ -1,12 +1,14 @@
 const Conversation = require('../Models/conversationModel');
 const Message = require('../Models/messageModel');
+const expressError = require('../utils/expressError');
 
-exports.startConversation = async (req, res) => {
+module.exports.startConversation = async (req, res) => {
     try {
         if (req.user.role === 'employer') {
-            const { senderId, recieverId, message } = req.body;
+            const senderId = req.user.id; 
+            const {recieverId, message } = req.body;
             const newConversation = new Conversation({
-                participants: [senderId, recieverId],
+                participants : [senderId, recieverId],
                 messages: []
             });
             const savedConversation = await newConversation.save();
@@ -21,16 +23,17 @@ exports.startConversation = async (req, res) => {
             await savedConversation.save();
             res.status(200).json(savedConversation);
         } else {
-            res.status(403).json({ message: 'You are not authorized to perform this action' });
+            return next(new expressError("You are not authorized to perform this action", 403));
         }
     } catch (error) {
         res.status(500).json(error);
     }
 };
 
-exports.sendMessage = async (req, res, next) => {
+module.exports.sendMessage = async (req, res, next) => {
     const {conversationId} = req.params;
-    const { message, senderId, recieverId } = req.body;
+    const senderId = req.user.id;
+    const { message, recieverId } = req.body;
     const newMessage = new Message({
         conversation: conversationId,
         sender: senderId,
@@ -44,13 +47,14 @@ exports.sendMessage = async (req, res, next) => {
     res.status(200).json(savedMessage);
 }
 
-exports.editMessage = async (req, res, next) => {
-    const { messageId, message } = req.body;
+module.exports.editMessage = async (req, res, next) => {
+    const {messageId} = req.params;
+    const { message } = req.body;
     const updatedMessage = await Message.findByIdAndUpdate(messageId, { content: message }, { new: true });
     res.status(200).json(updatedMessage);
 }
 
-exports.deleteMessage = async (req, res, next) => {
+module.exports.deleteMessage = async (req, res, next) => {
     const { conversationId, messageId } = req.params;
     await Message.findByIdAndDelete(messageId);
     const conversation = await Conversation.findById(conversationId);
@@ -59,8 +63,14 @@ exports.deleteMessage = async (req, res, next) => {
     res.status(200).json({ message: 'Message deleted successfully' });
 }
 
+module.exports.getConversation =async (req, res, next) => {
+    const {conversationId} = req.params;
+    const conversation = await Conversation.findById(conversationId).populate('messages');
+    res.status(200).json(conversation);
+}
+
 //admin
-exports.getAllConversations = async (req, res, next) => {
+module.exports.getAllConversations = async (req, res, next) => {
     const conversations = await Conversation.find().populate('messages');
     res.status(200).json(conversations);
 }

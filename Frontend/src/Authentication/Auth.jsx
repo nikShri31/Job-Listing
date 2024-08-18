@@ -50,6 +50,7 @@ const Auth = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+    
       <Grid
         container
         component="main"

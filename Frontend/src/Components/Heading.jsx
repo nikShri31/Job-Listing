@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 export default function Heading() {
   const [displayedText, setDisplayedText] = React.useState('');
-  const fullText = 'Get Your Dream Job'
+  const fullText ='!!Get Your DREAM JOB!!'
 
   React.useEffect(()=>{
     let index =0;
@@ -26,13 +26,14 @@ export default function Heading() {
     return () => clearInterval(typingInterval);
   },[])
 
-  const firstPart = displayedText.slice(0, 7); 
-  const secondPart = displayedText.length > 7 ? displayedText.slice(7) : '';
+  const firstPart = displayedText.slice(1, 9); 
+  const secondPart = displayedText.slice(9,19);
+
   return (
     <Box
       id="hero"
       sx={{
-        width: '100%',
+       
         backgroundImage:'url(https://img.freepik.com/free-vector/light-blue-curve-frame-template_53876-114602.jpg?ga=GA1.2.155362234.1722838665&semt=ais_hybrid)',
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
@@ -59,16 +60,16 @@ export default function Heading() {
               color:'lightslategrey'
             }}
           >
-           Get Your&nbsp;
+           {firstPart}&nbsp;
             <Typography
               component="span"
               variant="h1"
               sx={{
                 fontSize: 'clamp(3rem, 10vw, 4rem)',
-                color: 'primary.main',
+                color:'#032B53',
               }}
             >
-          Dream Job
+         {secondPart}
            
             </Typography>
           </Typography>

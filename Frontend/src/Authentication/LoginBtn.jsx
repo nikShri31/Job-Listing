@@ -9,7 +9,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '100%',
     height:'100%',
-   
+
     top: '50%',
     left: '50%',
      maxWidth: 400,
@@ -20,7 +20,7 @@ const style = {
     p: 2,
      // Ensures the modal doesn't exceed the viewport height
      // Allows scrolling if content exceeds modal height
-     overFlowY:'auto',
+     overflowY:'auto',
   };
 const LoginBtn = () => {
 
@@ -30,8 +30,10 @@ const LoginBtn = () => {
     const handleClose = () => setOpen(false);
   return (
     <>
-    <Button color="primary"
-    variant="text"
+    <Button 
+    color="primary"
+    variant="contained"
+
     size="small"
     component="a"
   

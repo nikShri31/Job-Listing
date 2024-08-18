@@ -1,6 +1,7 @@
 const Application = require('../Models/applicationModel')
 const expressError = require('../utils/expressError');
 const { getDownloadUrl } = require('../utils/utilityFunctions');
+const User = require('../Models/userModel');
 
 //employee
 module.exports.apply = async (req, res, next) => {
@@ -53,6 +54,10 @@ module.exports.updateStatus = async (req, res, next) => {
     const { applicationId } = req.params;
     const { status } = req.body;
     const application = await Application.findByIdAndUpdate(applicationId, { status }, { new: true });
+    const userId = application.applicant;
+    const user = await User.findById(userId);
+    user.notifications.push({text : `Your application for ${application.job.title} has been ${status}`, type : "Application", applicationId});
+    await user.save();
     res.status(200).json({ application });
 }
 

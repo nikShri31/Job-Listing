@@ -6,6 +6,15 @@ const expressError = require("./utils/expressError")
 const cors = require('cors')
 const mongoose = require('mongoose');
 
+io.on('connection', (socket) => {
+    console.log('User connected:', socket.id);
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected:', socket.id);
+    });
+});
+
+
 const authRoutes = require('./Routes/authRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const conversationRoutes = require('./Routes/conversationRoutes');
@@ -46,6 +55,6 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log( `Server running on port ${port}`)
 })

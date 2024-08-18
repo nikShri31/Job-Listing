@@ -1,8 +1,9 @@
 const JobListing = require('../Models/jobListingModel');
+const Organisation = require('../Models/organisationModel');
 
 //Employer 
 exports.createJob = async (req, res, next) => {
-    const { title, description, company, location, salary, requirements } = req.body;
+    const { title, description, company, location, salary, requirements, organisationId } = req.body;
     const employer = req.user.id;
     const newJob = new JobListing({
         title : title.toLowerCase(),
@@ -18,6 +19,10 @@ exports.createJob = async (req, res, next) => {
         },
     });
     await newJob.save();
+    const organisation = await Organisation.findById(organisationId);
+    organisation.jobs.push(newJob._id);
+    await organisation.save();
+
     res.status(201).json({ message: 'Job created successfully', job: newJob });
 }
 
@@ -38,6 +43,9 @@ exports.updateJob = async (req, res, next) => {
 exports.deleteJob = async (req, res, next) => {
     const { jobId } = req.params;
     await JobListing.findByIdAndDelete(jobId);
+    const organisation = await Organisation.findOne({ jobs: jobId });
+    organisation.jobs.pull(jobId);
+    await organisation.save();
     res.status(200).json({ message: 'Job deleted successfully' });
 }
 

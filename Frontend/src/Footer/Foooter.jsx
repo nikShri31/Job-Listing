@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/X";
-import { styled } from "@mui/material";
+import { styled } from '@mui/material/styles';
 
 const logoStyle = {
   width: "140px",
@@ -41,7 +41,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        backgroundImage: "linear-gradient(290deg,black, #fff )",
+        backgroundImage: "linear-gradient(180deg,#02294E, #090E10 )",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
         display: "flex",

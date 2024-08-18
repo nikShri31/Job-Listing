@@ -25,7 +25,7 @@ export default function LandingPage() {
 
       <Header  />
       <Heading />
-      <Box sx={{ bgcolor: "background.default" }}>
+      <Box sx={{ bgcolor: "background.default", }}>
         <LogoCollection />
         <Highlights />
         <Footer />

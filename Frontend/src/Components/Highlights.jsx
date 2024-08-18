@@ -58,7 +58,7 @@ export default function Highlights() {
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
-      
+        
         color: 'white',
         backgroundImage:'url(https://img.freepik.com/free-vector/blue-curve-frame-template_53876-114605.jpg?ga=GA1.2.155362234.1722838665&semt=ais_hybrid)',
         backgroundSize: '100% 100%',
@@ -106,6 +106,7 @@ export default function Highlights() {
                   background: 'transparent',
                   transition: "box-shadow 0.3s ease-in-out",
                   "&:hover": {
+                    transform: 'scale(1.1) translateZ(30px)',
                     boxShadow: ` 10px 10px 10px #00000041,
                                  inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
                   },

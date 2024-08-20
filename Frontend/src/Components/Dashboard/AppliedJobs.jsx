@@ -28,7 +28,7 @@ const AppliedJobs = () => {
         color: "#032340",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex_start",
         gap: { xs: 4, sm: 8 },
         py: { xs: 8, sm: 10 },
         textAlign: { sm: "center", md: "left" },
@@ -37,13 +37,13 @@ const AppliedJobs = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-    <Box>
-    <Stack direction={'row'} mt={2}>
-    <Box minWidth={'30vh'} sx={{border:'2px solid white'}}>
+    <Box >
+    <Stack direction={'row'} ml={2} alignItems="flex-start" >
+    <Box minWidth={'30vh'} sx={{border:'2px solid white',p:2}}>
     <Typography variant="h6"> Jobs Applied</Typography>
     <Typography>2000</Typography>
     </Box>
-    <Box minWidth={'30vh'} sx={{border:'2px solid white'}}>
+    <Box minWidth={'30vh'} sx={{border:'2px solid white',p:2}}>
     <Typography variant="h6"> Recruiter's Action</Typography>
     <Typography>700</Typography>
     </Box>
@@ -51,17 +51,18 @@ const AppliedJobs = () => {
     </Stack>
     </Box>
       <ToggleButtonGroup
-        color="primary"
+        color='info'
+        
         value={alignment}
         exclusive
         onChange={handleChange}
         aria-label="Platform"
-        sx={{borderRadius:'20%'}}
+        
       >
-        <ToggleButton value="Today" sx={{borderRadius:'40%'}}>Today</ToggleButton>
-        <ToggleButton value=" Week" sx={{borderRadius:'40%'}}>This Week</ToggleButton>
-        <ToggleButton value=" Month" sx={{borderRadius:'40%'}}>This Month</ToggleButton>
-        <ToggleButton value=" Year" sx={{borderRadius:'40%'}}>This Year</ToggleButton>
+        <ToggleButton value="Today" varient='filled'sx={{borderRadius:'50%',}}>Today</ToggleButton>
+        <ToggleButton value=" Week">This Week</ToggleButton>
+        <ToggleButton value=" Month">This Month</ToggleButton>
+        <ToggleButton value=" Year"sx={{borderRadius:'50%',}}>This Year</ToggleButton>
       </ToggleButtonGroup>
 
       {itJobs.map((job) => (

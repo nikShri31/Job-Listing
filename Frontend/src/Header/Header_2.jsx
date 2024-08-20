@@ -155,6 +155,9 @@ function Header_2() {
                     "&:hover": {
                       boxShadow: ` 10px 10px 10px #00000041,
                                  inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
+                      
+                      fontWeight:'bold',           
+
                     },
                   }}
                 >

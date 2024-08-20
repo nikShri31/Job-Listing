@@ -67,7 +67,7 @@ function Header_2() {
               boxShadow:1,
             }}
           >
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <AdbIcon sx={{ display: { xs: "none", md: "flex", lg:'flex' }, mr: 1 }} />
 
             <Typography
               variant="h6"
@@ -76,7 +76,7 @@ function Header_2() {
               href="#"
               sx={{
                 mr: 2,
-                display: { xs: "none", md: "flex" },
+                display: { xs: "none", md: "flex", lg:'flex' },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -143,7 +143,7 @@ function Header_2() {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex", lg:'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
@@ -155,6 +155,9 @@ function Header_2() {
                     "&:hover": {
                       boxShadow: ` 10px 10px 10px #00000041,
                                  inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
+                      
+                      fontWeight:'bold',           
+
                     },
                   }}
                 >

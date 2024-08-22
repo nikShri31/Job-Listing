@@ -13,7 +13,7 @@ const steps = [
 export default function JobStatus() {
   return (
     <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={1} alternativeLabel>
+      <Stepper activeStep={0} color='success' alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

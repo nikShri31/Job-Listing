@@ -232,38 +232,40 @@ export default function EditBtn() {
             </Stack>
 
             {/*phone */}
-            <Typography id="transition-modal-description" sx={{ m: 1 }}>
-              Phone
-            </Typography>
+             {
+            //   <Typography id="transition-modal-description" sx={{ m: 1 }}>
+            // //   Phone
+            // // </Typography>
 
-            <TextField
-              label="Mobile Number"
-              size="small"
-              variant="outlined"
-              fullWidth
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PhoneIcon />
-                    <TextField
-                      select
-                      value={countries.phone}
-                      onChange={handleCountryCodeChange}
-                      variant="standard"
-                      sx={{ width: "80px", marginLeft: "8px" }}
-                    >
-                      {countries.map((option) => (
-                        <MenuItem key={option.phone} value={option.phone}>
-                          {option.code} {option.phone}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            // <TextField
+            //   label="Mobile Number"
+            //   size="small"
+            //   variant="outlined"
+            //   fullWidth
+            //   value={phoneNumber}
+            //   onChange={handlePhoneNumberChange}
+            //   InputProps={{
+            //     startAdornment: (
+            //       <InputAdornment position="start">
+            //         <PhoneIcon />
+            //         <TextField
+            //           select
+            //           value={countries.phone}
+            //           onChange={handleCountryCodeChange}
+            //           variant="standard"
+            //           sx={{ width: "80px", marginLeft: "8px" }}
+            //         >
+            //           {countries.map((option) => (
+            //             <MenuItem key={option.phone} value={option.phone}>
+            //               {option.code} {option.phone}
+            //             </MenuItem>
+            //           ))}
+            //         </TextField>
+            //       </InputAdornment>
+            //     ),
+            //   }}
+            // />
+            }
 
            
 

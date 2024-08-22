@@ -3,7 +3,10 @@
 // import viteLogo from '/vite.svg'
 //import './Home/App.css'
 import './App.css'
-import Dashboard from './Pages/Dashboard';
+//import LandingPage from './Pages/LandingPage';
+
+//import Dashboard from './Pages/Dashboard';
+//import LandingPage from './Pages/LandingPage';
 // import Login from './Authentication/Login'
 // import Signup from './Authentication/Signup'
 // import Auth from './Authentication/Auth'
@@ -28,7 +31,7 @@ function App() {
     <>
     
    
-  <Dashboard/>
+  <ProfilePage/>
   
   
   

@@ -13,23 +13,21 @@ import {
   FormControl,
   FormControlLabel,
   InputLabel,
+  Link,
+  Menu,
   MenuItem,
   Select,
   Stack,
   TextField,
 } from "@mui/material";
 
+import dateSelect from "../../assets/dateSelect";
+
 const style = {
-  color:'#032340',
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+  color: "#032340",
+  width: "80%",
+  height: "80%",
+  p: 2,
 };
 
 export default function PersonalDeatailsBtn() {
@@ -49,28 +47,16 @@ export default function PersonalDeatailsBtn() {
   };
 
   return (
-    <div>
-    <Button onClick={handleOpen}  sx={{color:'whitesmoke'}}><EditIcon/></Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-            sx: {
-              backdropFilter: "blur(5px)",
-            },
-          },
-        }}
-      >
-        <Fade in={open}>
+    <>
+      <>
+        <>
           <Box sx={style}>
-            <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
-            Personal Details
+            <Typography
+              id="transition-modal-title"
+              variant="h5"
+              sx={{ fontWeight: "bold" }}
+            >
+              Personal Details
             </Typography>
 
             {/**Gender */}
@@ -84,7 +70,7 @@ export default function PersonalDeatailsBtn() {
             </Stack>
 
             {/**Marital Status */}
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" sx={{ mt: 3 }}>
               Marital status
             </Typography>
             <Stack direction="row" spacing={1}>
@@ -96,63 +82,55 @@ export default function PersonalDeatailsBtn() {
             </Stack>
 
             {/*DoB */}
-            <Stack direction="row" spacing={1}>
-              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-filled-label"></InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={age}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-filled-label"></InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={age}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-filled-label"></InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={age}
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Stack>
-            {/**Catagory*/}
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Marital status
+            <Typography id="transition-modal-description" sx={{ mt: 3 }}>
+              Date of Birth
             </Typography>
             <Stack direction="row" spacing={1}>
+              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="Date">Date</InputLabel>
+                <Select labelId="Date" id="demo-simple-select-filled">
+                  {dateSelect.dates.map((date) => (
+                    <MenuItem key={date} value={date}>
+                      {date}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="month">
+                  month
+                </InputLabel>
+                <Select labelId="month" id="demo-simple-select-filled">
+                  {dateSelect.month.map((month) => (
+                    <MenuItem key={month} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="year">Year</InputLabel>
+                <Select
+                labelId="year"
+                id="demo-simple-select-filled"
+               
+              >
+               {
+                dateSelect.year.map((year)=>(
+                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                ))
+               }
+              </Select>
+              </FormControl>
+            </Stack>
+
+            {/**Catagory*/}
+            <Typography id="transition-modal-description" sx={{ mt: 3 }}>
+              Category
+            </Typography>
+            <Stack direction="row" spacing={2}>
               <Chip label="Genral" onClick={handleChipClick} />
               <Chip label="OBC" onClick={handleChipClick} />
               <Chip label="SC" onClick={handleChipClick} />
@@ -161,20 +139,21 @@ export default function PersonalDeatailsBtn() {
             </Stack>
 
             {/*Language */}
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            <Typography id="transition-modal-description" sx={{ mt: 3 }}>
               Language
             </Typography>
             <Box
               component="form"
               sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
+                "& .MuiTextField-root": { width: "25ch" },
+                mt: 2,
               }}
               noValidate
               autoComplete="off"
             >
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={2}>
                 <TextField required id="outlined-required" label="language" />
-                <FormControl fullWidth>
+                <FormControl sx={{ width: "25ch" }}>
                   <InputLabel id="demo-simple-select-label">
                     Proficiancy
                   </InputLabel>
@@ -182,7 +161,7 @@ export default function PersonalDeatailsBtn() {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={age}
-                    label="Age"
+                    label="Proficiancy"
                     onChange={handleChange}
                   >
                     <MenuItem value={10}>Beginner</MenuItem>
@@ -191,27 +170,24 @@ export default function PersonalDeatailsBtn() {
                   </Select>
                 </FormControl>
               </Stack>
-              <Stack direction="row" spacing={1}>
-                <FormControlLabel control={<Checkbox />} label="Read" />
-                <FormControlLabel control={<Checkbox />} label="Write" />
-                <FormControlLabel control={<Checkbox />} label="Speak" />
+              <Stack
+                direction="row"
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Stack direction="row" spacing={1}>
+                  <FormControlLabel control={<Checkbox />} label="Read" />
+                  <FormControlLabel control={<Checkbox />} label="Write" />
+                  <FormControlLabel control={<Checkbox />} label="Speak" />
+                </Stack>
+                <Link> Add one</Link>
               </Stack>
             </Box>
 
             {/**Gender */}
-
-            {/**Submit */}
-            <Box sx={{ m: 1 }}>
-            <ButtonGroup aria-label="Loading button group">
-              <Button variant="contained" sx={{ m: 1 }} >
-                Submit
-              </Button>
-              <Button variant="outlined" onClick={handleClose} sx={{ m: 1 }}>cancel</Button>
-            </ButtonGroup>
           </Box>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
+        </>
+      </>
+    </>
   );
 }

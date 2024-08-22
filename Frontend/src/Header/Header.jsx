@@ -69,6 +69,7 @@ function Header() {
               maxHeight: 40,
               border: "1px solid",
               borderColor: "divider",
+           
             }}
           >
             <Box
@@ -78,6 +79,8 @@ function Header() {
                 alignItems: "center",
                 ml: "-18px",
                 px: 2,
+                
+               
               }}
             >
               <Typography
@@ -96,7 +99,12 @@ function Header() {
                 {" "}
                 Logo{" "}
               </Typography>
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Box
+               sx={{ 
+                display: { xs: "none", md: "flex" },
+               
+              }}
+              >
                 <MenuItem
                   
                   sx={{ py: "6px", px: "12px" }}
@@ -138,10 +146,21 @@ function Header() {
                 display: { xs: "none", md: "flex" },
                 gap: 0.5,
                 alignItems: "center",
+                transition: "box-shadow 0.3s ease-in-out",
+                "&:hover": {
+                  transform: 'scale(1.1) translateZ(30px)',
+                  boxShadow: ` 10px 10px 10px #00000041,
+                               inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
+                    
+                       
+                },
               }}
             >
               <LoginBtn />
+
+             
             </Box>
+            <Button> Post a Job ?</Button>
 
             <Box sx={{ display: { sm: "", md: "none" } }}>
               <Button
@@ -160,6 +179,7 @@ function Header() {
                     p: 2,
                     backgroundColor: "background.paper",
                     flexGrow: 1,
+                    
                   }}
                 >
                   <MenuItem onClick={() => scrollToSection("features")}>

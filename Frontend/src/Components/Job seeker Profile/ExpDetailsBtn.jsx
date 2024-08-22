@@ -24,20 +24,11 @@ import {
 import itSkills from "../../assets/itSkills";
 
 const style = {
-  position: "absolute",
-  color:'#032340',
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  height: "80%",
-  top: "50%",
-  left: "50%",
-  maxWidth: 400,
-  bgcolor: "background.paper",
-  backdropFilter: "blur(40px)",
-  borderRadius: 5,
-  boxShadow: 24,
+  color: "#032340",
+  width: "80%",
+ 
   p: 2,
-  overflowY: "auto",
+ 
 };
 
 export default function ExpEditBtn() {
@@ -66,29 +57,13 @@ export default function ExpEditBtn() {
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen} sx={{color:'whitesmoke'}}>Add Experience</Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-            sx: {
-              backdropFilter: "blur(5px)",
-            },
-          },
-        }}
-      >
-        <Fade in={open}>
+    <>
+     
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h5"  sx={{ fontWeight:'bold',}}>
-              Experience
-            </Typography>
+          <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
+          Add Experience
+          </Typography>
+
 
             {/**Employment */}
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
@@ -237,21 +212,10 @@ export default function ExpEditBtn() {
               </Select>
             </FormControl>
 
-            {/**Submit */}
-            <Box sx={{ m: 1 }}>
-              <ButtonGroup aria-label="Loading button group">
-                <Button variant="contained" sx={{ m: 1 }}>
-                  Submit
-                </Button>
-                <Button variant="outlined" onClick={handleClose} sx={{ m: 1 }}>
-                  cancel
-                </Button>
-              </ButtonGroup>
-            </Box>
+            
 
           </Box>
-        </Fade>
-      </Modal>
-    </div>
+       
+    </>
   );
 }

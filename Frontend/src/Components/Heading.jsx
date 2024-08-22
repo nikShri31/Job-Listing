@@ -34,21 +34,29 @@ export default function Heading() {
       id="hero"
       sx={{
        
-        backgroundImage:'url(https://img.freepik.com/free-vector/light-blue-curve-frame-template_53876-114602.jpg?ga=GA1.2.155362234.1722838665&semt=ais_hybrid)',
-        backgroundSize: '100% 100%',
+        backgroundImage:'url(https://www.zimyo.com/wp-content/uploads/2023/08/NA_October_10-1-768x439.jpg)',
+        backgroundSize:{xs:'100% 100%', sm:'50%,100%', lg:'50% 100%'},
         backgroundRepeat: 'no-repeat',
+        backdropFilter:'blur(20px)'
       }}
     >
       <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'flex-end',
+        
           pt: { xs: 14, sm: 20 },
           pb: { xs: 8, sm: 12 },
+       
         }}
       >
-        <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
+        <Stack spacing={2} useFlexGap 
+        sx={{ 
+          width: { xs: '100%', sm: '70%' },
+          
+       }}
+        >
           <Typography
             variant="h1"
             sx={{
@@ -64,7 +72,9 @@ export default function Heading() {
             <Typography
               component="span"
               variant="h1"
+              
               sx={{
+                fontWeight:'bold',
                 fontSize: 'clamp(3rem, 10vw, 4rem)',
                 color:'#032B53',
               }}
@@ -89,7 +99,7 @@ export default function Heading() {
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
         
-          Join Us to get Hired and achive your Career Goals!!!
+          Join Us to get Hired and achive your Career Goals !!
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -105,7 +115,7 @@ export default function Heading() {
           </Stack>
          
         </Stack>
-      
+     
       </Container>
     </Box>
   );

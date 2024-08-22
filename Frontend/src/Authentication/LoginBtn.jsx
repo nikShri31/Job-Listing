@@ -31,7 +31,7 @@ const LoginBtn = () => {
   return (
     <>
     <Button 
-    color="primary"
+    color="secondary"
     variant="contained"
 
     size="small"

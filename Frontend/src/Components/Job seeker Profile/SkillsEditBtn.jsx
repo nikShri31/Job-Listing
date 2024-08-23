@@ -47,7 +47,7 @@ export default function SkillsEditBtn() {
               <TextField
                 {...params}
                 variant="standard"
-                label="Multiple values"
+                label="select your skills"
               />
             )}
           />

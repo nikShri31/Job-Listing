@@ -12,10 +12,12 @@ import {
   colors,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   MenuItem,
   Radio,
   RadioGroup,
+  Select,
   Stack,
   TextField,
 } from "@mui/material";
@@ -32,19 +34,21 @@ const style = {
   height: "80%",
   top: "50%",
   left: "50%",
-  maxWidth: 400,
+  maxWidth: 550,
   bgcolor: "background.paper",
-  backdropFilter: "blur(40px)",
+  
   borderRadius: 5,
   boxShadow: 24,
   p: 2,
+  scrollbarWidth: 'none', 
   overflowY: "auto",
 };
 
 
 
 export default function EditBtn() {
-  const [name, setName] = React.useState("Nik Shri");
+  const [firstName, setFirstName] = React.useState("Nik");
+  const [lastName, setLastName] = React.useState(" Shri");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -77,14 +81,14 @@ export default function EditBtn() {
           backdrop: {
             timeout: 500,
             sx: {
-              backdropFilter: "blur(5px)",
+              backdropFilter: "blur(6px)",
             },
           },
         }}
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h5"  sx={{ fontWeight:'bold',}}>
+            <Typography id="transition-modal-title" variant="h5"  sx={{ fontWeight:'bold',mb:3}}>
               Basic Details
             </Typography>
 
@@ -103,10 +107,19 @@ export default function EditBtn() {
               <TextField
                 size="small"
                 id="outlined-controlled"
-                placeholder="full name"
-                value={name}
+                placeholder="First name*"
+                value={firstName}
                 onChange={(event) => {
-                  setName(event.target.value);
+                  setFirstName(event.target.value);
+                }}
+              />
+              <TextField
+                size="small"
+                id="outlined-controlled"
+                placeholder="Last name*"
+                value={lastName}
+                onChange={(event) => {
+                  setLastName(event.target.value);
                 }}
               />
             </Box>
@@ -123,20 +136,27 @@ export default function EditBtn() {
               noValidate
               autoComplete="off"
             >
-              <TextField
-                size="small"
-                id="outlined-select-profile"
-                select
-                defaultValue="Web Developer"
-                helperText="Please select your profile"
-                
-              >
-                {jobProfiles.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <FormControl sx={{ m: 1, minWidth: 250 , }}>
+           
+            <Select
+            labelId="year"
+            id="demo-simple-select-filled"
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 200,
+                },
+              },
+            }}
+            >
+           {
+            jobProfiles.map((option)=>(
+              <MenuItem key={option.value} value={option.value}>{option.value}</MenuItem>
+            ))
+           }
+          </Select>
+            <FormHelperText>Please select your profile</FormHelperText>
+          </FormControl>
             </Box>
 
             {/** Work Status */}
@@ -176,7 +196,7 @@ export default function EditBtn() {
             <Stack direction="row" spacing={1}>
               <Autocomplete
                 id="country-select-demo"
-                sx={{ width: 400 }}
+                sx={{ width: 300 }}
                 options={countries}
                 autoHighlight
                 getOptionLabel={(option) => option.label}
@@ -216,7 +236,7 @@ export default function EditBtn() {
               <Box
                 component="form"
                 sx={{
-                  "& .MuiTextField-root": { m: 1, width: "20ch" },
+                  "& .MuiTextField-root": {  width: "20ch" },
                 }}
                 noValidate
                 autoComplete="off"
@@ -272,7 +292,7 @@ export default function EditBtn() {
 
             {/*availability to join */}
 
-            <FormControl sx={{ color: "#02294E", m: 1 }}>
+            <FormControl sx={{ color: "#02294E", m: 2 }}>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Availability
               </FormLabel>

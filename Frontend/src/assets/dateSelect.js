@@ -9,6 +9,6 @@ const dateSelect= {
     ],
   
     // Array of years (1970 to 2024)
-     year : Array.from({ length: 2008 - 1970 + 1 }, (_, i) => 1970 + i),
+     year : Array.from({ length: 2024 - 1970 + 1 }, (_, i) => 1970 + i),
 }
     export default dateSelect;

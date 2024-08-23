@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import Banner from '../Home components/Banner';
+import React, { useEffect, useState } from "react";
+import Banner from "../Home components/Banner";
 import Card from "../Home components/Card";
-import Jobs from './Jobs';
-import Sidebar from '../Sidebar/Sidebar';
-import Newsletter from '../Home components/Newsletter';
-
+import Jobs from "./Jobs";
+import Sidebar from "../Sidebar/Sidebar";
+import Newsletter from "../Home components/Newsletter";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import JobCard from "../Home components/Card";
 
 const Home = () => {
-
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,22 +15,22 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("jobs.json").then(res => res.json()).then((data) => {
-      // Use data here or set it to state
-      // console.log(data); // This will work fine here
-      setJobs(data); // Set the data to state if you want to use it elsewhere in your component
-      setIsLoading(false)
-    })
+    fetch("jobs.json")
+      .then((res) => res.json())
+      .then((data) => {
+        // Use data here or set it to state
+        // console.log(data); // This will work fine here
+        setJobs(data); // Set the data to state if you want to use it elsewhere in your component
+        setIsLoading(false);
+      });
   }, []);
-
-
 
   // ----------- Input Filter -----------
   const [query, setQuery] = useState("");
   const handleInputChange = (event) => {
-    setQuery(event.target.value)
+    setQuery(event.target.value);
     // console.log(event.target.value);
-  }
+  };
 
   //------------filter by job title-----
   const filteredItems = jobs.filter(
@@ -74,14 +74,14 @@ const Home = () => {
     let filteredJobs = jobs;
     // Filtering Input Items
 
-    console.log(filteredItems)
+    console.log(filteredItems);
     if (query) {
       filteredJobs = filteredItems;
     }
 
     // Applying selected filter / category filtering
     if (selected) {
-      console.log((selected));
+      console.log(selected);
 
       filteredJobs = filteredJobs.filter(
         ({
@@ -106,72 +106,98 @@ const Home = () => {
     const { startIndex, endIndex } = calculatePageRange();
     filteredJobs = filteredJobs.slice(startIndex, endIndex);
 
-    return filteredJobs.map((data, i) => <Card key={i} data={data} />);
+    return filteredJobs.map((data, i) => <JobCard key={i} data={data} />);
   };
 
   const result = filteredData(jobs, selectedCategory, query);
 
   return (
-    <div>
+    <>
+    <Box 
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      gap: { xs: 4,sm:6,md:6 },
+      py: { xs: 6, sm: 6 },
+      textAlign: { sm: "center", md: "left" },
+      backgroundColor:'#E3F0FE',
+    backgroundSize: "100% 100%",
+     
+    }}
+    >
       <Banner query={query} handleInputChange={handleInputChange} />
-      {/* main content */}
-      <div className="bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12">
-        {/* left side */}
-        <div className="bg-white p-4 rounded">
-          <Sidebar handleChange={handleChange} handleClick={handleClick} />
 
-        </div>
+      {/* main content */}
+      <Box > {/*className="bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12" */}
+      <Grid  container spacing={3} justifyContent={'center'}>
+        {/* left side */}
+        <Grid item xs={12} minWidth={300}  md={3}   sx={{ backgroundColor:'#FFF',}}> {/**className="bg-white p-4 rounded" */}
+          <Sidebar handleChange={handleChange} handleClick={handleClick} />
+        </Grid>
 
         {/* job cards */}
-        <div className="col-span-2 bg-white p-4 rounded">
+        <Grid  item xs={12}  md={7} sx={{bgColor:'white'}}> {/*className="col-span-2 bg-white p-4 rounded" */}
           {isLoading ? ( // Loading indicator
             <p className="font-medium">Loading...</p>
           ) : result.length > 0 ? (
             <Jobs result={result} />
           ) : (
             <>
-              <h3 className="text-lg font-bold mb-2">{result.length} Jobs</h3>
+              <Typography variant="h3" sx={{ mb: 2, fontWeight: "bold" }}>
+                {result.length} Jobs
+              </Typography>
               <p>No data found</p>
             </>
           )}
           {/* pagination block here */}
 
           {result.length > 0 ? (
-            <div className="flex justify-center mt-4 space-x-8">
-              <button
+            <Box
+              sx={{ display: "flex", justifyContent: "center", mt: 4, mx: 4 }}
+            >
+              {" "}
+              {/*className="flex justify-center mt-4 space-x-8">*/}
+              <Button
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="hover:underline"
+                sx={{
+                  "&:hover": {
+                    textDecoration: "undrline",
+                  },
+                }}
               >
                 Previous
-              </button>
-              <span className="mx-2">
+              </Button>
+              <Typography component={"span"} mx={2}>
                 Page {currentPage} of{" "}
                 {Math.ceil(filteredItems.length / itemsPerPage)}
-              </span>
-              <button
+              </Typography>
+              <Button
                 onClick={nextPage}
                 disabled={
                   currentPage === Math.ceil(filteredItems.length / itemsPerPage)
                 }
-                className="hover:underline"
+                sx={{
+                  "&:hover": {
+                    textDecoration: "undrline",
+                  },
+                }}
               >
                 Next
-              </button>
-            </div>
+              </Button>
+            </Box>
           ) : (
             ""
           )}
-        </div>
+        </Grid>
 
-
-        {/* right side */}
-        <div className="bg-white p-4 rounded"><Newsletter /></div>
-
-
-      </div>
-    </div>
-  )
-}
+       
+        </Grid>
+      </Box>
+    </Box>
+    </>
+  );
+};
 
 export default Home;

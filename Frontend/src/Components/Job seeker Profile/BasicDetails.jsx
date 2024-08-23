@@ -7,9 +7,9 @@ const BasicDetails = () => {
   const details = {
     fullName: "Niks Shri",
     profile: "Web Developer",
-    place: "Kota,Rajasthan",
+    place: "India",
     experience: "Fresher",
-    phone: "9587227172",
+    phone: "1587267542",
     email: "nikshri1234@gmail.com",
     noticePeriod: "15 Days or Less",
   };
@@ -22,11 +22,12 @@ const BasicDetails = () => {
       alignItems: "center",
       gap: { xs: 4, sm: 8 },
       textAlign: { sm: "center", md: "left" },
-      backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF)",
+      // backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF)",
+      bgcolor:'#CEE5FD',
       backgroundSize: "100% 100%",
       backgroundRepeat: "no-repeat",
     }}>
-    <Container sx={{ minHeight: "50vh", mt: 8, border: "3px solid #032340", }}>
+    <Container sx={{ minHeight: "50vh", mt: 8, border: "3px solid white", }}>
    
       <Box
         mt={5}
@@ -88,13 +89,13 @@ const BasicDetails = () => {
             }}
           >
             <Box width={'60vh'} variant="h6" sx={{}} >
-              <Typography component="div"> {details.place} </Typography>
-              <Typography component="div"> {details.experience} </Typography>
-              <Typography component="div"> {details.noticePeriod} </Typography>
+              <Typography  variant="h6" component="div"> {details.place} </Typography>
+              <Typography  variant="h6" component="div"> {details.experience} </Typography>
+              <Typography  variant="h6" component="div"> {details.noticePeriod} </Typography>
             </Box>
             <Box sx={{}} >
-              <Typography component="div"> {details.email} </Typography>
-              <Typography component="div"> {details.phone} </Typography>
+              <Typography  variant="h6" component="div"> {details.email} </Typography>
+              <Typography  variant="h6" component="div"> {details.phone} </Typography>
             </Box>
           </Box>
         </Box>{" "}

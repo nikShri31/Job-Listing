@@ -93,7 +93,7 @@ function Header() {
                   pr: 3,
                   fontFamily: "monospace",
                   letterSpacing: ".3rem",
-                  display: { xs: "none", md: "flex" },
+                  display: { xs: "none", md: "flex", lg:'flex' },
                 }}
               >
                 {" "}
@@ -110,9 +110,11 @@ function Header() {
                   sx={{ py: "6px", px: "12px" }}
                 >
                   <Typography variant="body2" color="text.primary">
-                    Job List
+                   Home
                   </Typography>
                 </MenuItem>
+
+               
                 <MenuItem
                 
                   sx={{ py: "6px", px: "12px" }}
@@ -130,27 +132,19 @@ function Header() {
                   </Typography>
                 </MenuItem>
                
-                <MenuItem
-                  onClick={() => scrollToSection("faq")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    FAQ
-                  </Typography>
-                </MenuItem>
+               
               </Box>
             </Box>
             {/*Login Modal */}
             <Box
               sx={{
-                display: { xs: "none", md: "flex" },
+                display: { xs: "none", md: "flex",lg:'flex' },
                 gap: 0.5,
                 alignItems: "center",
                 transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
                   transform: 'scale(1.1) translateZ(30px)',
-                  boxShadow: ` 10px 10px 10px #00000041,
-                               inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
+                
                     
                        
                 },
@@ -183,7 +177,7 @@ function Header() {
                   }}
                 >
                   <MenuItem onClick={() => scrollToSection("features")}>
-                    Job List
+                    Home
                   </MenuItem>
                   <MenuItem onClick={() => scrollToSection("testimonials")}>
                     About
@@ -191,9 +185,7 @@ function Header() {
                   <MenuItem onClick={() => scrollToSection("highlights")}>
                     Highlights
                   </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("faq")}>
-                    FAQ
-                  </MenuItem>
+                 
                   <Divider />
 
                   <MenuItem>

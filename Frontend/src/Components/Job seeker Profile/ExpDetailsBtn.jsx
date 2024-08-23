@@ -60,7 +60,7 @@ export default function ExpEditBtn() {
     <>
      
           <Box sx={style}>
-          <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
+          <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',my:1}}>
           Add Experience
           </Typography>
 
@@ -69,7 +69,7 @@ export default function ExpEditBtn() {
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Employment
             </Typography>
-            <FormControl required sx={{ m: 1, minWidth: "100%" }}>
+            <FormControl required sx={{ m: 1, minWidth: "70%" }}>
               <InputLabel id="demo-simple-select-required-label">
                 Employment
               </InputLabel>
@@ -77,7 +77,7 @@ export default function ExpEditBtn() {
                 labelId="demo-simple-select-required-label"
                 id="demo-simple-select-required"
                 value={age}
-                label="Age *"
+                label="Employment*"
                 onChange={handleChange}
               >
                 <MenuItem value={10}>Current</MenuItem>
@@ -88,7 +88,7 @@ export default function ExpEditBtn() {
 
             {/**Employment Type */}
 
-            <FormControl>
+            <FormControl m={2}>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Type
               </FormLabel>
@@ -137,36 +137,22 @@ export default function ExpEditBtn() {
             {/** Company Name */}
 
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Company Name
-            </Typography>
+            Company Name
+          </Typography>
 
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
+            <Box 
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
             >
-              <TextField required id="outlined-required" label="Required" />
+            <TextField required id="outlined-required" label="Company" />
+            <TextField required id="outlined-required" label="Job Profile" />
             </Box>
-
-            {/**Job title */}
-
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Job Title
-            </Typography>
-
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField required id="outlined-required" label="Required" />
-            </Box>
+           
+           
 
             {/*Joining Date */}
 
@@ -176,7 +162,7 @@ export default function ExpEditBtn() {
               Skills
             </Typography>
 
-            <Stack spacing={3} sx={{ width: 300 }}>
+            <Stack spacing={3} sx={{ width:'50%' }}>
               <Autocomplete
                 multiple
                 limitTags={3}
@@ -186,7 +172,7 @@ export default function ExpEditBtn() {
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Skills" />
                 )}
-                sx={{ width: "350px" }}
+                sx={{ width: "130%" }}
               />
             </Stack>
 

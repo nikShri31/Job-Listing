@@ -1,13 +1,16 @@
+import { Box, Card, Typography } from "@mui/material";
 
 const Jobs = ({ result }) => {
   return (
-    <>
-     <div>
-     <h3 className='text-lg font-bold mb-2'>{result.length} Jobs</h3>
-     </div>
-      <section className="card-container">{result}</section>
-    </>
+    <Box >
+    
+      <Box className="card-container">{result}</Box>
+    </Box>
   );
 };
 
 export default Jobs;
+
+{/* <Box>
+     <Typography variant="h4" sx={{mb:2, fontWeight:'bold'}}>{result.length} Jobs</Typography>
+     </Box> */}

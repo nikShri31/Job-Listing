@@ -1,50 +1,56 @@
 import React from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { FaEnvelopeOpenText, FaRocket } from "react-icons/fa6";
 
 const Newsletter = () => {
   return (
-    <div>
-      <div>
-        <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+    <Box 
+    sx={{
+      minWidth:'100%'
+    }}>
+      <Box>
+        <Typography variant='h5' sx={{ minWidth: "80%",}}>
           {" "}
           <FaEnvelopeOpenText /> Email me for jobs
-        </h3>
-        <p className="text-primary/75 text-base mb-4">
+        </Typography>
+        <Typography component={'p'}>
           Ut esse eiusmod aute. Sit enim labore dolore. Aute ea fugiat commodo
           ea foes.
-        </p>
-        <div className="w-full space-y-4">
-          <input
-            type="email"
-            placeholder="name@mail.com"
-            className="w-full block py-2 pl-3 border focus:outline-none"
-          />
-          <input
-            type="submit"
-            value="Subcribe"
-            className="w-full block py-2 bg-blue rounded-sm text-white cursor-pointer font-semibold"
-          />
-        </div>
-      </div>
+        </Typography>
+        <Box
+          sx={{
+           mt:1,
+            
+            minWidth: "80%",
+            display:'flex',
+            flexDirection:'column',
+            alignItems:'flex-start'
+          }}
+        >
+          <TextField label="name@email.com" sx={{maxWidth:250}} />
+          <Button> subscribe</Button>
+        </Box>
+      </Box>
 
       {/* 2nd section */}
-      <div className="mt-20">
-        <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+      <Box mt={5}>
+        <Typography variant='h5'>
           <FaRocket /> Get noticed faster
-        </h3>
-        <p className="text-primary/75 text-base mb-4">
+        </Typography>
+        <Typography component={'p'}>
           Ut esse eiusmod aute. Sit enim labore dolore. Aute ea fugiat commodo
           ea foes.
-        </p>
-        <div className="w-full space-y-4">
-          <input
+        </Typography>
+        <Box>
+          <Button
             type="submit"
             value="Upload your resume"
             className="w-full block py-2 bg-blue rounded-sm text-white cursor-pointer font-semibold"
-          />
-        </div>
-      </div>
-    </div>
+           > Submit
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

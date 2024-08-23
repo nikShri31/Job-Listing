@@ -18,6 +18,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
+import dateSelect from "../../assets/dateSelect";
 
 const style = {
   color: "#032340",
@@ -68,7 +69,7 @@ export default function EducationEditBtn() {
         </FormControl>
 
         {/*University/College*/}
-        <Typography id="transition-modal-description" sx={{ mt: 2 ,  }}>
+        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           University/College
         </Typography>
         <Box
@@ -106,7 +107,7 @@ export default function EducationEditBtn() {
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Specialization
         </Typography>
-        <FormControl required sx={{ m: 1, minWidth: "100%" }}>
+        <FormControl required sx={{ m: 1, minWidth: "80%" }}>
           <InputLabel id="demo-simple-select-required-label">
             Specialization
           </InputLabel>
@@ -154,46 +155,38 @@ export default function EducationEditBtn() {
         </FormControl>
 
         {/*Course Duration */}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+        <Typography id="transition-modal-description" sx={{ mt: 2, }}>
           Course Duration(Years)
         </Typography>
 
         {/*Start */}
-        <FormControl required sx={{ m:2, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-required-label">Start</InputLabel>
+        <FormControl required sx={{ m:2, minWidth: 180 }}>
+          <InputLabel id="year">start</InputLabel>
           <Select
-            labelId="demo-simple-select-required-label"
-            id="demo-simple-select-required"
-            value={age}
-            label="Start*"
-            onChange={handleChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+                labelId="year"
+                id="demo-simple-select-filled"
+         >
+               {
+                dateSelect.year.map((year)=>(
+                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                ))
+               }
+              </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
 
-        <FormControl required sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-required-label">End</InputLabel>
+        <FormControl required sx={{ m: 2, minWidth: 180 }}>
+          <InputLabel id="year">End</InputLabel>
           <Select
-            labelId="demo-simple-select-required-label"
-            id="demo-simple-select-required"
-            value={age}
-            label="End*"
-            onChange={handleChange}
+                labelId="year"
+                id="demo-simple-select-filled"
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+               {
+                dateSelect.year.map((year)=>(
+                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                ))
+               }
+              </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
 
@@ -201,21 +194,33 @@ export default function EducationEditBtn() {
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Grade
         </Typography>
-
-        <FormControl required sx={{ m: 1, minWidth: "100%" }}>
+        
+        <Box
+        sx={{
+         mt:2,
+          display:'flex',
+          minWidth: "80%"
+        }}
+      >
+        <FormControl required sx={{mx:2, maxWidth: "50%", }}>
           <InputLabel id="demo-simple-select-required-label">Grade</InputLabel>
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
             value={age}
-            label="Grade*"
+            label="Grade"
             onChange={handleChange}
           >
-            <MenuItem value={10}>Percentage [%]</MenuItem>
-            <MenuItem value={20}>GPA</MenuItem>
+            <MenuItem value={'%'}>Percentage [%]</MenuItem>
+            <MenuItem value={"GPA"}>GPA</MenuItem>
           </Select>
           <FormHelperText>Required*</FormHelperText>
-        </FormControl>
+          </FormControl>
+          <Box
+           >
+          <TextField fullWidth id="fullWidth" />
+          </Box>
+          </Box>
       </Box>
     </div>
   );

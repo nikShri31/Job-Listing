@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import LoginBtn from '../Authentication/LoginBtn';
 
 export default function Heading() {
   const [displayedText, setDisplayedText] = React.useState('');
@@ -109,8 +110,8 @@ export default function Heading() {
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
            
-            <Button href ="#" variant="contained" color="primary">
-              Login to Get Started
+            <Button href ="#" variant="outlined" color="primary">
+              Login to Get Started 
             </Button>
           </Stack>
          

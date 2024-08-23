@@ -63,7 +63,7 @@ export default function PersonalDeatailsBtn() {
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Gender
             </Typography>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} mt={1}>
               <Chip label="Male" onClick={handleChipClick} />
               <Chip label="Female" onClick={handleChipClick} />
               <Chip label="other" onClick={handleChipClick} />
@@ -73,7 +73,7 @@ export default function PersonalDeatailsBtn() {
             <Typography id="transition-modal-description" sx={{ mt: 3 }}>
               Marital status
             </Typography>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} mt={1}>
               <Chip label="Single" onClick={handleChipClick} />
               <Chip label="Married" onClick={handleChipClick} />
               <Chip label="Widowed" onClick={handleChipClick} />
@@ -88,7 +88,17 @@ export default function PersonalDeatailsBtn() {
             <Stack direction="row" spacing={1}>
               <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="Date">Date</InputLabel>
-                <Select labelId="Date" id="demo-simple-select-filled">
+                <Select
+                  labelId="Date"
+                  id="demo-simple-select-filled"
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 200,
+                      },
+                    },
+                  }}
+                >
                   {dateSelect.dates.map((date) => (
                     <MenuItem key={date} value={date}>
                       {date}
@@ -98,10 +108,18 @@ export default function PersonalDeatailsBtn() {
               </FormControl>
 
               <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="month">
-                  month
-                </InputLabel>
-                <Select labelId="month" id="demo-simple-select-filled">
+                <InputLabel id="month">month</InputLabel>
+                <Select
+                  labelId="month"
+                  id="demo-simple-select-filled"
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 200,
+                      },
+                    },
+                  }}
+                >
                   {dateSelect.month.map((month) => (
                     <MenuItem key={month} value={month}>
                       {month}
@@ -113,16 +131,22 @@ export default function PersonalDeatailsBtn() {
               <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="year">Year</InputLabel>
                 <Select
-                labelId="year"
-                id="demo-simple-select-filled"
-               
-              >
-               {
-                dateSelect.year.map((year)=>(
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
-                ))
-               }
-              </Select>
+                  labelId="year"
+                  id="demo-simple-select-filled"
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 200,
+                      },
+                    },
+                  }}
+                >
+                  {dateSelect.year.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormControl>
             </Stack>
 
@@ -130,7 +154,7 @@ export default function PersonalDeatailsBtn() {
             <Typography id="transition-modal-description" sx={{ mt: 3 }}>
               Category
             </Typography>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} mt={1}>
               <Chip label="Genral" onClick={handleChipClick} />
               <Chip label="OBC" onClick={handleChipClick} />
               <Chip label="SC" onClick={handleChipClick} />
@@ -180,7 +204,7 @@ export default function PersonalDeatailsBtn() {
                   <FormControlLabel control={<Checkbox />} label="Write" />
                   <FormControlLabel control={<Checkbox />} label="Speak" />
                 </Stack>
-                <Link> Add one</Link>
+                <Link> Add +</Link>
               </Stack>
             </Box>
 

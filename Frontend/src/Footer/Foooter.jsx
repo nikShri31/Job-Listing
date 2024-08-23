@@ -20,16 +20,18 @@ const logoStyle = {
 
 const CustomLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: theme.palette.text.secondary,
+  color: "lightblue",
+  
   '&:hover': {
     color: '#ffffff',
-    textDecoration: 'underline', 
+    textDecoration: 'underline',
+  
   },
 }));
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" mt={1}>
+    <Typography variant="body2" color="skyblue" mt={1}>
       {"Copyright © "}
       <Link href="https://mui.com/">Sitemark&nbsp;</Link>
       {new Date().getFullYear()}
@@ -41,7 +43,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        backgroundImage: "linear-gradient(180deg,#02294E, #090E10 )",
+        backgroundImage: "linear-gradient(100deg,#5584B4 ,#02294E)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
         display: "flex",
@@ -55,6 +57,7 @@ export default function Footer() {
     >
       <Box
         sx={{
+          color:'grey',
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           width: "100%",
@@ -64,12 +67,13 @@ export default function Footer() {
         <Box
           sx={{
             display: "flex",
+            color:'skyblue',
             flexDirection: "column",
             gap: 4,
             minWidth: { xs: "100%", sm: "60%" },
           }}
         >
-          <Box sx={{ width: { xs: "100%", sm: "60%" } }}>
+          <Box sx={{ width: { xs: "100%", sm: "60%" }, }}>
             <Box sx={{ ml: "-15px" }}>
               <img
                 src={
@@ -82,7 +86,7 @@ export default function Footer() {
             <Typography variant="body2" fontWeight={600} gutterBottom>
               Newsletter
             </Typography>
-            <Typography variant="body2" color="text.secondary" mb={2}>
+            <Typography variant="body2" color="skyblue" mb={2}>
               Subscribe to our newsletter for weekly updates and promotions.
             </Typography>
             <Stack direction="row" spacing={1} useFlexGap>
@@ -90,6 +94,7 @@ export default function Footer() {
                 id="outlined-basic"
                 hiddenLabel
                 size="small"
+            
                 variant="outlined"
                 fullWidth
                 aria-label="Enter your email address"

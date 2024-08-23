@@ -60,9 +60,9 @@ export default function Highlights() {
         pb: { xs: 8, sm: 16 },
         
         color: 'white',
-        backgroundImage:'url(https://img.freepik.com/free-vector/blue-curve-frame-template_53876-114605.jpg?ga=GA1.2.155362234.1722838665&semt=ais_hybrid)',
-        backgroundSize: '100% 100%',
-        backgroundRepeat: 'no-repeat',
+        backgroundImage: "linear-gradient(90deg, #CEE5FD, #FFF ,#CEE5FD)",
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <Container
@@ -80,7 +80,7 @@ export default function Highlights() {
             textAlign: { sm: 'left', md: 'center' },
           }}
         >
-          <Typography component="h2" variant="h4" color={'rgba(192, 192, 192, 1)'}>
+          <Typography component="h2" variant="h4" color={'grey'}>
             Highlights
           </Typography>
           <Typography variant="body1" sx={{ color: 'black' }}>

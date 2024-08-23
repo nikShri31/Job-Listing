@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Badge, Stack } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
-const pages = ["Home", "Pricing", "Blog"];
+const pages = ["Home", "My Jobs", "Profile"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Header_2() {
@@ -43,10 +43,8 @@ function Header_2() {
         position="sticky"
         sx={{
           boxShadow: 0,
-          bgcolor:' #CEE5FD',
-          pt:1
-        
-         
+          bgcolor: " #E3F0FE",
+          pt: 1,
         }}
       >
         <Container maxWidth="xl">
@@ -61,13 +59,15 @@ function Header_2() {
               bgcolor: "primary",
               backdropFilter: "blur(30px)",
               maxHeight: 40,
-           
+
               border: "1px solid",
               borderColor: "divider",
-              boxShadow:1,
+              boxShadow: 1,
             }}
           >
-            <AdbIcon sx={{ display: { xs: "none", md: "flex", lg:'flex' }, mr: 1 }} />
+            <AdbIcon
+              sx={{ display: { xs: "none", md: "flex", lg: "flex" }, mr: 1 }}
+            />
 
             <Typography
               variant="h6"
@@ -76,7 +76,7 @@ function Header_2() {
               href="#"
               sx={{
                 mr: 2,
-                display: { xs: "none", md: "flex", lg:'flex' },
+                display: { xs: "none", md: "flex", lg: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -143,21 +143,28 @@ function Header_2() {
             >
               LOGO
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex", lg:'flex' } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex", lg: "flex" },
+              }}
+            >
               {pages.map((page) => (
                 <Button
                   key={page}
                   sx={{
                     my: 2,
-                    textDecoration:'none',
+                    textDecoration: "none",
                     display: "block",
                     transition: "box-shadow 0.3s ease-in-out",
+                    "&:focus": {
+                      outline: "none",
+                    },
                     "&:hover": {
                       boxShadow: ` 10px 10px 10px #00000041,
                                  inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
-                      
-                      fontWeight:'bold',           
 
+                      fontWeight: "bold",
                     },
                   }}
                 >

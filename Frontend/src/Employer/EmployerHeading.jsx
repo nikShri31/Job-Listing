@@ -8,10 +8,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LoginBtn from '../Authentication/LoginBtn';
+import EmployerLoginBtn from '../Authentication/EmployersLoginBtn';
 
-export default function Heading() {
+export default function EmployerHeading() {
   const [displayedText, setDisplayedText] = React.useState('');
-  const fullText ='!!Get Your DREAM JOB!!'
+  const fullText ='!!Hire best Candidates!!'
 
   React.useEffect(()=>{
     let index =0;
@@ -27,8 +28,8 @@ export default function Heading() {
     return () => clearInterval(typingInterval);
   },[])
 
-  const firstPart = displayedText.slice(1, 9); 
-  const secondPart = displayedText.slice(9,19);
+  const firstPart = displayedText.slice(1,10); 
+  const secondPart = displayedText.slice(10,21);
 
   return (
     <Box
@@ -59,10 +60,10 @@ export default function Heading() {
        }}
         >
           <Typography
-            variant="h1"
+            variant="h2"
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
+              flexDirection: { xs: 'column', md: 'row'},
               alignSelf: 'center',
               textAlign: 'center',
               fontSize: 'clamp(3.5rem, 10vw, 4rem)',
@@ -72,7 +73,7 @@ export default function Heading() {
            {firstPart}&nbsp;
             <Typography
               component="span"
-              variant="h1"
+              variant="h2"
               
               sx={{
                 fontWeight:'bold',
@@ -90,7 +91,7 @@ export default function Heading() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-          We have 100000+ great Job Offers for every Domain....
+          We have 10000+ Deserving Profiles for every Domain....
          
           </Typography>
           <Typography
@@ -100,18 +101,19 @@ export default function Heading() {
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
         
-          Join Us to get Hired and achive your Career Goals !!
+          Join Us to Hire new Talents and achive your Goals !!
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             alignSelf="center"
             spacing={1}
             useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
+            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' }, color:'#032B53' }}
           >
-           
-            <Button href ="#" variant="outlined" color="primary">
-              Login to Get Started 
+          <Typography variant='h4'> Posting a Job ?</Typography>
+         
+            <Button href ="#" variant="contained" color="primary">
+           <EmployerLoginBtn/>
             </Button>
           </Stack>
          
@@ -121,24 +123,3 @@ export default function Heading() {
     </Box>
   );
 }
-
-
-
-/**
-   <Box
-          id="image"
-          sx={{
-            mt: { xs: 8, sm: 10 },
-            alignSelf: 'center',
-            height: { xs: 200, sm: 700 },
-            width: '100%',
-             backgroundImage:'linear-gradient(180deg, #CEE5FD, #FFF)',
-            backgroundImage:'url("/static/images/templates/templates-images/hero-light.png")',
-            backgroundSize: 'cover',
-            borderRadius: '10px',
-            outline: '1px solid',
-            outlineColor: alpha('#BFCCD9', 0.5),
-            boxShadow: `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`,
-          }}
-        />
- */

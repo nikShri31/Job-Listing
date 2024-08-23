@@ -1,32 +1,114 @@
-
-import { FiCalendar, FiClock, FiDollarSign, FiMapPin, FiSearch } from "react-icons/fi";
+import {
+  Box,
+  Container,
+  Typography,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Stack,
+} from "@mui/material";
+import {
+  FiCalendar,
+  FiClock,
+  FiDollarSign,
+  FiMapPin,
+  FiSearch,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-const Card = ({ data }) => {
+const JobCard = ({ data }) => {
   // console.log(data);
-  const {_id,companyLogo, jobTitle, companyName, jobLocation, employmentType, minPrice,maxPrice, postingDate, description} = data;
+  const {
+    _id,
+    companyLogo,
+    jobTitle,
+    companyName,
+    jobLocation,
+    employmentType,
+    minPrice,
+    maxPrice,
+    postingDate,
+    description,
+  } = data;
   return (
-    <div>
-      <section className="card">
-        <Link to={`/jobs/${_id}`} className="flex gap-4 flex-col sm:flex-row items-start">
-          <img src={companyLogo} alt={jobTitle} className="w-16 h-16 mb-4" />
-          <div className="card-details">
-            <h4 className="text-primary mb-1">{companyName}</h4>
-            <h3 className="text-lg font-semibold mb-2">{jobTitle}</h3>
+    <Box sx={{ gap: 2, mb: 2 }}>
+      <Card sx={{
+        "&:hover": {
+                      boxShadow: ` 10px 10px 10px #00000041 `,
 
-            <div className="text-primary/70 text-base flex flex-wrap gap-2 mb-2">
-              <span className="flex items-center gap-2"><FiMapPin/> {jobLocation}</span>
-              <span className="flex items-center gap-2"><FiClock/> {employmentType}</span>
-              <span className="flex items-center gap-2"><FiDollarSign/> {minPrice}-{maxPrice}k</span>
-              <span className="flex items-center gap-2"><FiCalendar/> {postingDate}</span>
-            </div>
+                      fontWeight: "bold",
+                    },
+      }}>
+        {/* <Link to={`/jobs/${_id}`} className="flex gap-4 flex-col sm:flex-row items-start">*/}
+        <CardContent>
+          <CardActionArea
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              "&:focus": {
+                outline: "none",
+              },
+              
+            }}
+          >
+            <CardMedia
+              component="img"
+              alt={jobTitle}
+              height="140"
+              sx={{ maxWidth: 145 }}
+              image={companyLogo}
+            />
+            {/**  <img src={companyLogo} alt={jobTitle} /> className="w-16 h-16 mb-4" */}
+            <Stack>
+              <Typography variant="h5" sx={{ m: 1, fontWeight: "bold" }}>
+                {companyName}
+              </Typography>
+              <Typography variant="h5" sx={{ mb: 2, mx: 1 }}>
+                {jobTitle}
+              </Typography>
+            </Stack>
+          </CardActionArea>
 
-            <p className="text-base text-primary/70 ">{description}</p>
-          </div>
-        </Link>
-      </section>
-    </div>
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", gap: 2, m: 2 }}
+            className="text-primary/70 text-base"
+          >
+            <Typography
+              component={"span"}
+              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+            >
+              <FiMapPin /> {jobLocation}
+            </Typography>
+            <Typography
+              component={"span"}
+              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+            >
+              <FiClock /> {employmentType}
+            </Typography>
+            <Typography
+              component={"span"}
+              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+            >
+              <FiDollarSign /> {minPrice}-{maxPrice}k
+            </Typography>
+            <Typography
+              component={"span"}
+              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+            >
+              <FiCalendar /> {postingDate}
+            </Typography>
+          </Box>
+
+          <Typography variant="body2" color="text.secondary">
+            {description}
+          </Typography>
+        </CardContent>
+        {/* </Link>*/}
+      </Card>
+    </Box>
   );
 };
 
-export default Card;
+export default JobCard;

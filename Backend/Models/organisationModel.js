@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs")
 
 const organizationSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: true,
+    },
+    adminEmail : {
+        type : String,
+        required : true
+    },
+    role : {
+        type : String,
+        default : "Organisation"
     },
     address: {
         street: String,
@@ -36,10 +45,6 @@ const organizationSchema = new Schema({
         type: String,
         required : true
     },
-    employers: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     jobs: [{
         type: Schema.Types.ObjectId,
         ref: 'JobListing',
@@ -48,11 +53,22 @@ const organizationSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    jobs : [{
-        type : Schema.Types.ObjectId,
-        ref : 'JobListing'
-    }]
+    password : {
+        type : String,
+        required : true
+    }
 });
+
+organisationSchema.pre('save', async function (next) {
+    if (this.isModified('password') || this.isNew) {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+    next();
+})
+
+organisationSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+}
 
 const Organization = mongoose.model('Organization', organizationSchema);
 module.exports = Organization;

@@ -3,7 +3,16 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-    username: {
+    name : {
+        type : String,
+        required : true
+    },
+    username : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    email: {
         type: String,
         required: true,
         unique: true
@@ -14,18 +23,18 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['employee', 'employer', 'admin'],
+        enum: ['employee', 'admin'],
         required: true
     },
-    //profile may include : experience, short description, skillset, achievements
+    phoneNo :{
+        type : Number,
+        required : true
+    },
+    //profile may include : experience, short description, skillset, achievements, role as in web dev or app dev or stuff
     profile: {
         type: Map,
         required: true
     },
-    conversation: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Conversation'
-    }],
     applications: [{
         type: Schema.Types.ObjectId,
         ref: 'Application'
@@ -42,9 +51,8 @@ const userSchema = new Schema({
         timeStamp: {
             type: Date,
             default: Date.now
-        },
-        organisation : String
-    }],
+        }
+    }]
 })
 
 userSchema.pre('save', async function (next) {

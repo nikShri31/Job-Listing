@@ -57,6 +57,7 @@ const JobOverview = {
 };
 
 const JobDesc = () => {
+  //Job Listing API CALL
   return (
     <Box
       sx={{
@@ -181,7 +182,7 @@ const JobDesc = () => {
                   alignItems="flex-start"
                 >
                   {Job[0].skills.map((skill, index) => (
-                    <ListItemText id={index} sx={{ color: "black" }}>
+                    <ListItemText key={index} sx={{ color: "black" }}>
                       {skill}
                     </ListItemText>
                   ))}
@@ -207,7 +208,7 @@ const JobDesc = () => {
                   alignItems="flex-start"
                 >
                   {Job[0].experience.map((exp, index) => (
-                    <ListItemText id={index} sx={{ color: "black" }}>
+                    <ListItemText key={index} sx={{ color: "black" }}>
                       {exp}
                     </ListItemText>
                   ))}
@@ -345,7 +346,7 @@ const JobDesc = () => {
                 <Button
                   size="small"
                   variant="contained"
-                  sx={{ color: "white", alignItems:'center' }}
+                  sx={{ color: "white", alignItems: "center" }}
                 >
                   Apply Now
                 </Button>

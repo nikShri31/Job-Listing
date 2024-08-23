@@ -7,6 +7,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  Stepper,
+  Step,
+  StepLabel,
 } from "@mui/material";
 
 import itJobs from "../../assets/jobList";
@@ -16,6 +19,9 @@ import JobStatus from "./JobStatus";
 import { useState } from "react";
 
 const AppliedJobs = () => {
+  //Applications Applied, Their Status
+  const steps = ["Job applied", "Resume Viewed", "Awaiting Recruiter Action"];
+
   const [alignment, setAlignment] = useState("Today");
 
   const handleChange = (event, newAlignment) => {
@@ -37,32 +43,37 @@ const AppliedJobs = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-    <Box >
-    <Stack direction={'row'} ml={2} alignItems="flex-start" >
-    <Box minWidth={'30vh'} sx={{border:'2px solid white',p:2}}>
-    <Typography variant="h6"> Jobs Applied</Typography>
-    <Typography>2000</Typography>
-    </Box>
-    <Box minWidth={'30vh'} sx={{border:'2px solid white',p:2}}>
-    <Typography variant="h6"> Recruiter's Action</Typography>
-    <Typography>700</Typography>
-    </Box>
-  
-    </Stack>
-    </Box>
+      <Box>
+        <Stack direction={"row"} ml={2} alignItems="flex-start">
+          <Box minWidth={"30vh"} sx={{ border: "2px solid white", p: 2 }}>
+            <Typography variant="h6"> Jobs Applied</Typography>
+            <Typography>2000</Typography>
+          </Box>
+          <Box minWidth={"30vh"} sx={{ border: "2px solid white", p: 2 }}>
+            <Typography variant="h6"> Recruiter's Action</Typography>
+            <Typography>700</Typography>
+          </Box>
+        </Stack>
+      </Box>
       <ToggleButtonGroup
-        color='info'
-        
+        color="info"
         value={alignment}
         exclusive
         onChange={handleChange}
         aria-label="Platform"
-        
       >
-        <ToggleButton value="Today" varient='filled'sx={{borderRadius:'50%',}}>Today</ToggleButton>
+        <ToggleButton
+          value="Today"
+          varient="filled"
+          sx={{ borderRadius: "50%" }}
+        >
+          Today
+        </ToggleButton>
         <ToggleButton value=" Week">This Week</ToggleButton>
         <ToggleButton value=" Month">This Month</ToggleButton>
-        <ToggleButton value=" Year"sx={{borderRadius:'50%',}}>This Year</ToggleButton>
+        <ToggleButton value=" Year" sx={{ borderRadius: "50%" }}>
+          This Year
+        </ToggleButton>
       </ToggleButtonGroup>
 
       {itJobs.map((job) => (
@@ -73,16 +84,16 @@ const AppliedJobs = () => {
             backgroundSize: "100% 100%",
             backgroundRepeat: "no-repeat",
             color: "#032340",
-          
+
             p: 4,
             display: "flex",
             flexDirection: "column",
-            justifyContent:'space-between',
+            justifyContent: "space-between",
             alignItems: "flex-start",
             border: "2px solid white",
           }}
         >
-          <Stack direction={'row'}  justifyContent="space-between">
+          <Stack direction={"row"} justifyContent="space-between">
             <Box>
               <Link
                 variant="h6"
@@ -112,7 +123,15 @@ const AppliedJobs = () => {
             </Box>
 
             <Box m={4}>
-              <JobStatus/>
+              <Box sx={{ width: "100%" }}>
+                <Stepper activeStep={1} alternativeLabel>
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </Box>
             </Box>
           </Stack>
         </Container>

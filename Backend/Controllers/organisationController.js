@@ -1,36 +1,36 @@
 const Organization = require('../Models/organisationModel')
 const expressError = require('../utils/expressError');
 
-module.exports.createOrg = async (req, res, next) => {
-    try {
-        const { name, email, phone, address, website, description, industry } = req.body;
-        const newOrg = new Organization({
-            name,
-            contactInfo : {
-                phone,
-                email
-            },
-            address,
-            website,
-            industry, 
-            description
-        });
-        const savedOrg = await newOrg.save();
-        res.status(201).json(savedOrg);
-    } catch (error) {
-        return next(new expressError(error.message, 500));
+module.exports.searchOrg = async(req,res,next) => {
+    const {name} = req.body;
+    const org = await Organization.findOne({name});
+    if(!org){
+        return next(new expressError('Organization not found', 400));
     }
-};
+    res.status(200).json({status: 'success', org});
+}
 
-module.exports.addEmployers = async (req, res, next) => {
-    try {
-        const { orgId } = req.params;
-        const { employerIds } = req.body;
-        const org = await Organization.findById(orgId);
-        org.employers.push(...employerIds);
-        const savedOrg = await org.save();
-        res.status(200).json(savedOrg);
-    } catch (error) {
-        return next(new expressError(error.message, 500));
+module.exports.updateOrganisation = async(req, res, next) => {
+    const {name, address, phone, email, website, industry, description} = req.body;
+    const org = await Organization.findOne({name});
+    if(!org){
+        return next(new expressError('Organization not found', 400));
     }
-};
+    org.address = address;
+    org.phone = phone;
+    org.email = email;
+    org.website = website;
+    org.industry = industry;
+    org.description = description;
+    await org.save();
+    res.status(200).json({status: 'success', org});
+}
+
+module.exports.getOrganisation = async(req, res, next) => {
+    const name = req.user.name;
+    const organisation = await Organization.findOne({ name }).populate('jobs');
+    if(!org) {
+        return next(new expressError('Organization not found', 400));
+    }
+    res.status(200).json({status: 'success', organisation});
+}

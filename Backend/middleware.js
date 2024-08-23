@@ -52,9 +52,9 @@ module.exports.isEmployee = () => {
     }
 }
 
-module.exports.isEmployer = () => {
+module.exports.isOrganisation = () => {
     return (req, res, next) => {
-        if (req.user.role !== 'employer') return next(new expressError('You are not authorized to perform this action', 403));
+        if (req.user.role !== 'Organisation') return next(new expressError('You are not authorized to perform this action', 403));
         next();
     }
 }

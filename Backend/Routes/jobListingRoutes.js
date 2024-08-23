@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const catchAsync = require('../utils/catchAsync');
-const { isLogin, isEmployer} = require('../middleware');
+const { isLogin, isOrganisation} = require('../middleware');
 const jobListingController = require('../Controllers/jobListingController');
 
-router.route('/').post(isLogin(), isEmployer(), catchAsync(jobListingController.createJob))
-
-router.route('/created').get(isLogin(), isEmployer(), catchAsync(jobListingController.getJobsByEmployer));
+router.route('/').post(isLogin(), isOrganisation(), catchAsync(jobListingController.createJob))
 
 router.route('/getAll').get(isLogin(), catchAsync(jobListingController.getAllJobs))
 
+router.route('/organisation/:organisationId').get(isLogin(), isOrganisation(), catchAsync(jobListingController.getJobsByOrganisation));
+
 router.route('/:jobId')
-    .patch(isLogin(), isEmployer(), catchAsync(jobListingController.updateJob))
-    .delete(isLogin(), isEmployer(), catchAsync(jobListingController.deleteJob))
+    .patch(isLogin(), isOrganisation(), catchAsync(jobListingController.updateJob))
+    .delete(isLogin(), isOrganisation(), catchAsync(jobListingController.deleteJob))
     .get(isLogin(), catchAsync(jobListingController.getJob));
 
 module.exports = router;

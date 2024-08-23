@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
   Button,
-  
-  Divider,
   TextField,
   Grid,
   Box,
@@ -12,32 +10,42 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
-
-
-
-import GoogleIcon from "@mui/icons-material/Google";
+// import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-
+import axios from "axios";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("employee");
+  // const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    console.log(data.get("password"));
+    const response = await axios.post("http://localhost:5000/api/signup", {
+      name: data.get("name"),
+      username: data.get("username"),
+      role,
       email: data.get("email"),
       password: data.get("password"),
+      phoneNo: data.get("phone"),
+      profile: {
+        experience: data.get("experience"),
+      },
     });
+    localStorage.setItem("token", response.data.token);
+    // navigate('/')
   };
 
   return (
@@ -47,29 +55,55 @@ function Signup() {
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               size="small"
-              autoComplete="given-name"
-              name="firstName"
+              name="name"
               required
               fullWidth
-              id="firstName"
-              label="First Name"
+              id="name"
+              label="Full Name"
               autoFocus
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               size="small"
+              name="username"
               required
               fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="family-name"
+              id="username"
+              label="Username"
+              autoFocus
             />
           </Grid>
+          <Grid item xs={8}>
+            <TextField
+              size="small"
+              name="experience"
+              required
+              fullWidth
+              id="experience"
+              label="Experience"
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControl size="small" fullWidth>
+              <InputLabel id="role-select-label">Role</InputLabel>
+              <Select
+                labelId="role-select-label"
+                id="role-select"
+                value={role}
+                label="Role"
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <MenuItem value="employee">Employee</MenuItem>
+                <MenuItem value="organisation">Organisation</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
           <Grid item xs={12}>
             <TextField
               size="small"
@@ -83,6 +117,17 @@ function Signup() {
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              size="small"
+              required
+              fullWidth
+              id="phone"
+              type="text"
+              label="Phone Number"
+              name="phone"
+            />
+          </Grid>
+          <Grid item xs={12}>
             <FormControl variant="outlined" fullWidth size="small">
               <InputLabel htmlFor="outlined-adornment-password">
                 Password
@@ -90,6 +135,7 @@ function Signup() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
+                name="password"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -106,27 +152,14 @@ function Signup() {
               />
             </FormControl>
           </Grid>
-         
         </Grid>
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 ,color:'white'}}
+          sx={{ mt: 3, mb: 2, color: "white" }}
         >
           Sign Up
-        </Button>
-      
-
-        <Divider sx={{ mt: 2 }}>or</Divider>
-
-        <Button
-          type="submit"
-          fullWidth
-          variant="outlined"
-          sx={{ mt: 3, mb: 2, bgcolor: "secondary.main",color:'white' }}
-        >
-          <GoogleIcon sx={{ mr: 1 }}/> SignUp with Google
         </Button>
       </Box>
     </>
@@ -134,6 +167,3 @@ function Signup() {
 }
 
 export default Signup;
-
-
- 

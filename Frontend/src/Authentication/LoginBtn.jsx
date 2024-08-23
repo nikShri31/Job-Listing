@@ -18,16 +18,11 @@ const style = {
     borderRadius: 5,
     boxShadow: 24,
     p: 2,
-     // Ensures the modal doesn't exceed the viewport height
-     // Allows scrolling if content exceeds modal height
      overflowY:'auto',
   };
 const LoginBtn = () => {
 
     const [open, setOpen] = React.useState(false);
- 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
   return (
     <>
     <Button 
@@ -37,19 +32,19 @@ const LoginBtn = () => {
     size="small"
     component="a"
   
-    onClick={handleOpen}
+    onClick={() => setOpen(true)}
     >
     Login
   </Button>
   <Modal
     open={open}
-    onClose={handleClose}
+    onClose={() => setOpen(false)}
     closeAfterTransition
     BackdropComponent={Backdrop}
     BackdropProps={{
       timeout: 500,
       sx: {
-        backdropFilter: 'blur(5px)', // Apply blur effect
+        backdropFilter: 'blur(5px)', 
       },
     }}
   >

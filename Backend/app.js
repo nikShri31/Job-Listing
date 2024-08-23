@@ -6,20 +6,11 @@ const expressError = require("./utils/expressError")
 const cors = require('cors')
 const mongoose = require('mongoose');
 
-io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected:', socket.id);
-    });
-});
-
-
 const authRoutes = require('./Routes/authRoutes');
 const userRoutes = require('./Routes/userRoutes');
-const conversationRoutes = require('./Routes/conversationRoutes');
 const applicationRoutes = require('./Routes/applicationRoutes');
 const jobLisitngRoutes = require('./Routes/jobListingRoutes');
+const organisationRoutes = require('./Routes/organisationRoutes');
 
 const port = process.env.PORT;
 
@@ -34,7 +25,7 @@ app.use('/api', authRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/job', jobLisitngRoutes)
 app.use('/api/application', applicationRoutes)
-app.use('/api/conversation', conversationRoutes)
+app.use('/api/organisation', organisationRoutes)
 
 app.get('/', (req, res) => {
     console.log("Server running")
@@ -55,6 +46,6 @@ app.use((err, req, res, next) => {
     });
 })
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log( `Server running on port ${port}`)
 })

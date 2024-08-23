@@ -4,20 +4,19 @@ import Salary from './Salary'
 import JobPostingData from './JobPostingData'
 import WorkExperience from './WorkExperience'
 import EmploymentType from './EmploymentType'
+import { Box, Typography } from '@mui/material'
+
 
 const Sidebar = ({ handleChange, handleClick }) => {
   return (
-    <div className='space-y-5'>
-        <h3 className='text-lg font-bold mb-2'>Filters</h3>
+    <Box sx={{px:4 }} >
+        <Typography variant='h3' sx={{mb:3,}}>Filters</Typography>
        <Location handleChange={handleChange}/>
        <Salary handleChange={handleChange} handleClick={handleClick}/>
        <JobPostingData handleChange={handleChange}/>
        <WorkExperience handleChange={handleChange}/>
        <EmploymentType handleChange={handleChange}/>
-
-
-
-    </div>
+</Box>
   )
 }
 

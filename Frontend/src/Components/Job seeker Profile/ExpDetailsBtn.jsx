@@ -24,20 +24,11 @@ import {
 import itSkills from "../../assets/itSkills";
 
 const style = {
-  position: "absolute",
-  color:'#032340',
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  height: "80%",
-  top: "50%",
-  left: "50%",
-  maxWidth: 400,
-  bgcolor: "background.paper",
-  backdropFilter: "blur(40px)",
-  borderRadius: 5,
-  boxShadow: 24,
+  color: "#032340",
+  width: "80%",
+ 
   p: 2,
-  overflowY: "auto",
+ 
 };
 
 export default function ExpEditBtn() {
@@ -66,35 +57,19 @@ export default function ExpEditBtn() {
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen} sx={{color:'whitesmoke'}}>Add Experience</Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-            sx: {
-              backdropFilter: "blur(5px)",
-            },
-          },
-        }}
-      >
-        <Fade in={open}>
+    <>
+     
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h5"  sx={{ fontWeight:'bold',}}>
-              Experience
-            </Typography>
+          <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',my:1}}>
+          Add Experience
+          </Typography>
+
 
             {/**Employment */}
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Employment
             </Typography>
-            <FormControl required sx={{ m: 1, minWidth: "100%" }}>
+            <FormControl required sx={{ m: 1, minWidth: "70%" }}>
               <InputLabel id="demo-simple-select-required-label">
                 Employment
               </InputLabel>
@@ -102,7 +77,7 @@ export default function ExpEditBtn() {
                 labelId="demo-simple-select-required-label"
                 id="demo-simple-select-required"
                 value={age}
-                label="Age *"
+                label="Employment*"
                 onChange={handleChange}
               >
                 <MenuItem value={10}>Current</MenuItem>
@@ -113,7 +88,7 @@ export default function ExpEditBtn() {
 
             {/**Employment Type */}
 
-            <FormControl>
+            <FormControl m={2}>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Type
               </FormLabel>
@@ -162,36 +137,22 @@ export default function ExpEditBtn() {
             {/** Company Name */}
 
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Company Name
-            </Typography>
+            Company Name
+          </Typography>
 
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
+            <Box 
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
             >
-              <TextField required id="outlined-required" label="Required" />
+            <TextField required id="outlined-required" label="Company" />
+            <TextField required id="outlined-required" label="Job Profile" />
             </Box>
-
-            {/**Job title */}
-
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Job Title
-            </Typography>
-
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField required id="outlined-required" label="Required" />
-            </Box>
+           
+           
 
             {/*Joining Date */}
 
@@ -201,7 +162,7 @@ export default function ExpEditBtn() {
               Skills
             </Typography>
 
-            <Stack spacing={3} sx={{ width: 300 }}>
+            <Stack spacing={3} sx={{ width:'50%' }}>
               <Autocomplete
                 multiple
                 limitTags={3}
@@ -211,7 +172,7 @@ export default function ExpEditBtn() {
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Skills" />
                 )}
-                sx={{ width: "350px" }}
+                sx={{ width: "130%" }}
               />
             </Stack>
 
@@ -237,21 +198,10 @@ export default function ExpEditBtn() {
               </Select>
             </FormControl>
 
-            {/**Submit */}
-            <Box sx={{ m: 1 }}>
-              <ButtonGroup aria-label="Loading button group">
-                <Button variant="contained" sx={{ m: 1 }}>
-                  Submit
-                </Button>
-                <Button variant="outlined" onClick={handleClose} sx={{ m: 1 }}>
-                  cancel
-                </Button>
-              </ButtonGroup>
-            </Box>
+            
 
           </Box>
-        </Fade>
-      </Modal>
-    </div>
+       
+    </>
   );
 }

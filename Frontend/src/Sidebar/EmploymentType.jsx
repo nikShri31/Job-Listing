@@ -1,35 +1,29 @@
 import React from 'react'
 import InputField from '../Home components/InputField'
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 
 const EmploymentType = ({handleChange}) => {
+  
   return (
-    <div>
-    <Typography>Type of employment</Typography>
- <div>
-   <label className="sidebar-label-container">
-     <input onChange={handleChange} type="radio" value="" name="test" />
-     <span className="checkmark"></span>Any
-   </label>
-   <InputField
-     handleChange={handleChange}
-     value="full-time"
-     title="Full-time"
-     name="test"
-   />
-   <InputField
-     handleChange={handleChange}
-     value="temporary"
-     title="Temporary"
-     name="test"
-   />
-   <InputField
-     handleChange={handleChange}
-     value="part-time"
-     title="Part-time"
-     name="test"
-   />
- </div>
-</div>
+    <Box sx={{color: "#032B53"}}>
+    <Typography variant='h5' sx={{m:2,}}>Eployment Type</Typography>
+ <Box>
+ <FormControl>
+  <RadioGroup
+   aria-labelledby="emp-radio-buttons-group"
+   name="emp-radio-buttons-group"
+   
+   onChange={handleChange}
+ >
+   <FormControlLabel value="Any" control={<Radio />} label="Any" />
+   <FormControlLabel value="fullTime" control={<Radio />} label="Full-Time" />
+   <FormControlLabel value="intern" control={<Radio />} label="Internship" />
+   <FormControlLabel value="partTime" control={<Radio />} label="Part-Time" />
+   
+ </RadioGroup>
+</FormControl>
+ </Box>
+</Box>
   )
 }
 

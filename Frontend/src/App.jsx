@@ -1,24 +1,36 @@
 import './App.css'
-import Auth from './Authentication/Auth'
-// import Login from './Authentication/Login';
-// import LoginBtn from './Authentication/LoginBtn';
-// import BasicEditBtn from './Components/Job seeker Profile/BasicEditBtn'
-import ProfilePage from './Pages/ProfilePage';
-import JobDesc from './Components/JobDesc';
-import AppliedJobs from './Components/Dashboard/AppliedJobs';
-import Dashboard from './Pages/Dashboard';
+import EmployerPage from './Pages/EmployerPage';
+//import LandingPage from './Pages/LandingPage';
+
+//import Dashboard from './Pages/Dashboard';
+//import LandingPage from './Pages/LandingPage';
+// import Login from './Authentication/Login'
+// import Signup from './Authentication/Signup'
+// import Auth from './Authentication/Auth'
+
+
+
+ import LandingPage from './Pages/LandingPage'
+ import JD from './Pages/Jd_Page'
+ import ProfilePage from './Pages/ProfilePage'
+// import { Outlet } from 'react-router-dom'
+// import Navbar from './Home components/Navbar'
+// import Home from './HomePages/Home'
+import HomePage from './Pages/HomePage';
+// import ResponsiveAppBar from './Header/Header_2'
+//import Home from './Home/Home'
+
+
 
 function App() {
   return(
     <>
-    <Dashboard/>
-    {/* <AppliedJobs/> */}
-    {/* <JobDesc/> */}
-    {/* <ProfilePage/> */}
-    {/* <Login/> */}
-    {/* <BasicEditBtn/> */}
-    {/* <LoginBtn/> */}
-    <Auth/>
+    
+   
+  <HomePage/>
+  
+  
+  
     </>
   )
 }

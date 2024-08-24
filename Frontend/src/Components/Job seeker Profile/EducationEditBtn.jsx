@@ -28,18 +28,12 @@ const style = {
 };
 
 export default function EducationEditBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+ 
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
+ 
+  
   return (
-    <div>
+    <>
       <Box sx={style}>
       <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
       Add Education
@@ -57,13 +51,13 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={age}
+            value={education}
             label="Education*"
-            onChange={handleChange}
+            onChange={(e) => setEducation(e.target.value)} 
           >
-            <MenuItem value={10}>Doctarate/Phd</MenuItem>
-            <MenuItem value={20}>Masters/PostGraduation</MenuItem>
-            <MenuItem value={30}>Graduation/Diploma</MenuItem>
+            <MenuItem value={"Doc"}>Doctarate/Phd</MenuItem>
+            <MenuItem value={"PG"}>Masters/PostGraduation</MenuItem>
+            <MenuItem value={"UG"}>Graduation/Diploma</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -91,14 +85,14 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={age}
-            label="Age *"
-            onChange={handleChange}
+            value={course}
+            label="Course*"
+            onChange={(e) => setCourse(e.target.value)}
           >
             <MenuItem value={10}>B.Tech</MenuItem>
             <MenuItem value={20}>M.Tech/MCA</MenuItem>
             <MenuItem value={30}>BCA</MenuItem>
-            <MenuItem value={30}>Diploma</MenuItem>
+            <MenuItem value={40}>Diploma</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -114,13 +108,14 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={age}
+            value={special}
             label="Spacialization*"
-            onChange={handleChange}
+            onChange={(e) => setSpecial(e.target.value)} 
+            required
           >
-            <MenuItem value={10}>Doctarate/Phd</MenuItem>
-            <MenuItem value={20}>Masters/PostGraduation</MenuItem>
-            <MenuItem value={30}>Graduation/Diploma</MenuItem>
+            <MenuItem value={'CS'}>CS</MenuItem>
+            <MenuItem value={'IT'}>IT</MenuItem>
+            <MenuItem value={'ECE'}>ECE</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -207,11 +202,11 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={age}
+            value={grade}
             label="Grade"
-            onChange={handleChange}
+            onChange={(e) => setGrade(e.target.value)}
           >
-            <MenuItem value={'%'}>Percentage [%]</MenuItem>
+            <MenuItem value={'PER'}>Percentage [%]</MenuItem>
             <MenuItem value={"GPA"}>GPA</MenuItem>
           </Select>
           <FormHelperText>Required*</FormHelperText>
@@ -222,7 +217,7 @@ export default function EducationEditBtn() {
           </Box>
           </Box>
       </Box>
-    </div>
+    </>
   );
 }
 

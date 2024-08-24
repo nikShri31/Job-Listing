@@ -31,9 +31,7 @@ const style = {
 };
 
 export default function PersonalDeatailsBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
 
   const [variant, setVariant] = React.useState("outlined");
   const handleChipClick = () => {
@@ -46,6 +44,12 @@ export default function PersonalDeatailsBtn() {
     setAge(event.target.value);
   };
 
+  const [gender, setGender] = React.useState("");
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  
   return (
     <>
       <>
@@ -64,9 +68,10 @@ export default function PersonalDeatailsBtn() {
               Gender
             </Typography>
             <Stack direction="row" spacing={1} mt={1}>
-              <Chip label="Male" onClick={handleChipClick} />
-              <Chip label="Female" onClick={handleChipClick} />
-              <Chip label="other" onClick={handleChipClick} />
+              <Chip value={male} variant={variant} label="Male" onClick={handleChipClick} />
+              
+              <Chip value={female} variant={variant} label="Female" onClick={handleChipClick} />
+              <Chip value={other}  variant={variant} label="other" onClick={handleChipClick} />
             </Stack>
 
             {/**Marital Status */}

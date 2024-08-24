@@ -35,10 +35,21 @@ export default function ExpEditBtn() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [age, setAge] = React.useState("");
+  const [employment, setEmployment] = React.useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleEmpChange = (event) => {
+    setEmployment(event.target.value);
+  };
+  const [exp, setExp] = React.useState("");
+
+  const handleExpChange = (event) => {
+    setExp(event.target.value);
+  };
+
+  const [notice, setNotice] = React.useState("");
+
+  const handleNoticeChange = (event) => {
+    setNotice(event.target.value);
   };
 
   const [selectedSkills, setSelectedSkills] = React.useState([]);
@@ -75,14 +86,15 @@ export default function ExpEditBtn() {
               <Select
                 labelId="demo-simple-select-required-label"
                 id="demo-simple-select-required"
-                value={age}
+                value={employment}
                 label="Employment*"
-                onChange={handleChange}
+                onChange={handleEmpChange}
+                required
               >
                 <MenuItem value={10}>Working</MenuItem>
                 <MenuItem value={20}>Unemployed</MenuItem>
               </Select>
-              <FormHelperText>Required</FormHelperText>
+              
             </FormControl>
 
             {/**Employment Type */}
@@ -102,7 +114,7 @@ export default function ExpEditBtn() {
                   label="Full Time"
                 />
                 <FormControlLabel
-                  value="Internship"
+                  value="internship"
                   control={<Radio />}
                   label="Internship"
                 />
@@ -119,9 +131,9 @@ export default function ExpEditBtn() {
               <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
-                value={age}
-                label="Age"
-                onChange={handleChange}
+                value={exp}
+                label="Exp"
+                onChange={handleExpChange}
               >
                 <MenuItem value="">
                   <em>Fresher</em>
@@ -169,7 +181,7 @@ export default function ExpEditBtn() {
                 options={itSkills}
                 getOptionLabel={(option) => option.title}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="Skills" />
+                  <TextField {...params} placeholder="Skills" value={selectedSkills} onChange={handleSkillChange} />
                 )}
                 sx={{ width: "130%" }}
               />
@@ -185,15 +197,15 @@ export default function ExpEditBtn() {
               <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                value={age}
-                onChange={handleChange}
+                value={notice}
+                onChange={handleNoticeChange}
               >
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>15 Days or Less</MenuItem>
-                <MenuItem value={20}>1 Month</MenuItem>
-                <MenuItem value={30}>60 Days or More</MenuItem>
+                <MenuItem value={15}>15 Days or Less</MenuItem>
+                <MenuItem value={30}>30 Days</MenuItem>
+                <MenuItem value={60}>60 Days or More</MenuItem>
               </Select>
             </FormControl>
           </Box>

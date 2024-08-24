@@ -34,9 +34,7 @@ const style = {
 };
 
 export default function AddProjectsBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+ 
 
   const [age, setAge] = React.useState("");
 
@@ -79,7 +77,7 @@ export default function AddProjectsBtn() {
             name="row-radio-buttons-group"
           >
             <FormControlLabel
-              value="In Process"
+              value="process"
               control={<Radio />}
               label="In Process"
             />

@@ -8,20 +8,17 @@ import Typography from "@mui/material/Typography";
 import { Autocomplete, ButtonGroup, Stack, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import countries from "../../assets/countryList";
-import itSkills from "../../assets/itSkills";
+
 
 const style = {
   color: "#032340",
   width: "80%",
- 
   p: 2,
  
 };
 
-export default function SkillsEditBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function SkillsEditBtn({itSkills}) {
+  
 
   return (
     <>

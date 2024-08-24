@@ -5,6 +5,7 @@ import EducationEditBtn from "./EducationEditBtn";
 import ExpEditBtn from "./ExpDetailsBtn";
 import AddProjectsBtn from "./ProjectsEditBtn";
 import PersonalDeatailsBtn from "./PersonalEditBtn";
+import itSkills from "../../assets/itSkills";
 
 const details = [
   "Education",
@@ -20,10 +21,9 @@ const styleDetails = {
   my: 2,
   px: 3,
   ml: { lg: "25%" }, // Offset to avoid overlap with the fixed stack
-  height: "100vh", 
+  height: "100vh",
   overflowY: "auto",
   scrollbarWidth: "none",
-  
 };
 const CareerDetails = () => {
   const educationRef = useRef(null);
@@ -32,12 +32,24 @@ const CareerDetails = () => {
   const projectsRef = useRef(null);
   const personalDetailsRef = useRef(null);
 
-  // const [selectedDetail, setSelectedDetail] = useState(details[0]);
+  {
+    /**Skill values */
+  }
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const handleSkillsChange = (event, newValue) => {
+    setSelectedSkills(newValue);
+  };
+
+  {/**Education */}
+  const [education, setEducation] = React.useState("");
+const [course, setCourse] = React.useState("");
+ const [special, setSpecial] = React.useState("");
+  const [grade, setGrade] = React.useState("");
+
 
   const handleScroll = (ref) => {
-    
     window.scrollTo({ top: window.scrollY - 1 });
-    
+
     setTimeout(() => {
       ref.current.scrollIntoView({ behavior: "smooth" });
     }, 50);
@@ -54,7 +66,7 @@ const CareerDetails = () => {
         gap: { xs: 4, sm: 4 },
         height: "100%",
         width: { xs: "100%", md: "90%" },
-        p: { xs: 8,  },
+        p: { xs: 8 },
         textAlign: { sm: "center", md: "left" },
         bgColor: "#CEE5FD",
         backgroundImage: "linear-gradient(180deg, #E3F0FE,#CEE5FD)",
@@ -114,14 +126,13 @@ const CareerDetails = () => {
             position: "absolute",
             top: 0, // To align it with the top of the screen
             left: 0, // Align it with the left side
-            height: "100vh", 
+            height: "100vh",
             m: 2,
             overflowY: "auto",
           }}
         >
-          {
-            details.map((detail, index) =>{
-              let ref;
+          {details.map((detail, index) => {
+            let ref;
             switch (detail) {
               case "Education":
                 ref = educationRef;
@@ -141,47 +152,51 @@ const CareerDetails = () => {
               default:
                 ref = null;
             }
-            
-             return (
-            <Box
-              key={index}
-              sx={{
-                p: 3,
-                backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
-                color: "whitesmoke",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                cursor:'pointer'
-              }}
-              onClick={() => handleScroll(ref)}
-            >
-              {detail}
-            </Box>
-             )
+
+            return (
+              <Box
+                key={index}
+                sx={{
+                  p: 3,
+                  backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                  color: "whitesmoke",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "left",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleScroll(ref)}
+              >
+                {detail}
+              </Box>
+            );
           })}
         </Stack>
 
         <Stack spacing={2} sx={styleDetails}>
-        <Box ref={educationRef}>
-        <EducationEditBtn />
-      </Box>
-      <Box ref={skillsRef}>
-        <SkillsEditBtn />
-      </Box>
-      <Box ref={experienceRef}>
-        <ExpEditBtn />
-      </Box>
-      <Box ref={projectsRef}>
-        <AddProjectsBtn />
-      </Box>
-      <Box ref={personalDetailsRef}>
-        <PersonalDeatailsBtn />
-      </Box>
-          
-      {/**Submit */}
+          <Box ref={educationRef}>
+            <EducationEditBtn  />
+          </Box>
+          <Box ref={skillsRef}>
+            <SkillsEditBtn
+              itSkills={itSkills}
+              selectedSkills={selectedSkills}
+              onSkillsChange={handleSkillsChange}
+            />
+          </Box>
+          <Box ref={experienceRef}>
+            <ExpEditBtn />
+          </Box>
+          <Box ref={projectsRef}>
+            <AddProjectsBtn />
+          </Box>
+          <Box ref={personalDetailsRef}>
+            <PersonalDeatailsBtn />
+          </Box>
+
+          {/**Submit */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "flex-end" }}>
             <ButtonGroup aria-label="Loading button group">
               <Button variant="outlined" sx={{ m: 2 }}>

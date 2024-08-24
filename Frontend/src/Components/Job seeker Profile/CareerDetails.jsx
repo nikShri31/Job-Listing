@@ -26,6 +26,26 @@ const styleDetails = {
   scrollbarWidth: "none",
 };
 const CareerDetails = () => {
+
+  const [formData, setFormData] = useState({});
+
+  const changeEducationData = (data) => {
+    setFormData( (oldData) => ({...oldData, educationData : data}))
+  }
+  const changeSkillsData = (data) => {
+    setFormData( (oldData) => ({...oldData, skillData : data}))
+  }
+  const changExperienceData = (data) => {
+    setFormData( (oldData) => ({...oldData, experienceData : data}))
+  }
+  const changeProjectsData = (data) => {
+    setFormData( (oldData) => ({...oldData, projectData : data}))
+  }
+  const changePeronalDetials = (data) => {
+    setFormData( (oldData) => ({...oldData, personalDetails : data}))
+  }
+
+
   const educationRef = useRef(null);
   const skillsRef = useRef(null);
   const experienceRef = useRef(null);
@@ -41,10 +61,7 @@ const CareerDetails = () => {
   };
 
   {/**Education */}
-  const [education, setEducation] = React.useState("");
-const [course, setCourse] = React.useState("");
- const [special, setSpecial] = React.useState("");
-  const [grade, setGrade] = React.useState("");
+
 
 
   const handleScroll = (ref) => {
@@ -177,21 +194,18 @@ const [course, setCourse] = React.useState("");
 
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
-            <EducationEditBtn  />
+          <EducationEditBtn formData={formData} changeData={changeEducationData}/>
           </Box>
           <Box ref={skillsRef}>
-            <SkillsEditBtn
-              itSkills={itSkills}
-              selectedSkills={selectedSkills}
-              onSkillsChange={handleSkillsChange}
-            />
+            <SkillsEditBtn formData={formData} changeData={changeSkillsData} />
           </Box>
           <Box ref={experienceRef}>
-            <ExpEditBtn />
+            <ExpEditBtn formData={formData} changeData={changExperienceData}/>
           </Box>
           <Box ref={projectsRef}>
-            <AddProjectsBtn />
-          </Box>
+            <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
+
+            </Box>
           <Box ref={personalDetailsRef}>
             <PersonalDeatailsBtn />
           </Box>

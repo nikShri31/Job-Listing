@@ -18,9 +18,8 @@ const Home = () => {
     fetch("jobs.json")
       .then((res) => res.json())
       .then((data) => {
-        // Use data here or set it to state
-        // console.log(data); // This will work fine here
-        setJobs(data); // Set the data to state if you want to use it elsewhere in your component
+
+        setJobs(data);
         setIsLoading(false);
       });
   }, []);
@@ -63,7 +62,7 @@ const Home = () => {
     }
   };
 
-  // Function to handle previous page
+ 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -79,7 +78,7 @@ const Home = () => {
       filteredJobs = filteredItems;
     }
 
-    // Applying selected filter / category filtering
+   
     if (selected) {
       console.log(selected);
 
@@ -130,14 +129,14 @@ const Home = () => {
 
       {/* main content */}
       <Box > {/*className="bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12" */}
-      <Grid  container spacing={3} justifyContent={'center'}>
+      <Grid  container spacing={3} justifyContent={'flex-start'}>
         {/* left side */}
-        <Grid item xs={12} minWidth={300}  md={3}   sx={{ backgroundColor:'#FFF',}}> {/**className="bg-white p-4 rounded" */}
+        <Grid item xs={12} minWidth={300}  md={2}   sx={{ backgroundColor:'#FFF',ml:5}}> {/**className="bg-white p-4 rounded" */}
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </Grid>
 
         {/* job cards */}
-        <Grid  item xs={12}  md={7} sx={{bgColor:'white'}}> {/*className="col-span-2 bg-white p-4 rounded" */}
+        <Grid  item xs={12}  md={5} sx={{bgColor:'white'}}> {/*className="col-span-2 bg-white p-4 rounded" */}
           {isLoading ? ( // Loading indicator
             <p className="font-medium">Loading...</p>
           ) : result.length > 0 ? (

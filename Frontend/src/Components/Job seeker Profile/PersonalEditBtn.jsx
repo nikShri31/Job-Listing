@@ -68,10 +68,10 @@ export default function PersonalDeatailsBtn() {
               Gender
             </Typography>
             <Stack direction="row" spacing={1} mt={1}>
-              <Chip value={male} variant={variant} label="Male" onClick={handleChipClick} />
+              <Chip value={"male"} variant={variant} label="Male" onClick={handleChipClick} />
               
-              <Chip value={female} variant={variant} label="Female" onClick={handleChipClick} />
-              <Chip value={other}  variant={variant} label="other" onClick={handleChipClick} />
+              <Chip value={"female"} variant={variant} label="Female" onClick={handleChipClick} />
+              <Chip value={"other"}  variant={variant} label="other" onClick={handleChipClick} />
             </Stack>
 
             {/**Marital Status */}

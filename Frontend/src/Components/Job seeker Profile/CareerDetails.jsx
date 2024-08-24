@@ -122,7 +122,7 @@ const [course, setCourse] = React.useState("");
         <Stack
           spacing={3}
           sx={{
-            width: { xs: "100%", lg: "20%" },
+            width: { xs: "100%",sm:'20%', lg: "20%" },
             position: "absolute",
             top: 0, // To align it with the top of the screen
             left: 0, // Align it with the left side

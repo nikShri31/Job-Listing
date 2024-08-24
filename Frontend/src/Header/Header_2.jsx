@@ -78,13 +78,13 @@ function Header_2() {
                 mr: 2,
                 display: { xs: "none", md: "flex", lg: "flex" },
                 fontFamily: "monospace",
-                fontWeight: 700,
+                fontWeight: 'bold',
                 letterSpacing: ".3rem",
                 color: "black",
                 textDecoration: "none",
               }}
             >
-              LOGO
+              JOBS
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -135,13 +135,13 @@ function Header_2() {
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontFamily: "monospace",
-                fontWeight: 700,
+                fontWeight:'bold',
                 letterSpacing: ".3rem",
 
                 textDecoration: "none",
               }}
             >
-              LOGO
+              JOBS
             </Typography>
             <Box
               sx={{

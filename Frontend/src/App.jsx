@@ -1,12 +1,5 @@
 import './App.css'
-import EmployerPage from './Pages/EmployerPage';
-//import LandingPage from './Pages/LandingPage';
-
-//import Dashboard from './Pages/Dashboard';
-//import LandingPage from './Pages/LandingPage';
-// import Login from './Authentication/Login'
-// import Signup from './Authentication/Signup'
-// import Auth from './Authentication/Auth'
+//import EmployerPage from './Pages/EmployerPage';
 
 
 

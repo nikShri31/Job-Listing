@@ -32,7 +32,7 @@ const JobCard = ({ data }) => {
     description,
   } = data;
   return (
-    <Box sx={{ gap: 2, mb: 2 }}>
+    <Box sx={{mb: 2 }}>
       <Card sx={{
         transition: "box-shadow 0.3s ease-in-out",
         "&:hover": {
@@ -57,7 +57,7 @@ const JobCard = ({ data }) => {
             <CardMedia
               component="img"
               alt={jobTitle}
-              height="140"
+              height="80"
               sx={{ maxWidth: 145 }}
               image={companyLogo}
             />
@@ -73,12 +73,12 @@ const JobCard = ({ data }) => {
           </CardActionArea>
 
           <Box
-            sx={{ display: "flex", flexWrap: "wrap", gap: 2, m: 2 }}
+            sx={{ display: "flex", flexWrap: "wrap", gap: 1, m: 1 }}
             className="text-primary/70 text-base"
           >
             <Typography
               component={"span"}
-              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              sx={{ display: "flex", alignItems: "center", gap: 1 }}
             >
               <FiMapPin /> {jobLocation}
             </Typography>

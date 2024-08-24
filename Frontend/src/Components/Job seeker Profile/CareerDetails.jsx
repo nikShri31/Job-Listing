@@ -169,7 +169,7 @@ const CareerDetails = () => {
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
 
-          </Box>
+       
           <EducationEditBtn formData={formData} changeData={changeEducationData}/>
           </Box>
           <Box ref={skillsRef}>

@@ -17,7 +17,7 @@ const style = {
   p: 2,
   overflowY: "auto",
 };
-const LoginBtn = () => {
+const LoginBtn = ({role}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -33,7 +33,7 @@ const LoginBtn = () => {
           color: pink[800],
         }}
       >
-        Login
+        {role}
       </Button>
       <Modal
         open={open}
@@ -49,7 +49,7 @@ const LoginBtn = () => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Auth />
+            <Auth role={role}/>
           </Box>
         </Fade>
       </Modal>

@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import Login from "./Login";
 import Signup from "./Signup";
+import SignupOrg from "./SignupOrg";
 
 function Copyright(props) {
   return (
@@ -45,7 +46,7 @@ const defaultTheme = createTheme({
   },
 });
 
-const Auth = () => {
+const Auth = ({role}) => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
@@ -82,7 +83,7 @@ const Auth = () => {
               <LockOutlinedIcon />
             </Avatar>
 
-            {isLogin ? <Login /> : <Signup />}
+            {isLogin ? <Login role/> : role === "Individual" ? <Signup/> : <SignupOrg/>}
           </Box>
 
           <Grid container>

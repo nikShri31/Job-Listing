@@ -17,14 +17,24 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const route = "http://localhost:5000/";
 
-function Login() {
+function Login({role}) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const handleSubmitOrg = async(event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const adminEmail = data.get("email");
+    const password = data.get("password");
+    const response = await axios.post(`${route}api/organisation/login`, { adminEmail, password });
+    localStorage.setItem("token", response.data.token);
+    navigate('/home')
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,7 +44,7 @@ function Login() {
     const response = await axios.post(`${route}api/login`, { email, password });
     localStorage.setItem("token", response.data.token);
     console.log(localStorage.getItem("token"));
-    // navigate('/')
+    navigate('/home') 
   };
 
   return (
@@ -45,7 +55,7 @@ function Login() {
       <Box
         component="form"
         noValidate
-        onSubmit={handleSubmit}
+        onSubmit={role === "Individual" ? () => handleSubmit : () => handleSubmitOrg}
         sx={{ mx: 3, my: 8 }}
       >
         <Grid container spacing={2}>
@@ -96,7 +106,6 @@ function Login() {
         {error && (
           <Alert severity="error">ERROR : This is a filled error.</Alert>
         )}
-
         <Button
           type="submit"
           fullWidth

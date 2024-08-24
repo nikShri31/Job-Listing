@@ -143,18 +143,13 @@ function Header() {
                 alignItems: "center",
                 transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
-                  transform: 'scale(1.1) translateZ(30px)',
-                
-                    
-                       
+                  transform: 'scale(1.1) translateZ(30px)',        
                 },
               }}
             >
-              <LoginBtn />
-
-             
+              <LoginBtn role="Individual" sx={{mx:2}}/>
             </Box>
-            <Button> Post a Job ?</Button>
+            <LoginBtn role="Organisation"/>
 
             <Box sx={{ display: { sm: "", md: "none" } }}>
               <Button

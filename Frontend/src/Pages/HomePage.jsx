@@ -7,11 +7,11 @@ import { Box, Container } from '@mui/material';
 const HomePage = () => {
   return (
     < >
-    <Header_2/>
+   
   
     <Home/>
     
-    <Footer/>
+
     </>
   )
 }

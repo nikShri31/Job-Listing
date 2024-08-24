@@ -9,7 +9,7 @@ const EmployerPage = () => {
   return (
     <>
     <CssBaseline/>
-    <Header/>
+  
     <EmployerHeading/>
     <Footer/>
     </>

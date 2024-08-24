@@ -34,10 +34,11 @@ const JobCard = ({ data }) => {
   return (
     <Box sx={{ gap: 2, mb: 2 }}>
       <Card sx={{
+        transition: "box-shadow 0.3s ease-in-out",
         "&:hover": {
-                      boxShadow: ` 10px 10px 10px #00000041 `,
+                      boxShadow: ` 10px 10px 10px  #00000041 `,
 
-                      fontWeight: "bold",
+                     
                     },
       }}>
         {/* <Link to={`/jobs/${_id}`} className="flex gap-4 flex-col sm:flex-row items-start">*/}

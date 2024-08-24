@@ -10,27 +10,31 @@ import EmployerPage from './Pages/EmployerPage';
 
 
 
- import LandingPage from './Pages/LandingPage'
- import JD from './Pages/Jd_Page'
- import ProfilePage from './Pages/ProfilePage'
-// import { Outlet } from 'react-router-dom'
-// import Navbar from './Home components/Navbar'
-// import Home from './HomePages/Home'
-import HomePage from './Pages/HomePage';
-// import ResponsiveAppBar from './Header/Header_2'
-//import Home from './Home/Home'
+ 
+ import { Outlet } from 'react-router-dom'
+
+
+import { useState } from 'react';
+import Header_2 from './Header/Header_2';
+import Footer from './Footer/Foooter';
+import { Container } from '@mui/material';
+
 
 
 
 function App() {
+
+  const [loading, setLoading] = useState(false);
+
+
   return(
     <>
-    
-   
-  <HomePage/>
-  
-  
-  
+    <Header_2/>
+    <main>
+    <Outlet />
+  </main>
+
+  <Footer />
     </>
   )
 }

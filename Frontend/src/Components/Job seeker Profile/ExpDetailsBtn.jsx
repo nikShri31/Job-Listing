@@ -26,7 +26,6 @@ import itSkills from "../../assets/itSkills";
 const style = {
   color: "#032340",
   width: "80%",
- 
   p: 2,
  
 };
@@ -80,8 +79,8 @@ export default function ExpEditBtn() {
                 label="Employment*"
                 onChange={handleChange}
               >
-                <MenuItem value={10}>Current</MenuItem>
-                <MenuItem value={20}>Previous</MenuItem>
+                <MenuItem value={10}>Working</MenuItem>
+                <MenuItem value={20}>Unemployed</MenuItem>
               </Select>
               <FormHelperText>Required</FormHelperText>
             </FormControl>
@@ -197,9 +196,6 @@ export default function ExpEditBtn() {
                 <MenuItem value={30}>60 Days or More</MenuItem>
               </Select>
             </FormControl>
-
-            
-
           </Box>
        
     </>

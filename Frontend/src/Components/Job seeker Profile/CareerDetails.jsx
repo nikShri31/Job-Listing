@@ -17,7 +17,6 @@ const details = [
 const styleDetails = {
   width: { xs: "100%", md: "70%" },
   bgcolor: "background.paper",
-  ml: 5,
   my: 2,
   px: 3,
   ml: { lg: "25%" }, // Offset to avoid overlap with the fixed stack

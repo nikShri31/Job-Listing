@@ -10,7 +10,6 @@ const ProfilePage = () => {
     <Box sx={{color:'#084C91'}}>
     
       <BasicDetails/>
-     
       <CareerDetails />
      
     </Box>

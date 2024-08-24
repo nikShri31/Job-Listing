@@ -9,7 +9,6 @@ const JD = () => {
   const [mode, setMode] = React.useState("light");
   return (
     <>
-   
       <Box sx={{ bgcolor: "white" }}>
         <JobDesc />
       </Box>

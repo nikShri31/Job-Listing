@@ -27,23 +27,16 @@ const style = {
   p: 2,
 };
 
-
-export default function EducationEditBtn({formData, changeData}) {
+export default function EducationEditBtn({ formData, changeData }) {
   const [localFormData, setLocalFormData] = useState(formData);
 
-  const handleChange = (e) =>{
-    const {name, value} = e.target;
-    const formDetails = {...localFormData, [name] : value};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const formDetails = { ...localFormData, [name]: value };
 
     setLocalFormData(formDetails);
     changeData(formDetails);
-  }
-
-
- 
-
- 
-  
+  };
 
   return (
     <>
@@ -68,22 +61,16 @@ export default function EducationEditBtn({formData, changeData}) {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-
             value={localFormData?.education || "Diploma"}
             name="education"
-
-            value={education}
-
             label="Education*"
-            onChange={(e) => setEducation(e.target.value)} 
+            onChange={handleChange}
           >
-
-            <MenuItem value={'PhD'}>Doctarate/Phd</MenuItem>
-            <MenuItem value={'Post Graduation'}>Masters/PostGraduation</MenuItem>
-            <MenuItem value={'Diploma'}>Graduation/Diploma</MenuItem>
-
-
-
+            <MenuItem value={"PhD"}>Doctarate/Phd</MenuItem>
+            <MenuItem value={"Post Graduation"}>
+              Masters/PostGraduation
+            </MenuItem>
+            <MenuItem value={"Diploma"}>Graduation/Diploma</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -99,9 +86,13 @@ export default function EducationEditBtn({formData, changeData}) {
             minWidth: "80%",
           }}
         >
-          <TextField fullWidth label="College" id="fullWidth" value={localFormData?.college || ""}
-          name="college"
-          onChange={handleChange}
+          <TextField
+            fullWidth
+            label="College"
+            id="fullWidth"
+            value={localFormData?.college || ""}
+            name="college"
+            onChange={handleChange}
           />
           <FormHelperText>Required*</FormHelperText>
         </Box>
@@ -133,7 +124,7 @@ export default function EducationEditBtn({formData, changeData}) {
           <FormHelperText>Required</FormHelperText>
         </FormControl> */}
 
-{/* iske bhi options theek kr dio */}
+        {/* iske bhi options theek kr dio */}
 
         {/**Specialization */}
         {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
@@ -161,7 +152,7 @@ export default function EducationEditBtn({formData, changeData}) {
           <FormHelperText>Required</FormHelperText>
         </FormControl> */}
 
-{/* isme name and formData ka state change dekh lio */}
+        {/* isme name and formData ka state change dekh lio */}
 
         {/*Start */}
         {/* <FormControl required sx={{ m: 2, minWidth: 180 }}>
@@ -194,7 +185,6 @@ export default function EducationEditBtn({formData, changeData}) {
         </Typography>
 
         <Box
-
           sx={{
             mt: 2,
             display: "flex",
@@ -211,17 +201,21 @@ export default function EducationEditBtn({formData, changeData}) {
               value={localFormData?.marks || "%"}
               label="Marks"
               name="marks"
-              onChange={handleChange} 
+              onChange={handleChange}
             >
               <MenuItem value={"%"}>Percentage %</MenuItem>
               <MenuItem value={"GPA"}>GPA</MenuItem>
             </Select>
             <FormHelperText>Required*</FormHelperText>
-
-       
           </FormControl>
           <Box>
-            <TextField fullWidth id="fullWidth" label="Grade" name="grade" onChange={handleChange}/>
+            <TextField
+              fullWidth
+              id="fullWidth"
+              label="Grade"
+              name="grade"
+              onChange={handleChange}
+            />
           </Box>
         </Box>
       </Box>

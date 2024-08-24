@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState} from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -33,22 +33,21 @@ const style = {
   p: 2,
 };
 
-export default function AddProjectsBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function AddProjectsBtn({formData, changeData}) {
+  
+  const [localFormData, setLocalFormData] = useState(formData);
 
-  const [age, setAge] = React.useState("");
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    const formDetails = {...localFormData, [name] : value};
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+    setLocalFormData(formDetails);
+    changeData(formDetails);
+  }
 
   return (
     <>
+    {console.log(localFormData)}
       <Box sx={style}>
       <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
       Add Projects
@@ -66,7 +65,7 @@ export default function AddProjectsBtn() {
           noValidate
           autoComplete="off"
         >
-          <TextField required id="outlined-required" label="Title" />
+          <TextField required id="outlined-required" label="Title" name="title" value={localFormData?.title || "" }onChange={handleChange}/>
         </Box>
 
         {/**Project Status */}
@@ -76,7 +75,9 @@ export default function AddProjectsBtn() {
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
+            name="progress"
+            value={localFormData?.progress || ""}
+            onChange={handleChange}
           >
             <FormControlLabel
               value="In Process"
@@ -84,15 +85,15 @@ export default function AddProjectsBtn() {
               label="In Process"
             />
             <FormControlLabel
-              value="finished"
+              value="Finished"
               control={<Radio />}
-              label="finished"
+              label="Finished"
             />
           </RadioGroup>
         </FormControl>
 
         {/**Project Worked From */}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Duration
         </Typography>
 
@@ -113,10 +114,10 @@ export default function AddProjectsBtn() {
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
-        </FormControl>
+        </FormControl> */}
 
         {/**Worked Till */}
-        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+        {/* <FormControl required sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-required-label">Year</InputLabel>
           <Select
             labelId="demo-simple-select-required-label"
@@ -133,7 +134,7 @@ export default function AddProjectsBtn() {
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
-        </FormControl>
+        </FormControl> */}
 
         {/**Description*/}
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
@@ -150,47 +151,18 @@ export default function AddProjectsBtn() {
           <TextField
             id="outlined-multiline-flexible"
             label="Multiline"
+            name="description"
+            value={localFormData?.description || ""}
+            onChange={handleChange}
             multiline
           />
-        </Box>
-        {/**Skills */}
-
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-          Skills
-        </Typography>
-
-        <Autocomplete
-          multiple
-          id="checkboxes-tags-demo"
-          options={itSkills}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.title}
-          renderOption={(props, option, { selected }) => {
-            const { key, ...optionProps } = props;
-            return (
-              <li key={key} {...optionProps}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                />
-                {option.title}
-              </li>
-            );
-          }}
-          style={{ width: "80%" }}
-          renderInput={(params) => (
-            <TextField {...params} label="skills" placeholder="Skills" />
-          )}
-        />
-        {/**Team Size*/}
+        </Box>  
+        
         {/**Role */}
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Role
         </Typography>
-
-        <TextField required id="outlined-required" />
+        <TextField required id="outlined-required" sx={{mx:1}} label="Role" name="role" onChange={handleChange}/>
       </Box>
     </>
   );

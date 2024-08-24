@@ -32,18 +32,15 @@ function SignupOrg() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.get("password"));
     const response = await axios.post(
-      "http://localhost:5000/api/signup/organisation",
+      "http://localhost:5000/api/organisation/signup",
       {
         name: data.get("name"),
         adminEmail: data.get("adminEmail"),
         password: data.get("password"),
         role: "Organisation",
-        contactInfo: {
-          email: data.get("contactEmail"),
-          phoneNo: data.get("phone"),
-        },
+        email: data.get("contactEmail"),
+        phone: data.get("phone"),
         address: data.get("address"),
         website: data.get("website"),
         industry: data.get("industry"),
@@ -51,6 +48,7 @@ function SignupOrg() {
       }
     );
     localStorage.setItem("token", response.data.token);
+    console.log(localStorage.getItem("token"))
     navigate('/')
   };
 

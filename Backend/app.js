@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production') require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -17,9 +17,18 @@ const port = process.env.PORT;
 mongoose.connect(process.env.mongoUrl)
     .then(() => console.log('Connected!'))
 
-app.use(cors())
+app.use(cors());
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
+
+//http://localhost:5000
+// authRoutes : http://localhost:5000/api/signup
+//method : post
 
 app.use('/api', authRoutes)
 app.use('/api/users', userRoutes)
@@ -29,6 +38,7 @@ app.use('/api/organisation', organisationRoutes)
 
 app.get('/', (req, res) => {
     console.log("Server running")
+    res.status(200).json({msg : "FUCK YOU MOTHERFUCKER"})
 })
 
 app.all('*', (req, res, next) => {
@@ -47,5 +57,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(port, () => {
-    console.log( `Server running on port ${port}`)
+    console.log(`Server running on port ${port}`)
 })

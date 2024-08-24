@@ -39,6 +39,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Application'
     }],
+    location : {
+        type : String,
+        required : true
+    },
     notifications: [{
         text: {
             type: String,

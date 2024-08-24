@@ -100,13 +100,13 @@ function Header_2() {
               </IconButton>
               <MenuItem
                 id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
+                anchorel={anchorElNav}
+                anchororigin={{
                   vertical: "bottom",
                   horizontal: "left",
                 }}
-                keepMounted
-                transformOrigin={{
+                keepmounted="true"
+                transformorigin={{
                   vertical: "top",
                   horizontal: "left",
                 }}
@@ -198,13 +198,13 @@ function Header_2() {
                 <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
+                  anchorel={anchorElUser}
+                  anchororigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  keepMounted
-                  transformOrigin={{
+                  keepmounted="true"
+                  transformorigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}

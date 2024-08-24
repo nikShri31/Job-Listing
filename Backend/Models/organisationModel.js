@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs")
 
-const organizationSchema = new Schema({
+const organisationSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -41,10 +41,7 @@ const organizationSchema = new Schema({
         type: String,
         required : true
     },
-    description: {
-        type: String,
-        required : true
-    },
+    description: String,
     jobs: [{
         type: Schema.Types.ObjectId,
         ref: 'JobListing',
@@ -70,5 +67,5 @@ organisationSchema.methods.comparePassword = async function (candidatePassword) 
     return await bcrypt.compare(candidatePassword, this.password);
 }
 
-const Organization = mongoose.model('Organization', organizationSchema);
-module.exports = Organization;
+const Organisation = mongoose.model('Organisation', organisationSchema);
+module.exports = Organisation;

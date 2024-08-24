@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -27,155 +27,146 @@ const style = {
   color: "#032340",
   width: "80%",
   p: 2,
- 
 };
 
-export default function ExpEditBtn() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function ExpEditBtn({ formData, changeData }) {
+  const [localFormData, setLocalFormData] = useState({
+    ...formData,
+    employment: "",
+    employmentType: "",
+    experience: 0,
+    employmentRecord: {
+      organisation: "",
+      role: "",
+    },
+  });
 
-  const [age, setAge] = React.useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const [selectedSkills, setSelectedSkills] = React.useState([]);
-
-  const handleSkillChange = (event, newValue) => {
-    if (Array.isArray(newValue)) {
-      setSelectedSkills(newValue); // Only set the array if it's valid
+    if (name === "organisation" || name === "role") {
+      setLocalFormData((prevData) => ({
+        ...prevData,
+        employmentRecord: {
+          ...prevData.employmentRecord,
+          [name]: value,
+        },
+      }));
+    } else {
+      setLocalFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
     }
-  };
-
-  const handleDelete = (skillToDelete) => {
-    setSelectedSkills((prevSkills) =>
-      prevSkills.filter((skill) => skill.title !== skillToDelete.title)
-    );
+    changeData(localFormData);
   };
 
   return (
     <>
-     
-          <Box sx={style}>
-          <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',my:1}}>
+      <Box sx={style}>
+        <Typography
+          id="transition-modal-title"
+          variant="h5"
+          sx={{ fontWeight: "bold", my: 1 }}
+        >
           Add Experience
-          </Typography>
+        </Typography>
 
+        {/**Employment */}
+        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+          Employment
+        </Typography>
+        <FormControl required sx={{ m: 1, minWidth: "70%" }}>
+          <InputLabel id="demo-simple-select-required-label">
+            Employment
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-required-label"
+            id="demo-simple-select-required"
+            value={localFormData?.employment || ""}
+            label="Employment"
+            name="employment"
+            onChange={handleChange}
+          >
+            <MenuItem value={"Working"}>Working</MenuItem>
+            <MenuItem value={"Unemployed"}>Unemployed</MenuItem>
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
 
-            {/**Employment */}
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Employment
-            </Typography>
-            <FormControl required sx={{ m: 1, minWidth: "70%" }}>
-              <InputLabel id="demo-simple-select-required-label">
-                Employment
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-required-label"
-                id="demo-simple-select-required"
-                value={age}
-                label="Employment*"
-                onChange={handleChange}
-              >
-                <MenuItem value={10}>Working</MenuItem>
-                <MenuItem value={20}>Unemployed</MenuItem>
-              </Select>
-              <FormHelperText>Required</FormHelperText>
-            </FormControl>
+        {/**Employment Type */}
 
-            {/**Employment Type */}
+        <FormControl m={2}>
+          <FormLabel id="demo-row-radio-buttons-group-label">Type</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="employmentType"
+            value={localFormData?.employmentType || ""}
+            onChange={handleChange}
+          >
+            <FormControlLabel
+              value="FullTime"
+              control={<Radio />}
+              label="Full Time"
+            />
+            <FormControlLabel
+              value="Internship"
+              control={<Radio />}
+              label="Internship"
+            />
+          </RadioGroup>
+        </FormControl>
 
-            <FormControl m={2}>
-              <FormLabel id="demo-row-radio-buttons-group-label">
-                Type
-              </FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-              >
-                <FormControlLabel
-                  value="fullTime"
-                  control={<Radio />}
-                  label="Full Time"
-                />
-                <FormControlLabel
-                  value="Internship"
-                  control={<Radio />}
-                  label="Internship"
-                />
-              </RadioGroup>
-            </FormControl>
+        {/** Experience */}
+        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+          Experience
+        </Typography>
 
-            {/** Experience */}
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Experience
-            </Typography>
-
-            <FormControl sx={{ m: 1, minWidth: 300 }} size="small">
-              <InputLabel id="demo-select-small-label">Exp</InputLabel>
-              <Select
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                value={age}
-                label="Age"
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>Fresher</em>
-                </MenuItem>
-                <MenuItem value={1}>1 year</MenuItem>
-                <MenuItem value={2}>2 years</MenuItem>
-                <MenuItem value={3}>3 years</MenuItem>
-                <MenuItem value={4}>3+ years</MenuItem>
-              </Select>
-            </FormControl>
-
-            {/** Company Name */}
-
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-            Company Name
-          </Typography>
-
-            <Box 
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
+        <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <TextField
+            id="experience-input"
+            label="Experience in Years"
+            type="number"
+            value={localFormData?.experience || 0}
+            name="experience"
+            onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
             }}
-            noValidate
-            autoComplete="off"
-            >
-            <TextField required id="outlined-required" label="Company" />
-            <TextField required id="outlined-required" label="Job Profile" />
-            </Box>
-           
-           
+          />
+        </FormControl>
 
-            {/*Joining Date */}
+        {/** Company Name */}
 
-            {/* Skills Used */}
+        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+          Previous Employment Record
+        </Typography>
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, width: "25ch" },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined"
+            label="Organisation"
+            value={localFormData.employmentRecord?.organisation || ""}
+            name="organisation"
+            onChange={handleChange}
+          />
+          <TextField
+            id="outlined"
+            label="Job Profile"
+            value={localFormData.employmentRecord?.role || ""}
+            name="role"
+            onChange={handleChange}
+          />
+        </Box>
 
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Skills
-            </Typography>
-
-            <Stack spacing={3} sx={{ width:'50%' }}>
-              <Autocomplete
-                multiple
-                limitTags={3}
-                id="multiple-limit-tags"
-                options={itSkills}
-                getOptionLabel={(option) => option.title}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Skills" />
-                )}
-                sx={{ width: "130%" }}
-              />
-            </Stack>
-
-            {/*notice period */}
+        {/* notice period
 
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Notice Period
@@ -195,9 +186,8 @@ export default function ExpEditBtn() {
                 <MenuItem value={20}>1 Month</MenuItem>
                 <MenuItem value={30}>60 Days or More</MenuItem>
               </Select>
-            </FormControl>
-          </Box>
-       
+            </FormControl> */}
+      </Box>
     </>
   );
 }

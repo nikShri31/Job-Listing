@@ -20,12 +20,30 @@ const styleDetails = {
   my: 2,
   px: 3,
   ml: { lg: "25%" }, // Offset to avoid overlap with the fixed stack
-  height: "100vh", 
+  height: "100vh",
   overflowY: "auto",
   scrollbarWidth: "none",
-  
 };
 const CareerDetails = () => {
+
+  const [formData, setFormData] = useState({});
+
+  const changeEducationData = (data) => {
+    setFormData( (oldData) => ({...oldData, educationData : data}))
+  }
+  const changeSkillsData = (data) => {
+    setFormData( (oldData) => ({...oldData, skillData : data}))
+  }
+  const changExperienceData = (data) => {
+    setFormData( (oldData) => ({...oldData, experienceData : data}))
+  }
+  const changeProjectsData = (data) => {
+    setFormData( (oldData) => ({...oldData, projectData : data}))
+  }
+  const changePeronalDetials = (data) => {
+    setFormData( (oldData) => ({...oldData, personalDetails : data}))
+  }
+
   const educationRef = useRef(null);
   const skillsRef = useRef(null);
   const experienceRef = useRef(null);
@@ -35,9 +53,8 @@ const CareerDetails = () => {
   // const [selectedDetail, setSelectedDetail] = useState(details[0]);
 
   const handleScroll = (ref) => {
-    
     window.scrollTo({ top: window.scrollY - 1 });
-    
+
     setTimeout(() => {
       ref.current.scrollIntoView({ behavior: "smooth" });
     }, 50);
@@ -54,42 +71,14 @@ const CareerDetails = () => {
         gap: { xs: 4, sm: 4 },
         height: "100%",
         width: { xs: "100%", md: "90%" },
-        p: { xs: 8,  },
+        p: { xs: 8 },
         textAlign: { sm: "center", md: "left" },
         bgColor: "#CEE5FD",
         backgroundImage: "linear-gradient(180deg, #E3F0FE,#CEE5FD)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}
-    >
-      {/* Resume */}
-      <Box
-        sx={{
-          p: 4,
-
-          color: "#032340",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "left",
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Add Resume
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            mt: 4,
-            p: 3,
-            flexDirection: "column",
-            alignItems: "center",
-            border: "3px dotted #032340",
-          }}
-        >
-          <Button variant="contained">Upload Resume</Button>
-          <Typography>Supported Formats: doc, docx, pdf upto 2 MB</Typography>
-        </Box>
-      </Box>
+    > 
 
       {/**Adding Details */}
       <Typography
@@ -114,14 +103,13 @@ const CareerDetails = () => {
             position: "absolute",
             top: 0, // To align it with the top of the screen
             left: 0, // Align it with the left side
-            height: "100vh", 
+            height: "100vh",
             m: 2,
             overflowY: "auto",
           }}
         >
-          {
-            details.map((detail, index) =>{
-              let ref;
+          {details.map((detail, index) => {
+            let ref;
             switch (detail) {
               case "Education":
                 ref = educationRef;
@@ -141,47 +129,47 @@ const CareerDetails = () => {
               default:
                 ref = null;
             }
-            
-             return (
-            <Box
-              key={index}
-              sx={{
-                p: 3,
-                backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
-                color: "whitesmoke",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                cursor:'pointer'
-              }}
-              onClick={() => handleScroll(ref)}
-            >
-              {detail}
-            </Box>
-             )
+
+            return (
+              <Box
+                key={index}
+                sx={{
+                  p: 3,
+                  backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                  color: "whitesmoke",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "left",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleScroll(ref)}
+              >
+                {detail}
+              </Box>
+            );
           })}
         </Stack>
 
         <Stack spacing={2} sx={styleDetails}>
-        <Box ref={educationRef}>
-        <EducationEditBtn />
-      </Box>
-      <Box ref={skillsRef}>
-        <SkillsEditBtn />
-      </Box>
-      <Box ref={experienceRef}>
-        <ExpEditBtn />
-      </Box>
-      <Box ref={projectsRef}>
-        <AddProjectsBtn />
-      </Box>
-      <Box ref={personalDetailsRef}>
-        <PersonalDeatailsBtn />
-      </Box>
-          
-      {/**Submit */}
+          <Box ref={educationRef}>
+            <EducationEditBtn formData={formData} changeData={changeEducationData}/>
+          </Box>
+          <Box ref={skillsRef}>
+            <SkillsEditBtn formData={formData} changeData={changeSkillsData} />
+          </Box>
+          <Box ref={experienceRef}>
+            <ExpEditBtn formData={formData} changeData={changExperienceData}/>
+          </Box>
+          <Box ref={projectsRef}>
+            <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
+          </Box>
+          <Box ref={personalDetailsRef}>
+            <PersonalDeatailsBtn />
+          </Box>
+
+          {/**Submit */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "flex-end" }}>
             <ButtonGroup aria-label="Loading button group">
               <Button variant="outlined" sx={{ m: 2 }}>

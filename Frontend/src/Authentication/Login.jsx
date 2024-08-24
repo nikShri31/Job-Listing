@@ -15,36 +15,46 @@ import {
 
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const route = "http://localhost:5000/";
-
-function Login({role}) {
+function Login({ role }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmitOrg = async(event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const adminEmail = data.get("email");
-    const password = data.get("password");
-    const response = await axios.post(`${route}api/organisation/login`, { adminEmail, password });
-    localStorage.setItem("token", response.data.token);
-    navigate('/home')
-  }
+  const handleSubmitOrg = async (event) => {
+    try {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const adminEmail = data.get("email");
+      const password = data.get("password");
+      const response = await axios.post(
+        "http://localhost:5000/api/organisation/login",
+        {
+          adminEmail,
+          password,
+        }
+      );
+      localStorage.setItem("token", response.data.token);
+      navigate("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    const response = await axios.post(`${route}api/login`, { email, password });
+    const response = await axios.post("http://localhost:5000/api/login", {
+      email,
+      password,
+    });
     localStorage.setItem("token", response.data.token);
-    console.log(localStorage.getItem("token"));
-    navigate('/home') 
+    navigate("/profile");
   };
 
   return (
@@ -52,12 +62,7 @@ function Login({role}) {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <Box
-        component="form"
-        noValidate
-        onSubmit={role === "Individual" ? () => handleSubmit : () => handleSubmitOrg}
-        sx={{ mx: 3, my: 8 }}
-      >
+      <Box component="form" noValidate sx={{ mx: 3, my: 8 }} onSubmit={role === 'Organisation' ? handleSubmitOrg : handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField

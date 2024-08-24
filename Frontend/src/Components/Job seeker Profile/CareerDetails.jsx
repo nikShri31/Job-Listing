@@ -27,6 +27,8 @@ const styleDetails = {
 };
 const CareerDetails = () => {
 
+
+
   const [formData, setFormData] = useState({});
 
   const changeEducationData = (data) => {
@@ -90,35 +92,7 @@ const CareerDetails = () => {
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}
-    >
-      {/* Resume */}
-      <Box
-        sx={{
-          p: 4,
-
-          color: "#032340",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "left",
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Add Resume
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            mt: 4,
-            p: 3,
-            flexDirection: "column",
-            alignItems: "center",
-            border: "3px dotted #032340",
-          }}
-        >
-          <Button variant="contained">Upload Resume</Button>
-          <Typography>Supported Formats: doc, docx, pdf upto 2 MB</Typography>
-        </Box>
-      </Box>
+    > 
 
       {/**Adding Details */}
       <Typography
@@ -194,6 +168,8 @@ const CareerDetails = () => {
 
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
+
+          </Box>
           <EducationEditBtn formData={formData} changeData={changeEducationData}/>
           </Box>
           <Box ref={skillsRef}>

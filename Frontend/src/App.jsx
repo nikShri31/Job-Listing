@@ -1,7 +1,3 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-//import './Home/App.css'
 import './App.css'
 import EmployerPage from './Pages/EmployerPage';
 //import LandingPage from './Pages/LandingPage';
@@ -27,8 +23,6 @@ import HomePage from './Pages/HomePage';
 
 
 function App() {
-
-
   return(
     <>
     

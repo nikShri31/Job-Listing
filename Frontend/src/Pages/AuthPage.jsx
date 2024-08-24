@@ -146,7 +146,7 @@ const AuthPage = () => {
                   Search a Job
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Heaven frucvitful doesn't cover lesser dvsays appear creeping
+                  Heaven frucvitful does not cover lesser dvsays appear creeping
                   seasons so behold.
                 </Typography>
               </Paper>

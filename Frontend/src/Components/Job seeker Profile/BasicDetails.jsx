@@ -1,5 +1,5 @@
 import { Avatar, Box, Container, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, {useNavigate} from "react";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import EditBtn from "./BasicEditBtn";
 

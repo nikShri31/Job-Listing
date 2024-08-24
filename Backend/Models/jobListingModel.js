@@ -36,15 +36,15 @@ const jobListingSchema = new Schema({
         type : Date,
         default : Date.now
     },
-    employer : {
+    organisation : {
         type : Schema.Types.ObjectId,
-        required : true,
-        ref : 'User'
-    },
-    company : {
-        type : String,
+        ref : 'Organisation',
         required : true
-    }
+    },
+    applications : [{
+        type : Schema.Types.ObjectId,
+        ref : 'Application'
+    }]
 })
 
 const JobListing = mongoose.model('JobListing', jobListingSchema)

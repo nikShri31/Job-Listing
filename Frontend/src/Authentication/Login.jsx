@@ -11,28 +11,30 @@ import {
   IconButton,
   Link,
   Alert,
-  AlertTitle,
 } from "@mui/material";
 
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useState } from "react";
+import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+
+const route = "http://localhost:5000/";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  // const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email");
+    const password = data.get("password");
+    const response = await axios.post(`${route}api/login`, { email, password });
+    localStorage.setItem("token", response.data.token);
+    console.log(localStorage.getItem("token"));
+    // navigate('/')
   };
 
   return (
@@ -44,7 +46,7 @@ function Login() {
         component="form"
         noValidate
         onSubmit={handleSubmit}
-        sx={{ mx: 3, my: 8}}
+        sx={{ mx: 3, my: 8 }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -54,9 +56,8 @@ function Login() {
               fullWidth
               id="email"
               type="email"
-              label="Email Address"
+              label="Email"
               name="email"
-              autoComplete="email"
             />
           </Grid>
           <Grid item xs={12}>
@@ -67,12 +68,13 @@ function Login() {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
+                name="password"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(evt) => evt.preventDefault()}
                       edge="end"
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -92,16 +94,14 @@ function Login() {
         </Grid>
 
         {error && (
-          <Alert severity="error">
-            ERROR : This is a filled error.
-          </Alert>
+          <Alert severity="error">ERROR : This is a filled error.</Alert>
         )}
 
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 2,  color: "white" }}
+          sx={{ mt: 2, color: "white" }}
         >
           Sign In
         </Button>

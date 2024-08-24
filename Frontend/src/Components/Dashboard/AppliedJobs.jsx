@@ -7,6 +7,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  Stepper,
+  Step,
+  StepLabel,
 } from "@mui/material";
 
 import itJobs from "../../assets/jobList";
@@ -17,6 +20,9 @@ import { useState } from "react";
 import ThreeDotMenu from "./3DotMenu";
 
 const AppliedJobs = () => {
+  //Applications Applied, Their Status
+  const steps = ["Job applied", "Resume Viewed", "Awaiting Recruiter Action"];
+
   const [alignment, setAlignment] = useState("Today");
 
   const handleChange = (event, newAlignment) => {

@@ -6,7 +6,7 @@ import {useState} from 'react'
 const Dashboard = () => {
   return (
     <>
-    <Header_2/>
+   
     <AppliedJobs/>
     </>
   )

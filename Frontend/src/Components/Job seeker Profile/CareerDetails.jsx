@@ -21,27 +21,10 @@ const styleDetails = {
   my: 2,
   px: 3,
   ml: { lg: "25%" }, // Offset to avoid overlap with the fixed stack
-  height: "100vh", // Full height to allow scrolling
+  height: "100vh", 
   overflowY: "auto",
   scrollbarWidth: "none",
-  "&::-webkit-scrollbar": {
-    width: "0px",
-  },
-  "&:hover": {
-    "&::-webkit-scrollbar": {
-      width: "4px", // Show scrollbar on hover
-    },
-  },
-  "&::-webkit-scrollbar-track": {
-    backgroundColor: "blue",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    backgroundColor: "#888",
-    borderRadius: "5px",
-  },
-  "&::-webkit-scrollbar-thumb:hover": {
-    backgroundColor: "blue",
-  },
+  
 };
 const CareerDetails = () => {
   const educationRef = useRef(null);
@@ -55,7 +38,7 @@ const CareerDetails = () => {
   const handleScroll = (ref) => {
     
     window.scrollTo({ top: window.scrollY - 1 });
-    // Give a slight delay before calling scrollIntoView
+    
     setTimeout(() => {
       ref.current.scrollIntoView({ behavior: "smooth" });
     }, 50);
@@ -69,13 +52,13 @@ const CareerDetails = () => {
         flexDirection: "column",
         justifyContent: "flex-end",
         alignItems: "left",
-        gap: { xs: 4, sm: 6 },
+        gap: { xs: 4, sm: 4 },
         height: "100%",
-        width: { xs: "100%", md: "100%" },
-        p: { xs: 8, sm: 4 },
+        width: { xs: "100%", md: "90%" },
+        p: { xs: 8,  },
         textAlign: { sm: "center", md: "left" },
         bgColor: "#CEE5FD",
-        backgroundImage: "linear-gradient(90deg, #CEE5FD,#CEE5FD)",
+        backgroundImage: "linear-gradient(180deg, #E3F0FE,#CEE5FD)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}

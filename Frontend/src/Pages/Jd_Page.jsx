@@ -9,11 +9,11 @@ const JD = () => {
   const [mode, setMode] = React.useState("light");
   return (
     <>
-      <ResponsiveAppBar />
+   
       <Box sx={{ bgcolor: "white" }}>
         <JobDesc />
       </Box>
-      <Footer />
+    
     </>
   );
 };

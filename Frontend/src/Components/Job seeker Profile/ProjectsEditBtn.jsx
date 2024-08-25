@@ -47,7 +47,6 @@ export default function AddProjectsBtn({formData, changeData}) {
 
   return (
     <>
-    {console.log(localFormData)}
       <Box sx={style}>
       <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
       Add Projects

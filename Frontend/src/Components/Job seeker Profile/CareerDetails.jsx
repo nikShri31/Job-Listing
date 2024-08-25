@@ -39,7 +39,7 @@ const CareerDetails = () => {
   }
   const changeProjectsData = (data) => {
     setFormData( (oldData) => ({...oldData, projectData : data}))
-  }
+  } 
   const changePeronalDetials = (data) => {
     setFormData( (oldData) => ({...oldData, personalDetails : data}))
   }
@@ -166,8 +166,9 @@ const CareerDetails = () => {
             <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
           </Box>
           <Box ref={personalDetailsRef}>
-            <PersonalDeatailsBtn />
+            <PersonalDeatailsBtn formData={formData} changeData={changePeronalDetials}/>
           </Box>
+          {console.log(formData)}
 
           {/**Submit */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "flex-end" }}>
@@ -305,3 +306,6 @@ export default CareerDetails;
 //           <PersonalDeatailsBtn />
 //         </Stack>
 //      </Box>
+
+
+//localStorage.getItem()

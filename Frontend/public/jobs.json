@@ -11,7 +11,7 @@
     "postingDate": "2023-11-03",
     "experienceLevel": "Any experience",
     "employmentType": "Full-time",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "Linear Company is a leading provider of healthcare services, dedicated to improving the health and well-being of our community. We offer a comprehensive range of medical services delivered by a team of compassionate and skilled professionals. Our commitment to patient-centered care and innovation ensures that we provide the highest quality of service to those we serve."
   },
   {
     "id": 2,
@@ -25,21 +25,21 @@
     "postingDate": "2023-11-02",
     "experienceLevel": "Internship",
     "employmentType": "Temporary",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "At Notion, we are committed to making a positive impact on the environment by providing sustainable energy solutions. Our mission is to lead the transition to a greener future by offering renewable energy products and services that are both efficient and affordable. We believe in powering a cleaner tomorrow, today."
   },
   {
     "id": 3,
-    "companyName": "Spline studio",
-    "jobTitle": "Data Scientist",
-    "companyLogo": "/images/Spline.png",
+    "companyName": "Bern Black",
+    "jobTitle": "Web Developer",
+    "companyLogo": "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4d4d8b829a89976a419c_Bern-black.svg",
     "minPrice": "40",
     "maxPrice": "50",
     "salaryType": "Yearly",
-    "jobLocation": "Seattle",
-    "postingDate": "2023-10-28",
+    "jobLocation": "Delhi, India",
+    "postingDate": "2024-08-10",
     "experienceLevel": "Any experience",
     "employmentType": "Full-time",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "As a Web Developer at Bern Black, you will be responsible for designing, coding, and maintaining our websites and web applications. You will work closely with our design and development teams to create user-friendly and visually appealing digital experiences"
   },
   {
     "id": 4,
@@ -53,7 +53,7 @@
     "postingDate": "2023-10-05",
     "experienceLevel": "Work remotely",
     "employmentType": "Part-time",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "Raycast is a premier retail brand known for offering high-quality products and exceptional customer service. We pride ourselves on our ability to anticipate and meet the needs of our customers, providing a diverse range of products that cater to various tastes and preferences. Our commitment to excellence has made us a trusted name in the retail industry."
   },
   {
     "id": 5,
@@ -67,7 +67,7 @@
     "postingDate": "2023-10-28",
     "experienceLevel": "Intership",
     "employmentType": "Full-time",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "At Loom, we are pioneers in the technology sector, committed to delivering cutting-edge solutions that drive progress and innovation. Our team of experts works tirelessly to create products and services that not only meet but exceed the expectations of our clients. With a focus on quality and excellence, we are dedicated to shaping the future of technology."
   },
   {
     "id": 6,
@@ -81,7 +81,7 @@
     "postingDate": "2023-10-05",
     "experienceLevel": "Hourly",
     "employmentType": "Temporary",
-    "description": "Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. laborum tempor Lorem incididunt."
+    "description": "At Trinline group, we are pioneers in the technology sector, committed to delivering cutting-edge solutions that drive progress and innovation. Our team of experts works tirelessly to create products and services that not only meet but exceed the expectations of our clients. With a focus on quality and excellence, we are dedicated to shaping the future of technology."
   },
   {
     "id": 1,

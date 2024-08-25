@@ -171,7 +171,7 @@ function Header_2() {
                 display: { xs: "none", md: "flex", lg: "flex" },
               }}
             >
-              <Button sx={headingStyles} onClick={() => navigate("/")}>
+              <Button sx={headingStyles} onClick={() => navigate("/home")}>
                 Home
               </Button>
               <Button sx={headingStyles}>MyJobs</Button>

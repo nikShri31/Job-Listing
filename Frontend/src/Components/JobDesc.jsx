@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import PlaceIcon from "@mui/icons-material/Place";
+import {useNavigate} from "react-router-dom"
 
 const logoStyle = {
   width: "80px",
@@ -31,12 +32,12 @@ const Job = [
     companyName: "Bern Black",
     place: "Delhi, India",
     description:
-      " It is a long established fact that a reader will beff distractedby vbthe creadable content of a page when looking at its layout.The pointf of using Lorem Ipsum is that it has ahf mcoreor-lgess normal distribution of letters, as opposed to using,Content here content here making it look like readable.",
+      "As a Web Developer at Bern Black, you will be responsible for designing, coding, and maintaining our websites and web applications. You will work closely with our design and development teams to create user-friendly and visually appealing digital experiences",
     skills: [
       "System Software Development",
-      "  Research and code , libraries, APIs and frameworks",
-      " Strong problem solving and debugging skills",
       "Research and code , libraries, APIs and frameworks",
+      "Strong problem solving and debugging skills",
+      
     ],
     experience: [
       " 2 or more years of professional design experience",
@@ -52,11 +53,15 @@ const JobOverview = {
   location: "New Delhi",
   vacancy: "05",
   nature: "FullTime",
-  salary: "3-8 LPA",
+  salary: "$40k - $50k",
   lastDate: "10 Oct 2024",
 };
 
 const JobDesc = () => {
+  const navigate = useNavigate()
+  const handleApply = () => {
+    navigate("/home")
+  }
   //Job Listing API CALL
   return (
     <Box
@@ -145,14 +150,6 @@ const JobDesc = () => {
                 sx={{ fontWeight: "bold" }}
               >
                 Job Description
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                mb={2}
-                sx={{ textAlign: { xs: "left", sm: "none" } }}
-              >
-                {Job[0].description}
               </Typography>
               <Typography
                 variant="body2"
@@ -414,7 +411,7 @@ const JobDesc = () => {
               </List>
             </Box>
 
-            <Button variant="outlined">Back to other Similar jobs</Button>
+            <Button variant="outlined" onClick={handleApply}>Back to other Similar jobs</Button>
           </Stack>
         </Box>
       </Box>

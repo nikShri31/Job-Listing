@@ -1,6 +1,6 @@
 import React from "react";
 
-import InputField from "../Home components/InputField";
+import InputField from "../HomeComponents/InputField";
 import { Box, ButtonGroup, Typography,Button, FormControl, RadioGroup, FormControlLabel, Radio, Stack } from "@mui/material";
 
 

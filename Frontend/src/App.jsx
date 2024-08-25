@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      {/* <Header_2/> */}
+      <Header_2/>
       <main>
         <Outlet />
       </main>

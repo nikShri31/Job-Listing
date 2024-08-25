@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Banner from "../Home components/Banner";
-import Card from "../Home components/Card";
-import Jobs from "./Jobs";
+import Banner from "../HomeComponents/Banner";
+import JobCard from "../HomeComponents/Card";
 import Sidebar from "../Sidebar/Sidebar";
-import Newsletter from "../Home components/Newsletter";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import JobCard from "../Home components/Card";
+import { Box, Button, Grid, Typography } from "@mui/material";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -13,75 +10,60 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     fetch("jobs.json")
       .then((res) => res.json())
       .then((data) => {
-
         setJobs(data);
         setIsLoading(false);
       });
   }, []);
 
-  // ----------- Input Filter -----------
-  const [query, setQuery] = useState("");
   const handleInputChange = (event) => {
     setQuery(event.target.value);
-    // console.log(event.target.value);
+    setCurrentPage(1);
   };
 
-  //------------filter by job title-----
   const filteredItems = jobs.filter(
-    (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    (job) =>
+      job.jobTitle.toLowerCase().includes(query.toLowerCase()) ||
+      job.companyName.toLowerCase().includes(query.toLowerCase())
   );
-  // console.log(filteredItems);
 
-  // ----------- Radio Filtering -----------
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
-    console.log(event.target.value);
+    setCurrentPage(1);
   };
 
-  // // ------------ Button Filtering -----------
-  const handleClick = (event) => {
-    setSelectedCategory(event.target.value);
+  const handleClick = (value) => {
+    setSelectedCategory(value);
+    setCurrentPage(1);
   };
 
-  // Function to calculate the index range for the current page
   const calculatePageRange = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return { startIndex, endIndex };
   };
 
-  // Function to handle next page
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredItems.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
 
- 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  const filteredData = (jobs, selected, query) => {
-    let filteredJobs = jobs;
-    // Filtering Input Items
+  const filteredData = () => {
+    let filteredJobs = filteredItems;
 
-    console.log(filteredItems);
-    if (query) {
-      filteredJobs = filteredItems;
-    }
-
-   
-    if (selected) {
-      console.log(selected);
-
+    if (selectedCategory) {
       filteredJobs = filteredJobs.filter(
         ({
           jobLocation,
@@ -91,111 +73,81 @@ const Home = () => {
           postingDate,
           employmentType,
         }) =>
-          jobLocation.toLowerCase() === selected.toLowerCase() ||
-          postingDate === selected ||
-          parseInt(maxPrice) <= parseInt(selected) ||
-          salaryType.toLowerCase() === selected.toLowerCase() ||
-          experienceLevel.toLowerCase() === selected.toLowerCase() ||
-          employmentType.toLowerCase() === selected.toLowerCase()
+          jobLocation.toLowerCase() === selectedCategory.toLowerCase() ||
+          postingDate === selectedCategory ||
+          parseInt(maxPrice) <= parseInt(selectedCategory) ||
+          salaryType.toLowerCase() === selectedCategory.toLowerCase() ||
+          experienceLevel.toLowerCase() === selectedCategory.toLowerCase() ||
+          employmentType.toLowerCase() === selectedCategory.toLowerCase()
       );
-      console.log(filteredJobs);
     }
 
-    // Slice the data based on the current page
     const { startIndex, endIndex } = calculatePageRange();
-    filteredJobs = filteredJobs.slice(startIndex, endIndex);
-
-    return filteredJobs.map((data, i) => <JobCard key={i} data={data} />);
+    return filteredJobs.slice(startIndex, endIndex);
   };
 
-  const result = filteredData(jobs, selectedCategory, query);
+  const result = filteredData();
 
   return (
-    <>
-    <Box 
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-start",
-      gap: { xs: 4,sm:6,md:6 },
-      py: { xs: 6, sm: 6 },
-      textAlign: { sm: "center", md: "left" },
-      backgroundColor:'#E3F0FE',
-    backgroundSize: "100% 100%",
-     
-    }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: { xs: 4, sm: 6, md: 6 },
+        py: { xs: 6, sm: 8 },
+        backgroundColor: "#E3F0FE",
+        minHeight: "100vh",
+      }}
     >
       <Banner query={query} handleInputChange={handleInputChange} />
 
-      {/* main content */}
-      <Box > {/*className="bg-[#FAFAFA] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12" */}
-      <Grid  container spacing={3} justifyContent={'flex-start'}>
-        {/* left side */}
-        <Grid item xs={12} minWidth={300}  md={2}   sx={{ backgroundColor:'#FFF',ml:5}}> {/**className="bg-white p-4 rounded" */}
+      <Grid
+        container
+        spacing={3}
+        sx={{ width: "100%", maxWidth: 1200, px: { xs: 2, sm: 4 } }}
+      >
+        <Grid item xs={12} md={3} sx={{ bgcolor: "#FFF", p: 2 }}>
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </Grid>
-
-        {/* job cards */}
-        <Grid  item xs={12}  md={5} sx={{bgColor:'white'}}> {/*className="col-span-2 bg-white p-4 rounded" */}
-          {isLoading ? ( // Loading indicator
-            <p className="font-medium">Loading...</p>
-          ) : result.length > 0 ? (
-            <Jobs result={result} />
-          ) : (
-            <>
-              <Typography variant="h3" sx={{ mb: 2, fontWeight: "bold" }}>
-                {result.length} Jobs
-              </Typography>
-              <p>No data found</p>
-            </>
-          )}
-          {/* pagination block here */}
-
-          {result.length > 0 ? (
-            <Box
-              sx={{ display: "flex", justifyContent: "center", mt: 4, mx: 4 }}
-            >
-              {" "}
-              {/*className="flex justify-center mt-4 space-x-8">*/}
-              <Button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                sx={{
-                  "&:hover": {
-                    textDecoration: "undrline",
-                  },
-                }}
-              >
-                Previous
-              </Button>
-              <Typography component={"span"} mx={2}>
-                Page {currentPage} of{" "}
-                {Math.ceil(filteredItems.length / itemsPerPage)}
-              </Typography>
-              <Button
-                onClick={nextPage}
-                disabled={
-                  currentPage === Math.ceil(filteredItems.length / itemsPerPage)
-                }
-                sx={{
-                  "&:hover": {
-                    textDecoration: "undrline",
-                  },
-                }}
-              >
-                Next
-              </Button>
-            </Box>
-          ) : (
-            ""
-          )}
+        <Grid item xs={12} md={9}>
+          <Box sx={{ bgcolor: "white", p: 2 }}>
+            {isLoading ? (
+              <Typography variant="body1">Loading...</Typography>
+            ) : result.length > 0 ? (
+              result.map((job) => <JobCard key={job._id} data={job} />)
+            ) : (
+              <Typography variant="h6">No data found</Typography>
+            )}
+            {result.length > 0 && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                <Button
+                  onClick={prevPage}
+                  disabled={currentPage === 1}
+                  sx={{ mx: 1 }}
+                >
+                  Previous
+                </Button>
+                <Typography component="span" sx={{ mx: 2 }}>
+                  Page {currentPage} of{" "}
+                  {Math.ceil(filteredItems.length / itemsPerPage)}
+                </Typography>
+                <Button
+                  onClick={nextPage}
+                  disabled={
+                    currentPage ===
+                    Math.ceil(filteredItems.length / itemsPerPage)
+                  }
+                  sx={{ mx: 1 }}
+                >
+                  Next
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Grid>
-
-       
-        </Grid>
-      </Box>
+      </Grid>
     </Box>
-    </>
   );
 };
 

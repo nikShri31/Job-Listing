@@ -33,9 +33,12 @@ const style = {
   p: 2,
 };
 
+
 export default function AddProjectsBtn({formData, changeData}) {
   
   const [localFormData, setLocalFormData] = useState(formData);
+
+ 
 
   const handleChange = (e) =>{
     const {name, value} = e.target;
@@ -79,7 +82,7 @@ export default function AddProjectsBtn({formData, changeData}) {
             onChange={handleChange}
           >
             <FormControlLabel
-              value="In Process"
+              value="process"
               control={<Radio />}
               label="In Process"
             />

@@ -8,16 +8,17 @@ const style = {
 
   transform: "translate(-50%, -50%)",
   width: "100%",
-  minheight: "100%",
+  height:500,
   top: "50%",
   left: "50%",
   maxWidth: 450,
   bgcolor: "background.paper",
   borderRadius: 5,
   p: 2,
-  overflowY: "auto",
+ scrollbarWidth: "none",
+  overflowY: "scroll",
 };
-const LoginBtn = ({role}) => {
+const LoginBtn = ({role,variant}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -25,7 +26,7 @@ const LoginBtn = ({role}) => {
   return (
     <>
       <Button
-        variant="contained"
+        variant={variant}
         size="small"
         component="a"
         onClick={handleOpen}

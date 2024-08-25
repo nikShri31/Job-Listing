@@ -27,6 +27,7 @@ const style = {
   p: 2,
 };
 
+
 export default function EducationEditBtn({formData, changeData}) {
   const [localFormData, setLocalFormData] = useState(formData);
 
@@ -37,8 +38,15 @@ export default function EducationEditBtn({formData, changeData}) {
     setLocalFormData(formDetails);
     changeData(formDetails);
   }
+
+
+ 
+
+ 
+  
+
   return (
-    <div>
+    <>
       <Box sx={style}>
         <Typography
           id="transition-modal-title"
@@ -60,14 +68,22 @@ export default function EducationEditBtn({formData, changeData}) {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
+
             value={localFormData?.education || "Diploma"}
             name="education"
+
+            value={education}
+
             label="Education*"
-            onChange={handleChange}
+            onChange={(e) => setEducation(e.target.value)} 
           >
+
             <MenuItem value={'PhD'}>Doctarate/Phd</MenuItem>
             <MenuItem value={'Post Graduation'}>Masters/PostGraduation</MenuItem>
             <MenuItem value={'Diploma'}>Graduation/Diploma</MenuItem>
+
+
+
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -101,15 +117,18 @@ export default function EducationEditBtn({formData, changeData}) {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
+
             value={formData.course}
             label="Course"
             name="course"
             onChange={(evt) => setFormData( (formData) => ({...formData, course : evt.target.value}))}
+
+
           >
             <MenuItem value={"B.Tech"}>B.Tech</MenuItem>
             <MenuItem value={""}>M.Tech/MCA</MenuItem>
             <MenuItem value={30}>BCA</MenuItem>
-            <MenuItem value={30}>Diploma</MenuItem>
+            <MenuItem value={40}>Diploma</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl> */}
@@ -127,14 +146,17 @@ export default function EducationEditBtn({formData, changeData}) {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
+
             name="specialization"
             value={age}
             label="Spacialization*"
-            onChange={(evt) => setFormData( (formData) => ({...formData, specialization : evt.target.value}))}
+            onChange={(evt) => setFormData( (formData) => ({...formData, specialization : evt.target.value}))} 
+            required
+
           >
-            <MenuItem value={10}>Doctarate/Phd</MenuItem>
-            <MenuItem value={20}>Masters/PostGraduation</MenuItem>
-            <MenuItem value={30}>Graduation/Diploma</MenuItem>
+            <MenuItem value={'CS'}>CS</MenuItem>
+            <MenuItem value={'IT'}>IT</MenuItem>
+            <MenuItem value={'ECE'}>ECE</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl> */}
@@ -172,6 +194,7 @@ export default function EducationEditBtn({formData, changeData}) {
         </Typography>
 
         <Box
+
           sx={{
             mt: 2,
             display: "flex",
@@ -194,12 +217,14 @@ export default function EducationEditBtn({formData, changeData}) {
               <MenuItem value={"GPA"}>GPA</MenuItem>
             </Select>
             <FormHelperText>Required*</FormHelperText>
+
+       
           </FormControl>
           <Box>
             <TextField fullWidth id="fullWidth" label="Grade" name="grade" onChange={handleChange}/>
           </Box>
         </Box>
       </Box>
-    </div>
+    </>
   );
 }

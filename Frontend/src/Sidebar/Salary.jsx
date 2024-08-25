@@ -11,10 +11,10 @@ const Salary = ({handleChange,handleClick }) => {
     <Stack textAlign={'left'} sx={{color: "#032B53"}}>
       <Typography variant="h5" sx={{m:2,}}>Salary</Typography>
       {/* salaryType filtering */}
-      <ButtonGroup variant="outlined" aria-label="Basic button group">
-      <Button onClick={handleClick}>Hourly</Button>
-      <Button onClick={handleClick}>Monthly</Button>
-      <Button onClick={handleClick}>Yearly</Button>
+      <ButtonGroup variant="outlined" aria-label="Basic button group" >
+      <Button onClick={handleClick} sx={{p:1}}>Hourly</Button>
+      <Button onClick={handleClick} sx={{p:1}}>Monthly</Button>
+      <Button onClick={handleClick} sx={{p:1}}>Yearly</Button>
     </ButtonGroup>
 
       <Box>

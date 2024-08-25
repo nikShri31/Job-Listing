@@ -20,6 +20,8 @@ const logoStyle = {
   cursor: "pointer",
 };
 
+const menuItem = ["Home", "About", "Highlight"];
+
 function Header() {
   const [open, setOpen] = React.useState(false);
 
@@ -52,7 +54,7 @@ function Header() {
           boxShadow: 0,
           bgcolor: "transparent",
           backgroundImage: "none",
-          mt: 2,
+          mt: 1,
         }}
       >
         <Container maxWidth="xl">
@@ -69,7 +71,6 @@ function Header() {
               maxHeight: 40,
               border: "1px solid",
               borderColor: "divider",
-           
             }}
           >
             <Box
@@ -79,77 +80,75 @@ function Header() {
                 alignItems: "center",
                 ml: "-18px",
                 px: 2,
-                
-               
               }}
             >
               <Typography
-              variant="h6"
-              noWrap
-              component="a"
+                variant="h5"
+                noWrap
+                component="a"
                 href="#"
                 sx={{
                   color: "black",
                   pr: 3,
+                  fontWeight: "bold",
                   fontFamily: "monospace",
                   letterSpacing: ".3rem",
-                  display: { xs: "none", md: "flex", lg:'flex' },
+                  display: { xs: "none", md: "flex", lg: "flex" },
                 }}
               >
                 {" "}
-                Logo{" "}
+                JOBS{" "}
               </Typography>
               <Box
-               sx={{ 
-                display: { xs: "none", md: "flex" },
-               
-              }}
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
               >
-                <MenuItem
-                  
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                   Home
-                  </Typography>
-                </MenuItem>
+              {
+                menuItem.map((item, index) => (
+                <MenuItem 
+                sx={{ py: "6px", px: "12px",
+                  transition: "box-shadow 0.3s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.1) translateZ(30px)",
+                  },
 
-               
-                <MenuItem
+                 }}
                 
-                  sx={{ py: "6px", px: "12px" }}
+                onClick={() => scrollToSection({item})}
                 >
-                  <Typography variant="body2" color="text.primary">
-                    About
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection("highlights")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Highlights
-                  </Typography>
-                </MenuItem>
-               
-               
+                    <Typography
+                      key={index}
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {item}
+                    </Typography>
+                    </MenuItem>
+                  ))}
+
+                
               </Box>
             </Box>
             {/*Login Modal */}
             <Box
               sx={{
-                display: { xs: "none", md: "flex",lg:'flex' },
+                display: { xs: "none", md: "flex", lg: "flex" },
                 gap: 0.5,
                 alignItems: "center",
                 transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
-                  transform: 'scale(1.1) translateZ(30px)',        
+                  transform: "scale(1.1) translateZ(30px)",
                 },
               }}
             >
-              <LoginBtn role="Individual" sx={{mx:2}}/>
+              <LoginBtn
+                role="Individual"
+                sx={{ mx: 2 }}
+                variant={"contained"}
+              />
+              <LoginBtn role="Organisation" variant={"outline"} />
             </Box>
-            <LoginBtn role="Organisation"/>
 
             <Box sx={{ display: { sm: "", md: "none" } }}>
               <Button
@@ -168,7 +167,6 @@ function Header() {
                     p: 2,
                     backgroundColor: "background.paper",
                     flexGrow: 1,
-                    
                   }}
                 >
                   <MenuItem onClick={() => scrollToSection("features")}>
@@ -180,7 +178,7 @@ function Header() {
                   <MenuItem onClick={() => scrollToSection("highlights")}>
                     Highlights
                   </MenuItem>
-                 
+
                   <Divider />
 
                   <MenuItem>

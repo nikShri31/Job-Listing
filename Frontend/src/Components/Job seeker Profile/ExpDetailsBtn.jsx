@@ -29,6 +29,7 @@ const style = {
   p: 2,
 };
 
+
 export default function ExpEditBtn({ formData, changeData }) {
   const [localFormData, setLocalFormData] = useState({
     ...formData,
@@ -57,6 +58,7 @@ export default function ExpEditBtn({ formData, changeData }) {
         ...prevData,
         [name]: value,
       }));
+
     }
     changeData(localFormData);
   };
@@ -70,6 +72,7 @@ export default function ExpEditBtn({ formData, changeData }) {
           sx={{ fontWeight: "bold", my: 1 }}
         >
           Add Experience
+
         </Typography>
 
         {/**Employment */}
@@ -166,7 +169,8 @@ export default function ExpEditBtn({ formData, changeData }) {
           />
         </Box>
 
-        {/* notice period
+        {/* notice period */}
+
 
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Notice Period
@@ -176,15 +180,15 @@ export default function ExpEditBtn({ formData, changeData }) {
               <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                value={age}
-                onChange={handleChange}
+                value={notice}
+                onChange={handleNoticeChange}
               >
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>15 Days or Less</MenuItem>
-                <MenuItem value={20}>1 Month</MenuItem>
-                <MenuItem value={30}>60 Days or More</MenuItem>
+                <MenuItem value={15}>15 Days or Less</MenuItem>
+                <MenuItem value={30}>30 Days</MenuItem>
+                <MenuItem value={60}>60 Days or More</MenuItem>
               </Select>
             </FormControl> */}
       </Box>

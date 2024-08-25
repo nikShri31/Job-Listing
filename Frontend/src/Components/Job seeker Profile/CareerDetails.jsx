@@ -27,6 +27,8 @@ const styleDetails = {
 };
 const CareerDetails = () => {
 
+
+
   const [formData, setFormData] = useState({});
 
   const changeEducationData = (data) => {
@@ -45,6 +47,7 @@ const CareerDetails = () => {
     setFormData( (oldData) => ({...oldData, personalDetails : data}))
   }
 
+
   const educationRef = useRef(null);
   const skillsRef = useRef(null);
   const experienceRef = useRef(null);
@@ -60,10 +63,7 @@ const CareerDetails = () => {
   };
 
   {/**Education */}
-  const [education, setEducation] = React.useState("");
-const [course, setCourse] = React.useState("");
- const [special, setSpecial] = React.useState("");
-  const [grade, setGrade] = React.useState("");
+
 
 
   const handleScroll = (ref) => {
@@ -169,7 +169,19 @@ const [course, setCourse] = React.useState("");
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
 
+       
+          <EducationEditBtn formData={formData} changeData={changeEducationData}/>
           </Box>
+          <Box ref={skillsRef}>
+            <SkillsEditBtn formData={formData} changeData={changeSkillsData} />
+          </Box>
+          <Box ref={experienceRef}>
+            <ExpEditBtn formData={formData} changeData={changExperienceData}/>
+          </Box>
+          <Box ref={projectsRef}>
+            <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
+
+            </Box>
           <Box ref={personalDetailsRef}>
             <PersonalDeatailsBtn formData={formData} changeData={changePeronalDetials}/>
           </Box>

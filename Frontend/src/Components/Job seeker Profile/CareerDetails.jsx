@@ -5,7 +5,6 @@ import EducationEditBtn from "./EducationEditBtn";
 import ExpEditBtn from "./ExpDetailsBtn";
 import AddProjectsBtn from "./ProjectsEditBtn";
 import PersonalDeatailsBtn from "./PersonalEditBtn";
-import itSkills from "../../assets/itSkills";
 
 const details = [
   "Education",
@@ -54,17 +53,7 @@ const CareerDetails = () => {
   const projectsRef = useRef(null);
   const personalDetailsRef = useRef(null);
 
-  {
-    /**Skill values */
-  }
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const handleSkillsChange = (event, newValue) => {
-    setSelectedSkills(newValue);
-  };
-
-  {/**Education */}
-
-
+  // const [selectedDetail, setSelectedDetail] = useState(details[0]);
 
   const handleScroll = (ref) => {
     window.scrollTo({ top: window.scrollY - 1 });
@@ -113,7 +102,7 @@ const CareerDetails = () => {
         <Stack
           spacing={3}
           sx={{
-            width: { xs: "100%",sm:'20%', lg: "20%" },
+            width: { xs: "100%", lg: "20%" },
             position: "absolute",
             top: 0, // To align it with the top of the screen
             left: 0, // Align it with the left side
@@ -168,9 +157,7 @@ const CareerDetails = () => {
 
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
-
-       
-          <EducationEditBtn formData={formData} changeData={changeEducationData}/>
+            <EducationEditBtn formData={formData} changeData={changeEducationData}/>
           </Box>
           <Box ref={skillsRef}>
             <SkillsEditBtn formData={formData} changeData={changeSkillsData} />
@@ -180,8 +167,7 @@ const CareerDetails = () => {
           </Box>
           <Box ref={projectsRef}>
             <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
-
-            </Box>
+          </Box>
           <Box ref={personalDetailsRef}>
             <PersonalDeatailsBtn formData={formData} changeData={changePeronalDetials}/>
           </Box>

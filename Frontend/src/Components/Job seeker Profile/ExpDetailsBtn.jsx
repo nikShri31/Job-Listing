@@ -172,7 +172,7 @@ export default function ExpEditBtn({ formData, changeData }) {
         {/* notice period */}
 
 
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               Notice Period
             </Typography>
 

@@ -10,20 +10,16 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  Select,
-  MenuItem,
 } from "@mui/material";
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState("employee");
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -32,20 +28,20 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.get("password"));
     const response = await axios.post("http://localhost:5000/api/signup", {
       name: data.get("name"),
       username: data.get("username"),
-      role,
+      role : "employee",
       email: data.get("email"),
       password: data.get("password"),
       phoneNo: data.get("phone"),
       profile: {
-        experience: data.get("experience"),
+        role: data.get("role"),
       },
+      location : data.get("location")
     });
     localStorage.setItem("token", response.data.token);
-    // navigate('/')
+    navigate('/profile')
   };
 
   return (
@@ -77,33 +73,39 @@ function Signup() {
               autoFocus
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <TextField
               size="small"
-              name="experience"
+              name="role"
               required
               fullWidth
-              id="experience"
-              label="Experience"
+              id="role"
+              label="Role"
               autoFocus
             />
           </Grid>
-          <Grid item xs={4}>
-            <FormControl size="small" fullWidth>
-              <InputLabel id="role-select-label">Role</InputLabel>
-              <Select
-                labelId="role-select-label"
-                id="role-select"
-                value={role}
-                label="Role"
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <MenuItem value="employee">Employee</MenuItem>
-                <MenuItem value="organisation">Organisation</MenuItem>
-              </Select>
-            </FormControl>
+          <Grid item xs={12}>
+            <TextField 
+              size="small"
+              required
+              fullWidth
+              id="phone"
+              type="text"
+              label="Phone Number"
+              name="phone"
+            />
           </Grid>
-
+          <Grid item xs={12}>
+            <TextField 
+              size="small"
+              required
+              fullWidth
+              id="location"
+              type="text"
+              label="Location"
+              name="location"
+            />
+          </Grid>
           <Grid item xs={12}>
             <TextField
               size="small"
@@ -114,17 +116,6 @@ function Signup() {
               label="Email Address"
               name="email"
               autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              size="small"
-              required
-              fullWidth
-              id="phone"
-              type="text"
-              label="Phone Number"
-              name="phone"
             />
           </Grid>
           <Grid item xs={12}>

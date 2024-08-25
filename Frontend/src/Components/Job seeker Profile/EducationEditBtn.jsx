@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -18,7 +18,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import dateSelect from "../../assets/dateSelect";
+// import dateSelect from "../../assets/dateSelect";
 
 const style = {
   color: "#032340",
@@ -27,23 +27,40 @@ const style = {
   p: 2,
 };
 
-export default function EducationEditBtn() {
+
+export default function EducationEditBtn({formData, changeData}) {
+  const [localFormData, setLocalFormData] = useState(formData);
+
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    const formDetails = {...localFormData, [name] : value};
+
+    setLocalFormData(formDetails);
+    changeData(formDetails);
+  }
+
+
  
 
  
   
+
   return (
     <>
       <Box sx={style}>
-      <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
-      Add Education
-      </Typography>
+        <Typography
+          id="transition-modal-title"
+          variant="h5"
+          sx={{ fontWeight: "bold" }}
+        >
+          Add Education
+        </Typography>
 
         {/**Education */}
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Education
         </Typography>
-        
+
         <FormControl required sx={{ m: 1, minWidth: "80%" }}>
           <InputLabel id="demo-simple-select-required-label">
             Education
@@ -51,13 +68,22 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
+
+            value={localFormData?.education || "Diploma"}
+            name="education"
+
             value={education}
+
             label="Education*"
             onChange={(e) => setEducation(e.target.value)} 
           >
-            <MenuItem value={"Doc"}>Doctarate/Phd</MenuItem>
-            <MenuItem value={"PG"}>Masters/PostGraduation</MenuItem>
-            <MenuItem value={"UG"}>Graduation/Diploma</MenuItem>
+
+            <MenuItem value={'PhD'}>Doctarate/Phd</MenuItem>
+            <MenuItem value={'Post Graduation'}>Masters/PostGraduation</MenuItem>
+            <MenuItem value={'Diploma'}>Graduation/Diploma</MenuItem>
+
+
+
           </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
@@ -68,37 +94,49 @@ export default function EducationEditBtn() {
         </Typography>
         <Box
           sx={{
-           mt:1,
+            mt: 1,
             width: 500,
-            minWidth: "80%"
+            minWidth: "80%",
           }}
         >
-          <TextField fullWidth label="College" id="fullWidth" />
+          <TextField fullWidth label="College" id="fullWidth" value={localFormData?.college || ""}
+          name="college"
+          onChange={handleChange}
+          />
+          <FormHelperText>Required*</FormHelperText>
         </Box>
 
+        {/* Nimanshu ye theek kr dio */}
+
         {/*Course*/}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Course
         </Typography>
-        <FormControl required sx={{ m: 1,minWidth: "80%" }}>
+        <FormControl required sx={{ m: 1, minWidth: "80%" }}>
           <InputLabel id="demo-simple-select-required-label">Course</InputLabel>
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={course}
-            label="Course*"
-            onChange={(e) => setCourse(e.target.value)}
+
+            value={formData.course}
+            label="Course"
+            name="course"
+            onChange={(evt) => setFormData( (formData) => ({...formData, course : evt.target.value}))}
+
+
           >
-            <MenuItem value={10}>B.Tech</MenuItem>
-            <MenuItem value={20}>M.Tech/MCA</MenuItem>
+            <MenuItem value={"B.Tech"}>B.Tech</MenuItem>
+            <MenuItem value={""}>M.Tech/MCA</MenuItem>
             <MenuItem value={30}>BCA</MenuItem>
             <MenuItem value={40}>Diploma</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
-        </FormControl>
+        </FormControl> */}
+
+{/* iske bhi options theek kr dio */}
 
         {/**Specialization */}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Specialization
         </Typography>
         <FormControl required sx={{ m: 1, minWidth: "80%" }}>
@@ -108,127 +146,85 @@ export default function EducationEditBtn() {
           <Select
             labelId="demo-simple-select-required-label"
             id="demo-simple-select-required"
-            value={special}
+
+            name="specialization"
+            value={age}
             label="Spacialization*"
-            onChange={(e) => setSpecial(e.target.value)} 
+            onChange={(evt) => setFormData( (formData) => ({...formData, specialization : evt.target.value}))} 
             required
+
           >
             <MenuItem value={'CS'}>CS</MenuItem>
             <MenuItem value={'IT'}>IT</MenuItem>
             <MenuItem value={'ECE'}>ECE</MenuItem>
           </Select>
           <FormHelperText>Required</FormHelperText>
-        </FormControl>
+        </FormControl> */}
 
-        {/**Course Type */}
-
-        <FormControl sx={{ mt: 2 }}>
-          <FormLabel id="demo-row-radio-buttons-group-label">
-            Course Type
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-          >
-            <FormControlLabel
-              value="full Time"
-              control={<Radio />}
-              label="full Time"
-            />
-            <FormControlLabel
-              value="Part Time"
-              control={<Radio />}
-              label="Part Time"
-            />
-            <FormControlLabel
-              value="Distance"
-              control={<Radio />}
-              label="Distance"
-            />
-          </RadioGroup>
-        </FormControl>
-
-        {/*Course Duration */}
-        <Typography id="transition-modal-description" sx={{ mt: 2, }}>
-          Course Duration(Years)
-        </Typography>
+{/* isme name and formData ka state change dekh lio */}
 
         {/*Start */}
-        <FormControl required sx={{ m:2, minWidth: 180 }}>
+        {/* <FormControl required sx={{ m: 2, minWidth: 180 }}>
           <InputLabel id="year">start</InputLabel>
-          <Select
-                labelId="year"
-                id="demo-simple-select-filled"
-         >
-               {
-                dateSelect.year.map((year)=>(
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
-                ))
-               }
-              </Select>
+          <Select labelId="year" id="demo-simple-select-filled">
+            {dateSelect.year.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
           <FormHelperText>Required</FormHelperText>
         </FormControl>
 
         <FormControl required sx={{ m: 2, minWidth: 180 }}>
           <InputLabel id="year">End</InputLabel>
-          <Select
-                labelId="year"
-                id="demo-simple-select-filled"
-          >
-               {
-                dateSelect.year.map((year)=>(
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
-                ))
-               }
-              </Select>
+          <Select labelId="year" id="demo-simple-select-filled">
+            {dateSelect.year.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
           <FormHelperText>Required</FormHelperText>
-        </FormControl>
+        </FormControl> */}
 
         {/*Grade */}
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Grade
         </Typography>
-        
+
         <Box
-        sx={{
-         mt:2,
-          display:'flex',
-          minWidth: "80%"
-        }}
-      >
-        <FormControl required sx={{mx:2, maxWidth: "50%", }}>
-          <InputLabel id="demo-simple-select-required-label">Grade</InputLabel>
-          <Select
-            labelId="demo-simple-select-required-label"
-            id="demo-simple-select-required"
-            value={grade}
-            label="Grade"
-            onChange={(e) => setGrade(e.target.value)}
-          >
-            <MenuItem value={'PER'}>Percentage [%]</MenuItem>
-            <MenuItem value={"GPA"}>GPA</MenuItem>
-          </Select>
-          <FormHelperText>Required*</FormHelperText>
+
+          sx={{
+            mt: 2,
+            display: "flex",
+            minWidth: "80%",
+          }}
+        >
+          <FormControl required sx={{ mx: 2, maxWidth: "50%" }}>
+            <InputLabel id="demo-simple-select-required-label">
+              Grade
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-required-label"
+              id="demo-simple-select-required"
+              value={localFormData?.marks || "%"}
+              label="Marks"
+              name="marks"
+              onChange={handleChange} 
+            >
+              <MenuItem value={"%"}>Percentage %</MenuItem>
+              <MenuItem value={"GPA"}>GPA</MenuItem>
+            </Select>
+            <FormHelperText>Required*</FormHelperText>
+
+       
           </FormControl>
-          <Box
-           >
-          <TextField fullWidth id="fullWidth" />
+          <Box>
+            <TextField fullWidth id="fullWidth" label="Grade" name="grade" onChange={handleChange}/>
           </Box>
-          </Box>
+        </Box>
       </Box>
     </>
   );
-}
-
-{
-  //  {/**Submit */}
-  //    <Box sx={{ m: 1 }}>
-  //    <ButtonGroup aria-label="Loading button group">
-  //      <Button variant="contained" sx={{ m: 1 }} >
-  //        Submit
-  //      </Button>
-  //      <Button variant="outlined" onClick={handleClose} sx={{ m: 1 }}>cancel</Button>
-  //    </ButtonGroup>
-  //  </Box>
 }

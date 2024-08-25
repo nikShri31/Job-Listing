@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -21,7 +21,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import dateSelect from "../../assets/dateSelect";
+// import dateSelect from "../../assets/dateSelect";
 
 const style = {
   color: "#032340",
@@ -31,18 +31,23 @@ const style = {
 };
 
 export default function PersonalDeatailsBtn() {
+  const [localFormData, setLocalFormData] = useState(formData);
 
 
-  const [variant, setVariant] = React.useState("outlined");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const formDetails = { ...localFormData, [name]: value };
+
+    setLocalFormData(formDetails);
+    changeData(formDetails);
+  };
+
+  const [variant, setVariant] = useState("outlined");
   const handleChipClick = () => {
     setVariant("filled");
   };
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const [age, setAge] = useState(0);
 
   const [gender, setGender] = React.useState("");
 
@@ -87,7 +92,7 @@ export default function PersonalDeatailsBtn() {
             </Stack>
 
             {/*DoB */}
-            <Typography id="transition-modal-description" sx={{ mt: 3 }}>
+            {/* <Typography id="transition-modal-description" sx={{ mt: 3 }}>
               Date of Birth
             </Typography>
             <Stack direction="row" spacing={1}>
@@ -153,7 +158,7 @@ export default function PersonalDeatailsBtn() {
                   ))}
                 </Select>
               </FormControl>
-            </Stack>
+            </Stack> */}
 
             {/**Catagory*/}
             <Typography id="transition-modal-description" sx={{ mt: 3 }}>
@@ -189,7 +194,7 @@ export default function PersonalDeatailsBtn() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={""}
                     label="Proficiancy"
                     onChange={handleChange}
                   >

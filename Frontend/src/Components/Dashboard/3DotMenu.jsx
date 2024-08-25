@@ -65,8 +65,8 @@ export default function ThreeDotMenu() {
               },
             },
           }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          transformorigin={{ horizontal: 'right', vertical: 'top' }}
+          anchororigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {options.map((option) => (
           <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>

@@ -26,6 +26,25 @@ const styleDetails = {
   scrollbarWidth: "none",
 };
 const CareerDetails = () => {
+
+  const [formData, setFormData] = useState({});
+
+  const changeEducationData = (data) => {
+    setFormData( (oldData) => ({...oldData, educationData : data}))
+  }
+  const changeSkillsData = (data) => {
+    setFormData( (oldData) => ({...oldData, skillData : data}))
+  }
+  const changExperienceData = (data) => {
+    setFormData( (oldData) => ({...oldData, experienceData : data}))
+  }
+  const changeProjectsData = (data) => {
+    setFormData( (oldData) => ({...oldData, projectData : data}))
+  }
+  const changePeronalDetials = (data) => {
+    setFormData( (oldData) => ({...oldData, personalDetails : data}))
+  }
+
   const educationRef = useRef(null);
   const skillsRef = useRef(null);
   const experienceRef = useRef(null);
@@ -73,35 +92,7 @@ const [course, setCourse] = React.useState("");
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}
-    >
-      {/* Resume */}
-      <Box
-        sx={{
-          p: 4,
-
-          color: "#032340",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "left",
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Add Resume
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            mt: 4,
-            p: 3,
-            flexDirection: "column",
-            alignItems: "center",
-            border: "3px dotted #032340",
-          }}
-        >
-          <Button variant="contained">Upload Resume</Button>
-          <Typography>Supported Formats: doc, docx, pdf upto 2 MB</Typography>
-        </Box>
-      </Box>
+    > 
 
       {/**Adding Details */}
       <Typography
@@ -177,20 +168,7 @@ const [course, setCourse] = React.useState("");
 
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
-            <EducationEditBtn  />
-          </Box>
-          <Box ref={skillsRef}>
-            <SkillsEditBtn
-              itSkills={itSkills}
-              selectedSkills={selectedSkills}
-              onSkillsChange={handleSkillsChange}
-            />
-          </Box>
-          <Box ref={experienceRef}>
-            <ExpEditBtn />
-          </Box>
-          <Box ref={projectsRef}>
-            <AddProjectsBtn />
+
           </Box>
           <Box ref={personalDetailsRef}>
             <PersonalDeatailsBtn />

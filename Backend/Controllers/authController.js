@@ -34,22 +34,14 @@ module.exports.orgLogin = async(req, res, next) => {
 module.exports.createOrganisation = async(req, res, next) => {
     //address is street, city, state, country, zipCode
     const { name, address, phone, email, website, industry, description, password, adminEmail} = req.body;
-    const newOrganisation = new User({
+    const newOrganisation = new Organisation({
         name,
         adminEmail,
         password,
-        ...(address && Object.keys(address).length > 0 && {
-            address: {
-                street: address.street,
-                city: address.city,
-                state: address.state,
-                country: address.country,
-                zipCode: address.zipCode
-            }
-        }),
+        address,
         contactInfo: {
-            phone,
-            email
+            phone : phone,
+            email : email
         },
         website,
         industry,

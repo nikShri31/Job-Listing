@@ -33,6 +33,7 @@ const style = {
 export default function PersonalDeatailsBtn() {
   const [localFormData, setLocalFormData] = useState(formData);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     const formDetails = { ...localFormData, [name]: value };
@@ -48,6 +49,12 @@ export default function PersonalDeatailsBtn() {
 
   const [age, setAge] = useState(0);
 
+  const [gender, setGender] = React.useState("");
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  
   return (
     <>
       <>
@@ -66,9 +73,10 @@ export default function PersonalDeatailsBtn() {
               Gender
             </Typography>
             <Stack direction="row" spacing={1} mt={1}>
-              <Chip label="Male" onClick={handleChipClick} />
-              <Chip label="Female" onClick={handleChipClick} />
-              <Chip label="other" onClick={handleChipClick} />
+              <Chip value={"male"} variant={variant} label="Male" onClick={handleChipClick} />
+              
+              <Chip value={"female"} variant={variant} label="Female" onClick={handleChipClick} />
+              <Chip value={"other"}  variant={variant} label="other" onClick={handleChipClick} />
             </Stack>
 
             {/**Marital Status */}

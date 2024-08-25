@@ -10,7 +10,8 @@ import Heading from "../Components/Heading";
 import Header from "../Header/Header";
 import LogoCollection from "../Components/LogoCollection";
 import Highlights from "../Components/Highlights";
-import Footer from "../Footer/Foooter";
+import { Grid } from "@mui/material";
+
 
 
 
@@ -20,17 +21,17 @@ export default function LandingPage() {
   //const defaultTheme = createTheme({ palette: { mode } });
 
   return (
-    <>
+    <Grid >
       <CssBaseline />
 
-      <Header  />
+     <Header/>
       <Heading />
       <Box sx={{ bgcolor: "background.default", }}>
         <LogoCollection />
         <Highlights />
    
       </Box>
-    </>
+    </Grid>
   );
 }
 

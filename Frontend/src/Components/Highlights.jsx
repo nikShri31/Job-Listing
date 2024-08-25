@@ -54,11 +54,16 @@ const items = [
 export default function Highlights() {
   return (
     <Box
+    wrap
       id="highlights"
       sx={{
+        height: '100vh', // Full screen height
+        display: 'flex',
+        alignItems: 'center', // Center content vertically
+        justifyContent: 'center',
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
-        
+      
         color: 'white',
         backgroundImage: "linear-gradient(90deg, #CEE5FD, #FFF ,#CEE5FD)",
         backgroundSize: "100% 100%",
@@ -75,10 +80,10 @@ export default function Highlights() {
         }}
       >
         <Box
-          sx={{
-            width: { sm: '100%', md: '60%' },
-            textAlign: { sm: 'left', md: 'center' },
-          }}
+        sx={{
+          width: { xs: '100%', sm: '100%', md: '60%' }, // Adjust width based on screen size
+          textAlign: { xs: 'center', sm: 'left', md: 'center' }, // Responsive text alignment
+        }}
         >
           <Typography component="h2" variant="h4" color={'grey'}>
             Highlights
@@ -106,7 +111,7 @@ export default function Highlights() {
                   background: 'transparent',
                   transition: "box-shadow 0.3s ease-in-out",
                   "&:hover": {
-                    transform: 'scale(1.1) translateZ(30px)',
+                    transform: 'scale(1.05) translateZ(30px)',
                     boxShadow: ` 10px 10px 10px #00000041,
                                  inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
                   },

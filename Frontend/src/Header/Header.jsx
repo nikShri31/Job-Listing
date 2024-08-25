@@ -1,6 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -24,10 +22,6 @@ const menuItem = ["Home", "About", "Highlight"];
 
 function Header() {
   const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -104,19 +98,19 @@ function Header() {
                   display: { xs: "none", md: "flex" },
                 }}
               >
-              {
-                menuItem.map((item, index) => (
-                <MenuItem 
-                sx={{ py: "6px", px: "12px",
-                  transition: "box-shadow 0.3s ease-in-out",
-                  "&:hover": {
-                    transform: "scale(1.1) translateZ(30px)",
-                  },
-
-                 }}
-                
-                onClick={() => scrollToSection({item})}
-                >
+                {menuItem.map((item, index) => (
+                  <MenuItem
+                    key={index}
+                    sx={{
+                      py: "6px",
+                      px: "12px",
+                      transition: "box-shadow 0.3s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.1) translateZ(30px)",
+                      },
+                    }}
+                    onClick={() => scrollToSection({ item })}
+                  >
                     <Typography
                       key={index}
                       variant="body2"
@@ -124,10 +118,8 @@ function Header() {
                     >
                       {item}
                     </Typography>
-                    </MenuItem>
-                  ))}
-
-                
+                  </MenuItem>
+                ))}
               </Box>
             </Box>
             {/*Login Modal */}
@@ -142,12 +134,8 @@ function Header() {
                 },
               }}
             >
-              <LoginBtn
-                role="Individual"
-                sx={{ mx: 2 }}
-                variant={"contained"}
-              />
-              <LoginBtn role="Organisation" variant={"outline"} />
+              <LoginBtn role="Individual" variant={"contained"} />
+              <LoginBtn role="Organisation" variant={"contained"} />
             </Box>
 
             <Box sx={{ display: { sm: "", md: "none" } }}>

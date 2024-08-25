@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -41,10 +41,10 @@ export default function ExpEditBtn({ formData, changeData }) {
       role: "",
     },
   });
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    
     if (name === "organisation" || name === "role") {
       setLocalFormData((prevData) => ({
         ...prevData,
@@ -58,11 +58,15 @@ export default function ExpEditBtn({ formData, changeData }) {
         ...prevData,
         [name]: value,
       }));
-
+      
     }
     changeData(localFormData);
   };
 
+  useEffect(() => {
+    if(formData) setLocalFormData(formData);
+  }, [formData]);
+  
   return (
     <>
       <Box sx={style}>
@@ -156,14 +160,14 @@ export default function ExpEditBtn({ formData, changeData }) {
           <TextField
             id="outlined"
             label="Organisation"
-            value={localFormData.employmentRecord?.organisation || ""}
+            value={localFormData?.employmentRecord?.organisation || ""}
             name="organisation"
             onChange={handleChange}
           />
           <TextField
             id="outlined"
             label="Job Profile"
-            value={localFormData.employmentRecord?.role || ""}
+            value={localFormData?.employmentRecord?.role || ""}
             name="role"
             onChange={handleChange}
           />

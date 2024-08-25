@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -38,15 +38,17 @@ export default function AddProjectsBtn({formData, changeData}) {
   
   const [localFormData, setLocalFormData] = useState(formData);
 
- 
-
   const handleChange = (e) =>{
     const {name, value} = e.target;
     const formDetails = {...localFormData, [name] : value};
-
+    
     setLocalFormData(formDetails);
     changeData(formDetails);
   }
+  
+  useEffect(() => {
+    if(formData) setLocalFormData(formData);
+  }, [formData]);
 
   return (
     <>
@@ -164,7 +166,7 @@ export default function AddProjectsBtn({formData, changeData}) {
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           Role
         </Typography>
-        <TextField required id="outlined-required" sx={{mx:1}} label="Role" name="role" onChange={handleChange}/>
+        <TextField required id="outlined-required" sx={{mx:1}} value={localFormData?.role || ""} label="Role" name="role" onChange={handleChange}/>
       </Box>
     </>
   );

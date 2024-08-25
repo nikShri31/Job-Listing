@@ -21,14 +21,15 @@ exports.searchUser = (async (req, res, next) => {
 })
 
 exports.updateProfile = (async(req, res, next) => {
-    const {name, phoneNo, profile} = req.body;
+    const {location, phoneNo, workRole, profile} = req.body;
     const username = req.user.username;
     const user = await User.findOne({username});
     if(!user){
         next(new expressError('User not found', 400));
     }
-    user.profile = profile;
-    if(name) user.name = name;
+    if(profile) user.profile = profile;
+    if(location) user.location = location;
+    if(workRole) user.workRole = workRole;
     if(phoneNo) user.phoneNo = phoneNo;
     const updatedUser = await user.save();
     res.status(200).json({ status : 'success', message : 'Profile Updated Successfully', updatedUser})

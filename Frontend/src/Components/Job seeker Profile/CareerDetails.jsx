@@ -1,10 +1,12 @@
 import { Box, Button, ButtonGroup, Stack, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SkillsEditBtn from "./SkillsEditBtn";
 import EducationEditBtn from "./EducationEditBtn";
 import ExpEditBtn from "./ExpDetailsBtn";
 import AddProjectsBtn from "./ProjectsEditBtn";
 import PersonalDeatailsBtn from "./PersonalEditBtn";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const details = [
   "Education",
@@ -24,28 +26,50 @@ const styleDetails = {
   overflowY: "auto",
   scrollbarWidth: "none",
 };
-const CareerDetails = () => {
+const CareerDetails = ({userDetails}) => {
+  const [formData, setFormData] = useState();
+  const navigate = useNavigate();
 
-
-
-  const [formData, setFormData] = useState({});
+  useEffect(( )=> {
+    if(userDetails) setFormData(userDetails);
+  },[userDetails])
 
   const changeEducationData = (data) => {
-    setFormData( (oldData) => ({...oldData, educationData : data}))
-  }
+    setFormData((oldData) => ({ ...oldData, educationData: data }));
+  };
   const changeSkillsData = (data) => {
-    setFormData( (oldData) => ({...oldData, skillData : data}))
-  }
+    setFormData((oldData) => ({ ...oldData, skillData: data }));
+  };
   const changExperienceData = (data) => {
-    setFormData( (oldData) => ({...oldData, experienceData : data}))
-  }
+    setFormData((oldData) => ({ ...oldData, experienceData: data }));
+  };
   const changeProjectsData = (data) => {
-    setFormData( (oldData) => ({...oldData, projectData : data}))
-  } 
+    setFormData((oldData) => ({ ...oldData, projectData: data }));
+  };
   const changePeronalDetials = (data) => {
-    setFormData( (oldData) => ({...oldData, personalDetails : data}))
-  }
+    setFormData((oldData) => ({ ...oldData, personalDetails: data }));
+  };
 
+  const handleEditProfile = async () => {
+    try {
+      const response = await axios.patch(
+        "http://localhost:5000/api/users/profile",
+        {
+          profile: {
+            ...formData,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      navigate("/profile"); 
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const educationRef = useRef(null);
   const skillsRef = useRef(null);
@@ -81,8 +105,7 @@ const CareerDetails = () => {
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}
-    > 
-
+    >
       {/**Adding Details */}
       <Typography
         variant="h4"
@@ -102,7 +125,7 @@ const CareerDetails = () => {
         <Stack
           spacing={3}
           sx={{
-            width: { xs: "100%", lg: "20%" },
+            width: { xs: "", sm: "", lg: "20%" },
             position: "absolute",
             top: 0, // To align it with the top of the screen
             left: 0, // Align it with the left side
@@ -157,29 +180,41 @@ const CareerDetails = () => {
 
         <Stack spacing={2} sx={styleDetails}>
           <Box ref={educationRef}>
-            <EducationEditBtn formData={formData} changeData={changeEducationData}/>
+            <EducationEditBtn
+              formData={formData?.educationData}
+              changeData={changeEducationData}
+            />
           </Box>
           <Box ref={skillsRef}>
-            <SkillsEditBtn formData={formData} changeData={changeSkillsData} />
+            <SkillsEditBtn formData={formData?.skillData} changeData={changeSkillsData} />
           </Box>
           <Box ref={experienceRef}>
-            <ExpEditBtn formData={formData} changeData={changExperienceData}/>
+            <ExpEditBtn formData={formData?.experienceData} changeData={changExperienceData} />
           </Box>
           <Box ref={projectsRef}>
-            <AddProjectsBtn formData={formData} changeData={changeProjectsData}/>
+            <AddProjectsBtn
+              formData={formData?.projectData}
+              changeData={changeProjectsData}
+            />
           </Box>
           <Box ref={personalDetailsRef}>
-            <PersonalDeatailsBtn formData={formData} changeData={changePeronalDetials}/>
+            <PersonalDeatailsBtn
+              formData={formData?.personalDetails}
+              changeData={changePeronalDetials}
+            />
           </Box>
-          {console.log(formData)}
 
           {/**Submit */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "flex-end" }}>
             <ButtonGroup aria-label="Loading button group">
               <Button variant="outlined" sx={{ m: 2 }}>
-                cancel
+                Cancel
               </Button>
-              <Button variant="contained" sx={{ m: 2 }}>
+              <Button
+                variant="contained"
+                sx={{ m: 2 }}
+                onClick={handleEditProfile}
+              >
                 Submit
               </Button>
             </ButtonGroup>
@@ -309,6 +344,3 @@ export default CareerDetails;
 //           <PersonalDeatailsBtn />
 //         </Stack>
 //      </Box>
-
-
-//localStorage.getItem()

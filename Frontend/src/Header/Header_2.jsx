@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,27 +14,49 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Badge, Stack } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "My Jobs", "Profile"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const headingStyles = {
+  my: 2,
+  textDecoration: "none",
+  display: "block",
+  transition: "box-shadow 0.3s ease-in-out",
+  "&:focus": {
+    outline: "none",
+  },
+  "&:hover": {
+    boxShadow: ` 10px 10px 10px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
+    fontWeight: "bold",
+  },
+};
 
 function Header_2() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    handleCloseUserMenu();
+    navigate("/");
   };
 
   return (
@@ -78,7 +100,7 @@ function Header_2() {
                 mr: 2,
                 display: { xs: "none", md: "flex", lg: "flex" },
                 fontFamily: "monospace",
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 letterSpacing: ".3rem",
                 color: "black",
                 textDecoration: "none",
@@ -100,7 +122,7 @@ function Header_2() {
               </IconButton>
               <MenuItem
                 id="menu-appbar"
-                anchorel={anchorElNav}
+                anchorEl={anchorElNav}
                 anchororigin={{
                   vertical: "bottom",
                   horizontal: "left",
@@ -135,7 +157,7 @@ function Header_2() {
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontFamily: "monospace",
-                fontWeight:'bold',
+                fontWeight: "bold",
                 letterSpacing: ".3rem",
 
                 textDecoration: "none",
@@ -149,28 +171,10 @@ function Header_2() {
                 display: { xs: "none", md: "flex", lg: "flex" },
               }}
             >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  sx={{
-                    my: 2,
-                    textDecoration: "none",
-                    display: "block",
-                    transition: "box-shadow 0.3s ease-in-out",
-                    "&:focus": {
-                      outline: "none",
-                    },
-                    "&:hover": {
-                      boxShadow: ` 10px 10px 10px #00000041,
-                                 inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
-
-                      fontWeight: "bold",
-                    },
-                  }}
-                >
-                  {page}
-                </Button>
-              ))}
+              <Button sx={headingStyles} onClick={() => navigate("/")}>
+                Home
+              </Button>
+              <Button sx={headingStyles}>MyJobs</Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -198,24 +202,27 @@ function Header_2() {
                 <Menu
                   sx={{ mt: "45px" }}
                   id="menu-appbar"
-                  anchorel={anchorElUser}
-                  anchororigin={{
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  keepmounted="true"
-                  transformorigin={{
+                  transformOrigin={{
                     vertical: "top",
                     horizontal: "right",
                   }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem onClick={() => navigate("/profile")}>
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
+                  <MenuItem>
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
                 </Menu>
               </Stack>
             </Box>

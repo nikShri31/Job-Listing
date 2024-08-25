@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
@@ -24,7 +24,7 @@ const style = {
 
 export default function PersonalDetailsBtn({ formData, changeData }) {
   const [localFormData, setLocalFormData] = useState(formData || {});
-  const [languages, setLanguages] = useState(localFormData.languages || []);
+  const [languages, setLanguages] = useState(localFormData?.languages || []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +47,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
       ...prev,
       [fieldName]: chipValue,
     }));
-    changeData(localFormData)
+    changeData(localFormData);
   };
 
   const handleAddLanguage = () => {
@@ -82,9 +82,12 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
     }
   };
 
+  useEffect(() => {
+    if (formData) setLocalFormData(formData);
+  }, [formData]);
+
   return (
     <Box sx={style}>
-      {console.log(localFormData)}
       <Typography
         id="transition-modal-title"
         variant="h5"
@@ -99,19 +102,22 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
       </Typography>
       <Stack direction="row" spacing={1} mt={1}>
         <Chip
+          name="gender"
           label="Male"
           onClick={(e) => handleChipClick(e, "gender", "Male")}
-          variant={localFormData.gender === "Male" ? "filled" : "outlined"}
+          variant={localFormData?.gender === "Male" ? "filled" : "outlined"}
         />
         <Chip
+          name="gender"
           label="Female"
           onClick={(e) => handleChipClick(e, "gender", "Female")}
-          variant={localFormData.gender === "Female" ? "filled" : "outlined"}
+          variant={localFormData?.gender === "Female" ? "filled" : "outlined"}
         />
         <Chip
+          name="gender"
           label="Other"
           onClick={(e) => handleChipClick(e, "gender", "Other")}
-          variant={localFormData.gender === "Other" ? "filled" : "outlined"}
+          variant={localFormData?.gender === "Other" ? "filled" : "outlined"}
         />
       </Stack>
 
@@ -124,35 +130,39 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
           label="Single"
           onClick={(e) => handleChipClick(e, "maritalStatus", "Single")}
           variant={
-            localFormData.maritalStatus === "Single" ? "filled" : "outlined"
+            localFormData?.maritalStatus === "Single" ? "filled" : "outlined"
           }
         />
         <Chip
+          name="maritalStatus"
           label="Married"
           onClick={(e) => handleChipClick(e, "maritalStatus", "Married")}
           variant={
-            localFormData.maritalStatus === "Married" ? "filled" : "outlined"
+            localFormData?.maritalStatus === "Married" ? "filled" : "outlined"
           }
         />
         <Chip
+          name="maritalStatus"
           label="Widowed"
           onClick={(e) => handleChipClick(e, "maritalStatus", "Widowed")}
           variant={
-            localFormData.maritalStatus === "Widowed" ? "filled" : "outlined"
+            localFormData?.maritalStatus === "Widowed" ? "filled" : "outlined"
           }
         />
         <Chip
+          name="maritalStatus"
           label="Divorced"
           onClick={(e) => handleChipClick(e, "maritalStatus", "Divorced")}
           variant={
-            localFormData.maritalStatus === "Divorced" ? "filled" : "outlined"
+            localFormData?.maritalStatus === "Divorced" ? "filled" : "outlined"
           }
         />
         <Chip
+          name="maritalStatus"
           label="Other"
           onClick={(e) => handleChipClick(e, "maritalStatus", "Other")}
           variant={
-            localFormData.maritalStatus === "Other" ? "filled" : "outlined"
+            localFormData?.maritalStatus === "Other" ? "filled" : "outlined"
           }
         />
       </Stack>
@@ -163,29 +173,36 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
       </Typography>
       <Stack direction="row" spacing={2} mt={1}>
         <Chip
+        name="category"
           label="General"
           onClick={(e) => handleChipClick(e, "category", "General")}
-          variant={localFormData.category === "General" ? "filled" : "outlined"}
+          variant={
+            localFormData?.category === "General" ? "filled" : "outlined"
+          }
         />
         <Chip
+        name="category"
           label="OBC"
           onClick={(e) => handleChipClick(e, "category", "OBC")}
-          variant={localFormData.category === "OBC" ? "filled" : "outlined"}
+          variant={localFormData?.category === "OBC" ? "filled" : "outlined"}
         />
         <Chip
+        name="category"
           label="SC"
           onClick={(e) => handleChipClick(e, "category", "SC")}
-          variant={localFormData.category === "SC" ? "filled" : "outlined"}
+          variant={localFormData?.category === "SC" ? "filled" : "outlined"}
         />
         <Chip
+        name="category"
           label="ST"
           onClick={(e) => handleChipClick(e, "category", "ST")}
-          variant={localFormData.category === "ST" ? "filled" : "outlined"}
+          variant={localFormData?.category === "ST" ? "filled" : "outlined"}
         />
         <Chip
+        name="category"
           label="Other"
           onClick={(e) => handleChipClick(e, "category", "Other")}
-          variant={localFormData.category === "Other" ? "filled" : "outlined"}
+          variant={localFormData?.category === "Other" ? "filled" : "outlined"}
         />
       </Stack>
 
@@ -208,7 +225,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
             id="outlined-required"
             label="Language"
             name="language"
-            value={localFormData.language || ""}
+            value={localFormData?.language || ""}
             onChange={handleChange}
           />
           <FormControl sx={{ width: "25ch" }}>
@@ -217,7 +234,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
               label="Proficiency"
               id="demo-simple-select"
               name="proficiency"
-              value={localFormData.proficiency || ""}
+              value={localFormData?.proficiency || ""}
               onChange={handleChange}
             >
               <MenuItem value={"Beginner"}>Beginner</MenuItem>
@@ -236,7 +253,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
               control={
                 <Checkbox
                   name="canRead"
-                  checked={localFormData.canRead || false}
+                  checked={localFormData?.canRead || false}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -246,7 +263,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
               control={
                 <Checkbox
                   name="canWrite"
-                  checked={localFormData.canWrite || false}
+                  checked={localFormData?.canWrite || false}
                   onChange={handleCheckboxChange}
                 />
               }
@@ -256,7 +273,7 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
               control={
                 <Checkbox
                   name="canSpeak"
-                  checked={localFormData.canSpeak || false}
+                  checked={localFormData?.canSpeak || false}
                   onChange={handleCheckboxChange}
                 />
               }

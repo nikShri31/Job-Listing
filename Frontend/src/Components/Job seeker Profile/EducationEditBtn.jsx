@@ -1,24 +1,12 @@
-import React, { useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import {
-  ButtonGroup,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  TextField,
-} from "@mui/material";
-// import dateSelect from "../../assets/dateSelect";
+import { TextField } from "@mui/material";
 
 const style = {
   color: "#032340",
@@ -28,7 +16,7 @@ const style = {
 };
 
 export default function EducationEditBtn({ formData, changeData }) {
-  const [localFormData, setLocalFormData] = useState(formData);
+  const [localFormData, setLocalFormData] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +25,10 @@ export default function EducationEditBtn({ formData, changeData }) {
     setLocalFormData(formDetails);
     changeData(formDetails);
   };
+
+  useEffect(() => {
+    if (formData) setLocalFormData(formData);
+  }, [formData]);
 
   return (
     <>
@@ -212,8 +204,8 @@ export default function EducationEditBtn({ formData, changeData }) {
             <TextField
               fullWidth
               id="fullWidth"
-              label="Grade"
               name="grade"
+              value={localFormData?.grade || ""}
               onChange={handleChange}
             />
           </Box>

@@ -1,31 +1,20 @@
-import { Avatar, Box, Container, Grid, Stack, Typography } from "@mui/material";
-import { useState, useEffect, useNavigate } from "react";
+import { Avatar, Box, Container, Stack, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
 import { deepOrange } from "@mui/material/colors";
 import EditBtn from "./BasicEditBtn";
-import axios from "axios";
 
-const BasicDetails = () => {
-  const [userDetails, setUserDetails] = useState({});
+const BasicDetails = ({ userDetails, onDataChange }) => {
+  const [formData, setFormData] = useState(userDetails);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/users/profile",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setUserDetails({ ...response.data.user });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
+    setFormData(userDetails);
+  }, [userDetails]);
+
+  const changeData = (data) => {
+    console.log("Data Changed:", data);
+    setFormData((oldData) => ({ ...oldData, ...data }));
+    onDataChange();
+  };
 
   return (
     <Box
@@ -36,7 +25,6 @@ const BasicDetails = () => {
         alignItems: "center",
         gap: { xs: 4, sm: 8 },
         textAlign: { sm: "center", md: "left" },
-        // backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF)",
         bgcolor: "#CEE5FD",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
@@ -69,9 +57,8 @@ const BasicDetails = () => {
           >
             <Stack direction="row">
               <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-                {userDetails.name || "Name"}
+                {formData?.name || "Name"}
               </Typography>
-              {/*Edit Button */}
               <Box
                 component="span"
                 ml={2}
@@ -79,7 +66,7 @@ const BasicDetails = () => {
                   cursor: "pointer",
                 }}
               >
-                <EditBtn />
+                <EditBtn formData={formData} changeData={changeData} />
               </Box>
             </Stack>
 
@@ -88,10 +75,10 @@ const BasicDetails = () => {
               component="div"
               sx={{ textAlign: "left", color: "grey" }}
             >
-              {userDetails.profile?.role || "Role"}
+              {formData?.workRole || ""}
             </Typography>
 
-            {/*Basic Details */}
+            {/* Basic Details */}
             <Box
               sx={{
                 display: "flex",
@@ -105,22 +92,17 @@ const BasicDetails = () => {
             >
               <Box sx={{}}>
                 <Typography variant="h6" component="div">
-                  {" "}
-                  {userDetails.email}{" "}
+                  {formData?.email || "email"}
                 </Typography>
                 <Typography variant="h6" component="div">
-                  {" "}
-                  {userDetails.phoneNo}{" "}
+                  {formData?.phoneNo || "phoneNo"}
                 </Typography>
                 <Typography variant="h6" component="div">
-                  {" "}
-                  {
-                    userDetails.location || "Location"
-                  }
+                  {formData?.location || ""}
                 </Typography>
               </Box>
             </Box>
-          </Box>{" "}
+          </Box>
         </Box>
       </Container>
     </Box>

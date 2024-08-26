@@ -14,7 +14,7 @@ module.exports.login = async (req, res, next) => {
 }
 
 module.exports.signup = (async (req, res, next) => {
-    const { email, password, role, profile, username, name, phoneNo } = req.body;
+    const { email, password, role, profile, username, name, phoneNo, workRole } = req.body;
     const user = new User({ email, password, role, profile, username, name, phoneNo });
     const createdUser = await user.save();
     const token = generateToken(createdUser);

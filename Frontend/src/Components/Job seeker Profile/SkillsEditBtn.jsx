@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { Autocomplete, Stack, TextField } from "@mui/material";
 import itSkills from "../../assets/itSkills";
-
 
 const style = {
   color: "#032340",
@@ -12,27 +11,31 @@ const style = {
   p: 2,
 };
 
-
 export default function SkillsEditBtn({ formData, changeData }) {
   const [localFormData, setLocalFormData] = useState({
     ...formData,
-    skills: formData.skills || [], // Ensure skills is always an array
+    skills: formData?.skills || [], // Ensure skills is always an array
   });
 
   const handleAutocompleteChange = (event, newValue) => {
-    // Extract the title property from each selected skill and store it as an array of strings
-    const skillTitles = newValue.map(skill => skill.title);
+    const skillTitles = newValue.map((skill) => skill.title);
     const formDetails = { ...localFormData, skills: skillTitles };
     setLocalFormData(formDetails);
     changeData(formDetails);
   };
 
-
+  useEffect(() => {
+    if (formData) setLocalFormData(formData);
+  }, [formData]); 
 
   return (
     <>
       <Box sx={style}>
-        <Typography id="transition-modal-title" variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography
+          id="transition-modal-title"
+          variant="h5"
+          sx={{ fontWeight: "bold" }}
+        >
           Add Skills
         </Typography>
         <Stack spacing={3} sx={{ m: 2 }}>
@@ -44,9 +47,11 @@ export default function SkillsEditBtn({ formData, changeData }) {
             id="tags-standard"
             options={itSkills}
             getOptionLabel={(option) => option.title}
-            value={localFormData.skills.map(title => ({ title }))} // Convert strings back to objects for display
-            onChange={handleAutocompleteChange} // Handle change for the Autocomplete
-            isOptionEqualToValue={(option, value) => option.title === value.title} // Custom equality check
+            value={localFormData?.skills.map((title) => ({ title }))}
+            onChange={handleAutocompleteChange}
+            isOptionEqualToValue={(option, value) =>
+              option.title === value.title
+            }
             renderInput={(params) => (
               <TextField
                 {...params}

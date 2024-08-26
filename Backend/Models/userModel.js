@@ -30,7 +30,7 @@ const userSchema = new Schema({
         type : Number,
         required : true
     },
-    //profile may include : experience, short description, skillset, achievements, role as in web dev or app dev or stuff
+    workRole : String,
     profile: {
         type: Map,
         required: true
@@ -39,10 +39,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Application'
     }],
-    location : {
-        type : String,
-        required : true
-    },
+    location : String,
     notifications: [{
         text: {
             type: String,

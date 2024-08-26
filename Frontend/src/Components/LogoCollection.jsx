@@ -1,12 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-
 import { styled, keyframes } from "@mui/material";
 
 const logos = [
-  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/6560628889c3bdf1129952dc_Sydney-black.svg",
   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4d4d8b829a89976a419c_Bern-black.svg",
   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f467502f091ccb929529d_Montreal-black.svg",
   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e911fa22f2203d7514c_TerraDark.svg",
@@ -17,7 +14,7 @@ const logos = [
 const logoStyle = {
   width: "100px",
   height: "80px",
-  margin: "0 32px",
+  margin: "0 16px",
   opacity: 0.7,
 };
 
@@ -30,13 +27,10 @@ const scroll = keyframes`
   }
 `;
 
-// Styled component for the logo container
 const LogoContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
-  width: "max-content", // Ensures the container is only as wide as its content
-  overflow: "hidden", // Prevents overflow issues within the container
+  width: "max-content",
   animation: `${scroll} 20s linear infinite`,
 }));
 
@@ -48,47 +42,43 @@ export default function LogoCollection() {
         py: 4,
         backgroundImage: "linear-gradient(100deg, #94DCFB, #FFF)",
         overflowX: "hidden",
-        display: { xs: "none" , md:'block' },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
       }}
     >
-      <Typography
-        component="p"
-        variant="subtitle2"
-        align="center"
-        color="text.secondary"
-      >
-        Trusted by the best companies
-      </Typography>
-      <Grid container justifyContent="center" sx={{ mt: 5, opacity: 0.8 }}>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%", // Makes sure it takes up the full width of the container
-            overflowX: "hidden", // Prevents horizontal scroll within the container
-          }}
+      <Box sx={{ maxWidth: "100%", overflowX: "hidden" }}>
+        <Typography
+          component="p"
+          variant="subtitle2"
+          align="center"
+          color="text.secondary"
+          sx={{ mb: 4 }}
         >
-          <LogoContainer>
-            {logos.map((logo, index) => (
-              <Grid item key={index}>
-                <img
-                  src={logo}
-                  alt={`Fake company number ${index + 1}`}
-                  style={logoStyle}
-                />
-              </Grid>
-            ))}
-            {logos.map((logo, index) => (
-              <Grid item key={`${index}-duplicate`}>
-                <img
-                  src={logo}
-                  alt={`Logo ${index + 1} duplicate`}
-                  style={logoStyle}
-                />
-              </Grid>
-            ))}
-          </LogoContainer>
-        </Box>
-      </Grid>
+          Trusted by the best companies
+        </Typography>
+        <LogoContainer>
+          {logos.map((logo, index) => (
+            <Box key={index} sx={{ flexShrink: 0 }}>
+              <img
+                src={logo}
+                alt={`Fake company number ${index + 1}`}
+                style={logoStyle}
+              />
+            </Box>
+          ))}
+          {logos.map((logo, index) => (
+            <Box key={`${index}-duplicate`} sx={{ flexShrink: 0 }}>
+              <img
+                src={logo}
+                alt={`Logo ${index + 1} duplicate`}
+                style={logoStyle}
+              />
+            </Box>
+          ))}
+        </LogoContainer>
+      </Box>
     </Box>
   );
 }

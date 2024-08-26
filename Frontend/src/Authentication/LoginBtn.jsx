@@ -50,7 +50,7 @@ const LoginBtn = ({role,variant}) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Auth role={role}/>
+            <Auth role={role === "Organisation" ? "Organisation" : "Login"}/>
           </Box>
         </Fade>
       </Modal>

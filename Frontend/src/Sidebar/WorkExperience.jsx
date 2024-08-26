@@ -1,5 +1,5 @@
 import React from 'react'
-import InputField from '../Home components/InputField'
+import InputField from '../HomeComponents/InputField'
 import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
 
 const WorkExperience = ({handleChange}) => {

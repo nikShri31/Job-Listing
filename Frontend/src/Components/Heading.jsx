@@ -1,19 +1,16 @@
-import * as React from 'react';
-
+import {useState, useEffect} from "react"
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import LoginBtn from '../Authentication/LoginBtn';
+import LoginBtn from "../Authentication/LoginBtn"
 
 export default function Heading() {
-  const [displayedText, setDisplayedText] = React.useState('');
+  const [login, setLogin] = useState(false)
+  const [displayedText, setDisplayedText] = useState('');
   const fullText ='!!Get Your DREAM JOB!!'
 
-  React.useEffect(()=>{
+  useEffect(()=>{
     let index =0;
     const typingInterval = setInterval(()=>{
       if(index < fullText.length){
@@ -109,14 +106,10 @@ export default function Heading() {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-           
-            <Button href ="#" variant="outlined" color="primary">
-              Login to Get Started 
-            </Button>
+           <LoginBtn role="Login to get started" variant={"outlined"}/>
           </Stack>
          
         </Stack>
-     
       </Container>
     </Box>
   );

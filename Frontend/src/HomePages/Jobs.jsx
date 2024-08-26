@@ -2,8 +2,7 @@ import { Box } from "@mui/material";
 
 const Jobs = ({ result }) => {
   return (
-    <Box >
-    
+    <Box>
       <Box className="card-container">{result}</Box>
     </Box>
   );
@@ -11,6 +10,8 @@ const Jobs = ({ result }) => {
 
 export default Jobs;
 
-{/* <Box>
+{
+  /* <Box>
      <Typography variant="h4" sx={{mb:2, fontWeight:'bold'}}>{result.length} Jobs</Typography>
-     </Box> */}
+     </Box> */
+}

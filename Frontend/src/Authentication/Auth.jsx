@@ -27,7 +27,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Job Finder
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -83,7 +83,7 @@ const Auth = ({role}) => {
               <LockOutlinedIcon />
             </Avatar>
 
-            {isLogin ? <Login role={role}/> : role === "Individual" ? <Signup/> : <SignupOrg/>}
+            {isLogin ? <Login role={role}/> : role === "Individual" ? <SignupOrg/> : <Signup/>}
           </Box>
 
           <Grid container>

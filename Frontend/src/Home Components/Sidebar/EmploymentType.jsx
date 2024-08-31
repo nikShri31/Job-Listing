@@ -1,5 +1,5 @@
 import React from "react";
-import InputField from "../HomeComponents/InputField";
+
 import {
   Box,
   FormControl,
@@ -9,34 +9,40 @@ import {
   Typography,
 } from "@mui/material";
 
-const WorkExperience = ({ handleChange }) => (
+const EmploymentType = ({ handleChange }) => (
   <Box sx={{ color: "#032B53" }}>
     <Typography variant="h5" sx={{ my: 2 }}>
-      Work Experience
+      Employment Type
     </Typography>
     <Box>
       <FormControl>
         <RadioGroup onChange={handleChange}>
-          <FormControlLabel value="" control={<Radio />} label="Any" />
+          <FormControlLabel value="Any" control={<Radio />} label="Any" />
           <FormControlLabel
-            value="Internship"
-            title="Internship"
+            value="full-time"
+            title="Full-time"
             name="test"
             control={<Radio />}
-            label="Fresher"
+            label="Full-Time"
           />
           <FormControlLabel
-            value="Work remotely"
-            title="Work remotely"
+            value="temporary"
+            title="Temporary"
             name="test"
             control={<Radio />}
-            label="1+ Year"
+            label="Internship"
           />
-        
+          <FormControlLabel
+            value="part-time"
+            title="Part-time"
+            name="test"
+            control={<Radio />}
+            label="Part-Time"
+          />
         </RadioGroup>
       </FormControl>
     </Box>
   </Box>
 );
 
-export default WorkExperience;
+export default EmploymentType;

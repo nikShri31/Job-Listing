@@ -1,6 +1,6 @@
 // import { Input } from "postcss";
 import React from "react";
-import InputField from "../HomeComponents/InputField";
+
 import { Box, Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
 
 const Location = ({handleChange}) => {

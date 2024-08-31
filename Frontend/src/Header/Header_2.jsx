@@ -174,7 +174,7 @@ function Header_2() {
               <Button sx={headingStyles} onClick={() => navigate("/home")}>
                 Home
               </Button>
-              <Button sx={headingStyles}>MyJobs</Button>
+              <Button sx={headingStyles} onClick={() => navigate("/dashboard")}>MyJobs</Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -185,7 +185,7 @@ function Header_2() {
                     aria-label="show 17 new notifications"
                     color="text.primary"
                   >
-                    <Badge badgeContent={2} color="error">
+                    <Badge badgeContent={""}  color="error">
                       <NotificationsIcon />
                     </Badge>
                   </IconButton>

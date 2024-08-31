@@ -40,7 +40,7 @@ export default function LogoCollection() {
       id="logoCollection"
       sx={{
         py: 4,
-        backgroundImage: "linear-gradient(100deg, #94DCFB, #FFF)",
+        backgroundImage: "linear-gradient(0deg, #CEE5FD, #FFF)",
         overflowX: "hidden",
         display: "flex",
         alignItems: "center",

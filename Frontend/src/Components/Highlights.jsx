@@ -63,7 +63,7 @@ export default function Highlights() {
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
         color: "white",
-        backgroundImage: "linear-gradient(90deg, #CEE5FD, #FFF ,#CEE5FD)",
+        backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF ,#CEE5FD)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
         width: "100%",
@@ -77,10 +77,10 @@ export default function Highlights() {
             mb: 4,
           }}
         >
-          <Typography component="h2" variant="h4" color={"grey"}>
+          <Typography component="h2" variant="h4" color={"grey"} >
             Highlights
           </Typography>
-          <Typography variant="body1" sx={{ color: "black" }}>
+          <Typography variant="body1" sx={{ color: "black",my:3 }}>
             Explore all the top opportunities, Excel your Career, Grow your
             skills with US !!!
           </Typography>

@@ -58,6 +58,7 @@ const JobOverview = {
 };
 
 const JobDesc = () => {
+
   const navigate = useNavigate()
   const handleApply = () => {
     navigate("/home")
@@ -97,13 +98,14 @@ const JobDesc = () => {
           }}
         >
           <Box sx={{ width: { xs: "100%", sm: "80%" }, ml: { xs: 1, sm: 4 } }}>
-            <Box sx={{ m: 4 }}>
+            <Box sx={{ m: 4,border:'2px solid red' }}>
               <Grid
                 container
                 spacing={1}
                 sx={{
                   maxWidth: { xs: "270px", sm: "none" },
                   border: "1px solid white",
+                  border:'2px solid green',
                   backgroundImage: "linear-gradient(90deg,#CEE5FD,white)",
                   transition: "box-shadow 0.3s ease-in-out",
                   "&:hover": {

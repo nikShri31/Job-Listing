@@ -1,30 +1,48 @@
-import React from 'react'
-import InputField from '../HomeComponents/InputField'
-import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import React from "react";
+import InputField from "../HomeComponents/InputField";
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 
-const EmploymentType = ({handleChange}) => {
-  
-  return (
-    <Box sx={{color: "#032B53"}}>
-    <Typography variant='h5' sx={{m:2,}}>Eployment Type</Typography>
- <Box>
- <FormControl>
-  <RadioGroup
-   aria-labelledby="emp-radio-buttons-group"
-   name="emp-radio-buttons-group"
-   
-   onChange={handleChange}
- >
-   <FormControlLabel value="Any" control={<Radio />} label="Any" />
-   <FormControlLabel value="fullTime" control={<Radio />} label="Full-Time" />
-   <FormControlLabel value="intern" control={<Radio />} label="Internship" />
-   <FormControlLabel value="partTime" control={<Radio />} label="Part-Time" />
-   
- </RadioGroup>
-</FormControl>
- </Box>
-</Box>
-  )
-}
+const EmploymentType = ({ handleChange }) => (
+  <Box sx={{ color: "#032B53" }}>
+    <Typography variant="h5" sx={{ my: 2 }}>
+      Employment Type
+    </Typography>
+    <Box>
+      <FormControl>
+        <RadioGroup onChange={handleChange}>
+          <FormControlLabel value="Any" control={<Radio />} label="Any" />
+          <FormControlLabel
+            value="full-time"
+            title="Full-time"
+            name="test"
+            control={<Radio />}
+            label="Full-Time"
+          />
+          <FormControlLabel
+            value="temporary"
+            title="Temporary"
+            name="test"
+            control={<Radio />}
+            label="Internship"
+          />
+          <FormControlLabel
+            value="part-time"
+            title="Part-time"
+            name="test"
+            control={<Radio />}
+            label="Part-Time"
+          />
+        </RadioGroup>
+      </FormControl>
+    </Box>
+  </Box>
+);
 
 export default EmploymentType;

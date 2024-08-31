@@ -122,6 +122,7 @@ function Header() {
                 ))}
               </Box>
             </Box>
+
             {/*Login Modal */}
             <Box
               sx={{
@@ -134,10 +135,11 @@ function Header() {
                 },
               }}
             >
-              <LoginBtn role="Individual" variant={"contained"} />
-              <LoginBtn role="Organisation" variant={"contained"} />
+              <LoginBtn role="Individual" variant={"outlined"} bgColor={"grey"}/>
+              <LoginBtn role="Organisation" variant={"outlined"} bgColor={"black"}/>
             </Box>
-
+          
+{/** App Drawer for small screens */}
             <Box sx={{ display: { sm: "", md: "none" } }}>
               <Button
                 variant="text"

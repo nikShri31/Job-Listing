@@ -50,3 +50,5 @@ const itSkills = [
     { title: 'Scala' }
   ];
 export default itSkills ; 
+
+

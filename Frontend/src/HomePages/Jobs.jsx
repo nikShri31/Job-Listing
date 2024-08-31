@@ -1,4 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import JobCard from "../HomeComponents/Card"; // Assuming you have a JobCard component
+
 
 const Jobs = ({ result }) => {
   return (

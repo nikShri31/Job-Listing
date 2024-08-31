@@ -18,7 +18,7 @@ const style = {
  scrollbarWidth: "none",
   overflowY: "scroll",
 };
-const LoginBtn = ({role,variant}) => {
+const LoginBtn = ({role,variant,bgColor}) => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -30,9 +30,7 @@ const LoginBtn = ({role,variant}) => {
         size="small"
         component="a"
         onClick={handleOpen}
-        sx={{
-          color: pink[800],
-        }}
+        sx={{ backgroundColor:'#032B53', color:'white' }} 
       >
         {role}
       </Button>

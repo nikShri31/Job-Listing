@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Backdrop from "@mui/material/Backdrop";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {
-  Autocomplete,
-  ButtonGroup,
-  Chip,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -18,10 +11,8 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Stack,
   TextField,
 } from "@mui/material";
-import itSkills from "../../assets/itSkills";
 
 const style = {
   color: "#032340",
@@ -33,7 +24,7 @@ const style = {
 export default function ExpEditBtn({ formData, changeData }) {
   const [localFormData, setLocalFormData] = useState({
     ...formData,
-    employment: "",
+    employment: "Working",
     employmentType: "",
     experience: 0,
     employmentRecord: {

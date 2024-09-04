@@ -16,7 +16,7 @@ const style = {
 };
 
 export default function EducationEditBtn({ formData, changeData }) {
-  const [localFormData, setLocalFormData] = useState({});
+  const [localFormData, setLocalFormData] = useState({...formData});
 
   const handleChange = (e) => {
     const { name, value } = e.target;

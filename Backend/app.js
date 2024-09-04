@@ -14,7 +14,7 @@ const organisationRoutes = require('./Routes/organisationRoutes');
 
 const port = process.env.PORT;
 
-mongoose.connect(process.env.mongoUrl)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log('Connected!'))
 
 app.use(cors());

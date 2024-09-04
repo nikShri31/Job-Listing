@@ -62,7 +62,6 @@ export default function EditBtn({ formData, changeData }) {
     };
 
     try {
-      // Send PATCH request to update data on the server
       await axios.patch(
         "http://localhost:5000/api/users/profile",
         {

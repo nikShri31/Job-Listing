@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import RightDrawer from "./RightDrawer";
+import { useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUserSelectedJobId } from "../store/appliedJobsSlice";
 
 const logoStyle = {
   width: "50px",
@@ -28,6 +31,8 @@ const Home = () => {
   const itemsPerPage = 6;
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
+
+  const { id } = useParams();
 
   useEffect(() => {
     fetch("jobs.json")
@@ -48,9 +53,10 @@ const Home = () => {
     setQuery(event.target.value);
   };
 
-  // ------------ Filter by Job Title -----
+  // ------------ Filter items in search bar  -----
   const filteredItems = jobs.filter((job) =>
-    job.jobTitle.toLowerCase().includes(query.toLowerCase())
+    job.jobTitle.toLowerCase().includes(query.toLowerCase()) ||
+  job.jobLocation.toLowerCase().includes(query.toLowerCase())
   );
 
   // ----------- Radio Filtering -----------
@@ -83,6 +89,8 @@ const Home = () => {
 
     // Applying selected category filter
     if (selected) {
+      const selectedDate = new Date(selected); 
+
       const lowerCaseSelected =
         typeof selected === "string" ? selected.toLowerCase() : "";
       filteredJobs = filteredJobs.filter(
@@ -93,14 +101,21 @@ const Home = () => {
           maxPrice,
           postingDate,
           employmentType,
-        }) =>
+        }) =>{
+            // Convert job posting date to a Date object
+        const jobPostingDate = new Date(postingDate);
+
+        // Check if the jobPostingDate is greater than or equal to the selectedDate
+        const isDateValid = jobPostingDate >= selectedDate;
+       return(
           jobLocation.toLowerCase() === lowerCaseSelected ||
-          postingDate === selected ||
+         isDateValid||
           (!isNaN(parseInt(maxPrice)) &&
             parseInt(maxPrice) <= parseInt(selected)) ||
           salaryType.toLowerCase() === lowerCaseSelected ||
           experienceLevel.toLowerCase() === lowerCaseSelected ||
           employmentType.toLowerCase() === lowerCaseSelected
+       )}  
       );
     }
 
@@ -136,27 +151,60 @@ const Home = () => {
   // Drawer States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const selectedJobId = useSelector((state) => state.appliedJobs.userSelectedJobId);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selectedJobId) {
+      const pageNumber = findPageForJob(selectedJobId, jobs);
+      if (pageNumber !== -1 && pageNumber !== currentPage) {
+        setCurrentPage(pageNumber);
+      } else {
+        const job = jobs.find((job) => job.id === selectedJobId);
+        if (job) {
+          setSelectedJob(job);
+          setIsDrawerOpen(true); // Open the drawer
+          dispatch(clearUserSelectedJobId()); // Clear the selected job ID after use
+        }
+      }
+    }
+  }, [selectedJobId, jobs, currentPage, dispatch]);
+  
+  const findPageForJob = (jobId, jobs) => {
+    const index = jobs.findIndex((job) => job.id === jobId);
+    if (index === -1) return -1; // Job not found
+    return Math.floor(index / itemsPerPage) + 1;
+  };
   // const [appliedJobs, setAppliedJobs] = useState({});
   // const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [isButtonReset, setButtonReset] = useState(false);
+ // const [isButtonReset, setButtonReset] = useState(false);
+
+//  const location = useLocation();
+
+//  useEffect(() => {
+//    const params = new URLSearchParams(location.search);
+//    const jobId = params.get('jobId');
+//    if (jobId) {
+//      const job = jobs.find(j => j.id === jobId);
+//      if (job) {
+//        setSelectedJob(job);
+//        setIsDrawerOpen(true);
+//      }
+//    }
+//  }, [location, jobs]);
+
 
   const handleCardClick = (job) => {
-    if (selectedJob && selectedJob._id !== job._id) {
-      setButtonReset(true);
-    }
     setSelectedJob(job);
     setIsDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
-    setButtonReset(false);
+    //setButtonReset(false);
   };
 
-  // const handleApply = (jobId) => {
-  //   setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
-  //   setSnackbarOpen(true);
-  // };
+  
 
   // Random skills
  const getRandomSkills = (skillsArray, numOfSkills)=> {
@@ -212,7 +260,7 @@ const Home = () => {
               fullWidth
               size="small"
               variant="outlined"
-              placeholder="Search..."
+              placeholder="Search.... job Location / job Profile..."
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -278,16 +326,19 @@ const Home = () => {
       </Grid>
 
       {/* Drawer Component */}
+      <Box>
+      
       <RightDrawer
         isDrawerOpen={isDrawerOpen}
         //appliedJobs={appliedJobs}
         selectedJob={selectedJob}
       //  snackbarOpen={snackbarOpen}
-        isButtonReset={isButtonReset}
+        //isButtonReset={isButtonReset}
         handleDrawerClose={handleDrawerClose}
        // handleApply ={handleApply }
         getRandomSkills={getRandomSkills}
       />
+      </Box>
     </Box>
   );
 };

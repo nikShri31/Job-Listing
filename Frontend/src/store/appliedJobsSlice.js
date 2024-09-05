@@ -1,20 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  jobs: [],
+  userAppliedJobs: [], //  applied jobs list
+  userSelectedJobId: null, // For storing the job selected for viewing details
 };
-
 const appliedJobsSlice = createSlice({
-  name: 'appliedJobs',
+  name: "appliedJobs",
   initialState,
   reducers: {
-    applyJob: (state, action) => {
-      state.jobs.push(action.payload);
+    setUserAppliedJobs: (state, action) => {
+      const existingJob = state.userAppliedJobs.find(
+        (job) => job.id === action.payload.id
+      );
+      if (!existingJob) {
+        state.userAppliedJobs.push(action.payload);
+      }
+    },
+    setUserSelectedJobId: (state, action) => {
+      state.userSelectedJobId = action.payload;
+    },
+    clearUserSelectedJobId(state) {
+      state.userSelectedJobId = null;
     },
   },
 });
 console.log(appliedJobsSlice);
 
-
-export const { applyJob } = appliedJobsSlice.actions;
+export const { setUserAppliedJobs, setUserSelectedJobId, clearUserSelectedJobId } =
+  appliedJobsSlice.actions;
 export default appliedJobsSlice.reducer;

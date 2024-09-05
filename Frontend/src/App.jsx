@@ -3,10 +3,10 @@ import "./App.css";
 
 import { Outlet } from "react-router-dom";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Header_2 from "./Header/Header_2";
 import Footer from "./Footer/Foooter";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,9 @@ function App() {
     <>
       <Header_2/>
       <main>
-        <Outlet />
+      <Suspense fallback={<Typography variant="h2"> Loading ...</Typography>}>
+      <Outlet />
+      </Suspense>
       </main>
       <Footer />
     </>

@@ -28,13 +28,13 @@ const Salary = ({ handleChange }) => (
             label="Any"
           />
           <FormControlLabel
-            value={30}
+            value={40}
             name="test2"
             control={<Radio />}
             label="<5 LPA"
           />
           <FormControlLabel
-            value={50}
+            value={70}
             name="test2"
             control={<Radio />}
             label="<10 LPA"

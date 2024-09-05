@@ -25,17 +25,18 @@ const BasicDetails = ({ userDetails, onDataChange }) => {
         alignItems: "center",
         gap: { xs: 4, sm: 8 },
         textAlign: { sm: "center", md: "left" },
-        bgcolor: "#CEE5FD",
+        backgroundImage: "linear-gradient(0deg, #E3F0FE, #E3F0FE)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Container sx={{ minHeight: "50vh", mt: 8, border: "3px solid white" }}>
+      <Container sx={{ minHeight: "50vh", mt: 8, border: "3px solid white", bgcolor: "#CEE5FD", }}>
         <Box
           mt={5}
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
+            
           }}
         >
           <Avatar

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 //import App from './App.jsx'
 import "./index.css";
@@ -13,10 +13,12 @@ import {
 } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage";
 import HomePage from "./Pages/HomePage";
-import Dashboard from "./Pages/Dashboard";
+//import Dashboard from "./Pages/Dashboard";
 import AccountPage from "./Pages/AccountPage";
 import JD from "./Pages/Jd_Page";
 import LandingPage from "./Pages/LandingPage";
+
+const Dashboard = lazy(()=> import("./Pages/DashboardPage"));
 
 import { store } from "./store/store";
 import { Provider } from 'react-redux';
@@ -26,6 +28,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
      <Route path="/" element={<LandingPage />}/>
       <Route path="/Home" element={<HomePage />} />
+   
       <Route path="/jd" element={<JD />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<ProfilePage />} />

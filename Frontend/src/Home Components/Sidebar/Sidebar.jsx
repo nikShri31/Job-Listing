@@ -1,5 +1,5 @@
 import React from "react";
-import Location from "./Location";
+//import Location from "./Location";
 import Salary from "./Salary";
 import JobPostingData from "./JobPostingData";
 import WorkExperience from "./WorkExperience";
@@ -11,7 +11,7 @@ const Sidebar = ({ handleChange, handleClick }) => (
     <Typography variant="h3" sx={{ mb: 3 }}>
       Filters
     </Typography>
-    <Location handleChange={handleChange}/>
+   
     <Salary handleChange={handleChange} handleClick={handleClick}/>
     <JobPostingData handleChange={handleChange}/>
     <WorkExperience handleChange={handleChange}/>

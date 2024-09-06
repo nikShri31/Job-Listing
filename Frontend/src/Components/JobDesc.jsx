@@ -104,7 +104,6 @@ const JobDesc = () => {
                 spacing={1}
                 sx={{
                   maxWidth: { xs: "270px", sm: "none" },
-                  border: "1px solid white",
                   border:'2px solid green',
                   backgroundImage: "linear-gradient(90deg,#CEE5FD,white)",
                   transition: "box-shadow 0.3s ease-in-out",

@@ -1,173 +1,171 @@
-import React, {useState, useEffect} from "react";
-import Backdrop from "@mui/material/Backdrop";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {
-  Autocomplete,
-  ButtonGroup,
-  Checkbox,
+  Button,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
+  IconButton,
+  Divider,
 } from "@mui/material";
-import itSkills from "../../assets/itSkills";
-import EditIcon from "@mui/icons-material/Edit";
-
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const style = {
   color: "#032340",
   width: "80%",
-
   p: 2,
 };
 
+export default function AddProjectsBtn({ formData, changeData }) {
+  const [projects, setProjects] = useState(
+    formData?.projects || [
+      { title: "", progress: "", description: "", role: "" },
+    ]
+  );
 
-export default function AddProjectsBtn({formData, changeData}) {
-  
-  const [localFormData, setLocalFormData] = useState(formData);
+  const handleChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedProjects = [...projects];
+    updatedProjects[index] = { ...updatedProjects[index], [name]: value };
 
-  const handleChange = (e) =>{
-    const {name, value} = e.target;
-    const formDetails = {...localFormData, [name] : value};
-    
-    setLocalFormData(formDetails);
-    changeData(formDetails);
-  }
-  
+    setProjects(updatedProjects);
+    changeData({ projects: updatedProjects });
+  };
+
+  const addProject = () => {
+    setProjects([
+      ...projects,
+      { title: "", progress: "", description: "", role: "" },
+    ]);
+  };
+
+  const removeProject = (index) => {
+    const updatedProjects = projects.filter((_, i) => i !== index);
+    setProjects(updatedProjects);
+    changeData({ projects: updatedProjects });
+  };
+
   useEffect(() => {
-    if(formData) setLocalFormData(formData);
+    setProjects(
+      formData?.projects || [
+        { title: "", progress: "", description: "", role: "" },
+      ]
+    );
   }, [formData]);
 
   return (
-    <>
-      <Box sx={style}>
-      <Typography id="transition-modal-title"variant="h5"  sx={{ fontWeight:'bold',}}>
-      Add Projects
+    <Box sx={style}>
+      <Typography
+        id="transition-modal-title"
+        variant="h5"
+        sx={{ fontWeight: "bold", mb: 2 }}
+      >
+        Add Projects
       </Typography>
 
-        {/**Project Title */}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-          Project Title
-        </Typography>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "80%" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField required id="outlined-required" label="Title" name="title" value={localFormData?.title || "" }onChange={handleChange}/>
-        </Box>
+      {projects.map((project, index) => (
+        <Box key={index} sx={{ mb: 3 }}>
+          {/* Divider between projects */}
+          {index > 0 && <Divider sx={{ my: 3 }} />}
 
-        {/**Project Status */}
-
-        <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Status</FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="progress"
-            value={localFormData?.progress || ""}
-            onChange={handleChange}
+          {/* Project Title Heading */}
+          <Typography
+            id={`project-heading-${index}`}
+            variant="h6"
+            sx={{ fontWeight: "bold", mt: 2, mb: 1 }}
           >
-            <FormControlLabel
-              value="process"
-              control={<Radio />}
-              label="In Process"
+            Project {index + 1}
+          </Typography>
+
+          {/* Flex container for Title input and Remove button */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+            <TextField
+              required
+              id={`title-${index}`}
+              label="Title"
+              name="title"
+              value={project?.title || ""}
+              onChange={(e) => handleChange(index, e)}
+              sx={{ flex: 1, mt: 1, mr: 2 }}
             />
-            <FormControlLabel
-              value="Finished"
-              control={<Radio />}
-              label="Finished"
-            />
-          </RadioGroup>
-        </FormControl>
+            {/* Button to remove this project */}
+            {projects.length > 1 && (
+              <IconButton
+                aria-label="delete"
+                onClick={() => removeProject(index)}
+                color="error"
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </Box>
 
-        {/**Project Worked From */}
-        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-          Duration
-        </Typography>
-
-        <FormControl required sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-required-label">Year</InputLabel>
-          <Select
-            labelId="demo-simple-select-required-label"
-            id="demo-simple-select-required"
-            value={age}
-            label="Age *"
-            onChange={handleChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Required</FormHelperText>
-        </FormControl> */}
-
-        {/**Worked Till */}
-        {/* <FormControl required sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-required-label">Year</InputLabel>
-          <Select
-            labelId="demo-simple-select-required-label"
-            id="demo-simple-select-required"
-            value={age}
-            label="Age *"
-            onChange={handleChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <FormHelperText>Required</FormHelperText>
-        </FormControl> */}
-
-        {/**Description*/}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-          Description
-        </Typography>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "80%" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
+          {/* Role Input */}
+          <Typography id={`role-label-${index}`} sx={{ mt: 2 }}>
+            Role
+          </Typography>
           <TextField
-            id="outlined-multiline-flexible"
-            label="Multiline"
-            name="description"
-            value={localFormData?.description || ""}
-            onChange={handleChange}
-            multiline
+            required
+            id={`role-${index}`}
+            label="Role"
+            name="role"
+            value={project?.role || ""}
+            onChange={(e) => handleChange(index, e)}
+            sx={{ mt: 1, width: "100%" }}
           />
-        </Box>  
-        
-        {/**Role */}
-        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-          Role
-        </Typography>
-        <TextField required id="outlined-required" sx={{mx:1}} value={localFormData?.role || ""} label="Role" name="role" onChange={handleChange}/>
-      </Box>
-    </>
+
+          {/* Progress/Status */}
+          <FormControl sx={{ mt: 2 }}>
+            <FormLabel id={`status-label-${index}`}>Status</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby={`status-label-${index}`}
+              name="progress"
+              value={project?.progress || ""}
+              onChange={(e) => handleChange(index, e)}
+            >
+              <FormControlLabel
+                value="process"
+                control={<Radio />}
+                label="In Process"
+              />
+              <FormControlLabel
+                value="Finished"
+                control={<Radio />}
+                label="Finished"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          {/* Description Input */}
+          <Typography id={`description-label-${index}`} sx={{ mt: 2 }}>
+            Description
+          </Typography>
+          <TextField
+            id={`description-${index}`}
+            label="Description*"
+            name="description"
+            value={project?.description || ""}
+            onChange={(e) => handleChange(index, e)}
+            multiline
+            sx={{ mt: 1, width: "100%" }}
+          />
+        </Box>
+      ))}
+
+      {/* Button to add a new project */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={addProject}
+        sx={{ mt: 2 }}
+      >
+        Add Project
+      </Button>
+    </Box>
   );
 }

@@ -33,7 +33,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <Box sx={{ color: "#084C91" }}>
+    <Box >
       <BasicDetails userDetails={userDetails} onDataChange={handleDataChange} />
       <CareerDetails userDetails={userDetails.profile} />
     </Box>

@@ -3,18 +3,18 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const options = [
  'View and Manage Details',
- 'Withdraw Application',
- 'Report Job'
  
 ];
 
 const ITEM_HEIGHT = 48;
 
-export default function ThreeDotMenu() {
+export default function ThreeDotMenu({handleViewDetails ,job}) {
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -49,7 +49,7 @@ export default function ThreeDotMenu() {
             sx: {
               overflow: 'visible',
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
+              mt: 1,
               
               '&::before': {
                 content: '""',
@@ -65,12 +65,14 @@ export default function ThreeDotMenu() {
               },
             },
           }}
-          transformorigin={{ horizontal: 'right', vertical: 'top' }}
-          anchororigin={{ horizontal: 'right', vertical: 'bottom' }}
+          transformorigin={{ horizontal: 'left', vertical: 'top' }}
+          anchororigin={{ horizontal: 'left', vertical: 'bottom' }}
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
+          <MenuItem key={option} onClick={handleClose}>
+           <Button sx={{m:-1,}} onClick={()=> handleViewDetails(job.id)} >
+           {option}
+           </Button>
           </MenuItem>
         ))}
       </Menu>

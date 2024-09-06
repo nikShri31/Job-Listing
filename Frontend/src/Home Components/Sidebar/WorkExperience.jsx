@@ -19,15 +19,15 @@ const WorkExperience = ({ handleChange }) => (
         <RadioGroup onChange={handleChange}>
           <FormControlLabel value="" control={<Radio />} label="Any" />
           <FormControlLabel
-            value="Internship"
-            title="Internship"
+            value="Fresher"
+            title="Fresher"
             name="test"
             control={<Radio />}
             label="Fresher"
           />
           <FormControlLabel
-            value="Work remotely"
-            title="Work remotely"
+            value="1"
+            title="1"
             name="test"
             control={<Radio />}
             label="1+ Year"

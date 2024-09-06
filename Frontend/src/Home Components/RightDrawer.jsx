@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Alert,
   Box,
   Button,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Drawer,
   Grid,
   InputAdornment,
@@ -21,39 +26,101 @@ import PlaceIcon from "@mui/icons-material/Place";
 import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
 import BusinessIcon from "@mui/icons-material/Business";
 
-import { useDispatch } from 'react-redux';
-import { applyJob } from "../store/appliedJobsSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserAppliedJobs } from "../store/appliedJobsSlice";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { styled, useTheme } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-const logoStyle = {
-    width: "50px",
-    height: "50px",
-    margin: "0 15px",
-    opacity: 0.8,
-  };
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 1,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
+
+// const logoStyle = {
+//     width: "50px",
+//     height: "50px",
+//     margin: "0 15px",
+//     opacity: 0.8,
+//   };
+  const chipStyle={
+      mt: 2,
+      mx: 1,
+        // Increase padding for a larger chip
+      fontSize: "1rem",  // Increase the font size
+      height: "auto",  // Allow the height to auto-adjust based on content
+      color: "grey",
+      '& .MuiChip-label': {
+        fontSize: "1.1rem",  // Increase the font size of the label specifically
+      }
+  }
   
 
 const RightDrawer = ({
   isDrawerOpen,
   selectedJob,
-  isButtonReset,
   handleDrawerClose,
   getRandomSkills
 }) => {
 
-    const [appliedJobs, setAppliedJobs] = useState({});
-    const [snackbarOpen, setSnackbarOpen] = useState(false);   
+//     const [appliedJobs, setAppliedJobs] = useState({});
+//     const [snackbarOpen, setSnackbarOpen] = useState(false);   
+//      const dispatch = useDispatch();
+//     // const userSelectedJob = useSelector((state) => state.appliedJobs.userSelectedJob);
 
-    const dispatch = useDispatch();
+// // useEffect(() => {
+// //   if (userSelectedJob) {
+// //     // Open the drawer with the selected job details
+// //     openJobDetailsDrawer(userSelectedJob);
+// //   }
+// // }, [userSelectedJob]);
 
-    const handleApply = (jobId) => {
-        setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
-        setSnackbarOpen(true);
-        dispatch(applyJob(selectedJob));
-      };
+//     const handleApply = (jobId) => {
+//         setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
+//         setSnackbarOpen(true);
+//        dispatch(setUserAppliedJobs(selectedJob));
+//       };
+
+const [snackbarOpen, setSnackbarOpen] = useState(false);
+const dispatch = useDispatch();
+
+const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleClickOpen = () => {
+    setResumeBoxOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setResumeBoxOpen(false);
+  };
+
+// Get the applied jobs from Redux store
+const appliedJobs = useSelector((state) =>
+  state.appliedJobs.userAppliedJobs.map((job) => job?.id )
+);
+
+// Check if the current job has already been applied
+const isJobApplied = appliedJobs.includes(selectedJob?.id);
+
+const handleApply = (jobId) => {
+  if (!isJobApplied) {
+    dispatch(setUserAppliedJobs(selectedJob));
+    setSnackbarOpen(true);
+    setResumeBoxOpen(false);
+  }
+};
+
     
-
-  
-  return (
+return (
     <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
       <Box sx={{ width: 500, py: 4, px: 3 }}>
         {selectedJob && (
@@ -175,7 +242,7 @@ const RightDrawer = ({
                   <Chip
                     key={index}
                     label={skill}
-                    sx={{ mt: 1, mx: 0.5, p: 1, color: "grey" }}
+                    sx={chipStyle}
                   />
                 ))}
               </Box>
@@ -209,8 +276,7 @@ const RightDrawer = ({
               </List>
             </Box>
 
-            {/* Apply Button */}
-
+           {/* Apply Button */}
             <Box
               sx={{
                 mt: "auto",
@@ -223,25 +289,131 @@ const RightDrawer = ({
               }}
             >
               <Button
-                variant="contained"
-                fullWidth
-                color={
-                  appliedJobs[selectedJob._id] && !isButtonReset
-                    ? "success"
-                    : "primary"
-                }
-                onClick={() => handleApply(selectedJob.id)}
-                disabled={appliedJobs[selectedJob.id]}
+              variant="contained"
+              fullWidth
+             
+              disabled={isJobApplied} 
                 sx={{}}
               >
-                {appliedJobs[selectedJob.id] ? "Applied" : "Apply Now"}
+              {isJobApplied ? 
+                
+              ("Applied") : ( 
+
+                <React.Fragment>
+                <Button variant="outline" color="white" onClick={handleClickOpen}>
+                  Add Your Resume
+                </Button>
+                <Dialog
+                  fullScreen={fullScreen}
+                  open={resumeBoxOpen}
+                  onClose={handleDialogClose}
+                  aria-labelledby="Add Your Resume"
+                >
+                  <DialogTitle id="responsive-dialog-title">
+                    {"Add Resume"}
+                  </DialogTitle>
+                  <DialogContent>
+                  <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload Resume
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={(event) => console.log(event.target.files)}
+                    multiple
+                  />
+                </Button>
+                <DialogContentText>
+                `Resume should be in (.pdf ,.docx,) upto 2MB `
+              </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button autoFocus onClick={handleDialogClose}>
+                      Cancel
+                    </Button>
+                    <Button 
+                    onClick={() => {
+                      handleApply(selectedJob.id);
+                    }}
+                    disabled={isJobApplied} // Disable apply if already applied
+                    variant="contained"
+                    autoFocus
+                    >
+                      Apply Now
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </React.Fragment>
+     
+
+                )}
               </Button>
             </Box>
+  {
+ /**
+  * 
+
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+export default function ResponsiveDialog() {
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Open responsive dialog
+      </Button>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            Disagree
+          </Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+  * 
+  */
+}
 
             {/* Snackbar */}
             <Snackbar
               open={snackbarOpen}
-              autoHideDuration={3000}
+              autoHideDuration={1000}
               onClose={() => setSnackbarOpen(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >

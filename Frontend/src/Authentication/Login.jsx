@@ -20,6 +20,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Login({ role }) {
+
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ function Login({ role }) {
                 Password
               </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
+                id="password"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 endAdornment={

@@ -102,10 +102,10 @@ const CareerDetails = ({ userDetails }) => {
         alignItems: "left",
         gap: { xs: 4, sm: 4 },
         height: "100%",
-        width: { xs: "100%", md: "90%" },
+       
         p: { xs: 8 },
         textAlign: { sm: "center", md: "left" },
-        bgColor: "#CEE5FD",
+        
         backgroundImage: "linear-gradient(180deg, #E3F0FE,#CEE5FD)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
@@ -181,8 +181,8 @@ const CareerDetails = ({ userDetails }) => {
             );
           })}
         </Stack>
-
-        <Stack spacing={2} sx={styleDetails}>
+  {/** Form details */}
+        <Stack spacing={2} sx={styleDetails} maxWidth={'60%'}>
           <Box ref={educationRef}>
             <EducationEditBtn
               formData={formData?.educationData}

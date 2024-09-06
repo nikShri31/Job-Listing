@@ -128,7 +128,7 @@ function Header() {
               sx={{
                 display: { xs: "none", md: "flex", lg: "flex" },
                 gap: 0.5,
-                alignItems: "center",
+                alignItems: "right",
                 transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
                   transform: "scale(1.1) translateZ(30px)",

@@ -17,6 +17,10 @@ import Login from "./Login";
 import Signup from "./Signup";
 import SignupOrg from "./SignupOrg";
 
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from "../store/authSlice";
+import { useNavigate } from 'react-router-dom'; 
+
 function Copyright(props) {
   return (
     <Typography
@@ -49,6 +53,14 @@ const defaultTheme = createTheme({
 const Auth = ({role}) => {
   const [isLogin, setIsLogin] = useState(true);
 
+  const navigate = useNavigate(); 
+
+  const dispatch = useDispatch();
+
+  const handleLogin = (userData) => {
+    // Assuming userData contains userRole and userInfo
+    dispatch(loginSuccess({ userRole: userData.role, userInfo: userData.info }));
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
     

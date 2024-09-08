@@ -61,14 +61,11 @@ export default function EditBtn({ formData, changeData }) {
       workRole: localFormData.workRole,
     };
 
+    console.log("Submitting data...");
     try {
       await axios.patch(
         "http://localhost:5000/api/users/profile",
-        {
-          location,
-          phoneNo: localFormData.phoneNo,
-          workRole: localFormData.workRole,
-        },
+        updatedData,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -76,8 +73,9 @@ export default function EditBtn({ formData, changeData }) {
           },
         }
       );
-      changeData(updatedData); // Update local state
-      handleClose(); // Close the modal
+      changeData(updatedData); // Update local state in parent component
+      console.log("Closing modal...");
+      handleClose(); // Close the modal after update
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -240,9 +238,6 @@ export default function EditBtn({ formData, changeData }) {
                 />
               </Stack>
 
-              <Typography id="transition-modal-description" sx={{ m: 1 }}>
-                Phone Number
-              </Typography>
               <Typography id="transition-modal-description" sx={{ m: 1 }}>
                 Phone Number
               </Typography>

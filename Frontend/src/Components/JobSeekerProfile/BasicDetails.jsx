@@ -1,7 +1,7 @@
 import { Avatar, Box, Container, Stack, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { deepOrange } from "@mui/material/colors";
-import EditBtn from "./BasicEditBtn";
+import BasicEditBtn from "./BasicEditBtn"; // Adjusted import if needed
 
 const BasicDetails = ({ userDetails, onDataChange }) => {
   const [formData, setFormData] = useState(userDetails);
@@ -11,9 +11,8 @@ const BasicDetails = ({ userDetails, onDataChange }) => {
   }, [userDetails]);
 
   const changeData = (data) => {
-    console.log("Data Changed:", data);
     setFormData((oldData) => ({ ...oldData, ...data }));
-    onDataChange();
+    onDataChange(); // Notify parent component of data change
   };
 
   return (
@@ -67,7 +66,7 @@ const BasicDetails = ({ userDetails, onDataChange }) => {
                   cursor: "pointer",
                 }}
               >
-                <EditBtn formData={formData} changeData={changeData} />
+                <BasicEditBtn formData={formData} changeData={changeData} />
               </Box>
             </Stack>
 

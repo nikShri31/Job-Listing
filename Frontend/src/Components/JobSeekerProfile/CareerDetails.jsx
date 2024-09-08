@@ -26,13 +26,14 @@ const styleDetails = {
   overflowY: "auto",
   scrollbarWidth: "none",
 };
-const CareerDetails = ({userDetails}) => {
+
+const CareerDetails = ({ userDetails }) => {
   const [formData, setFormData] = useState();
   const navigate = useNavigate();
 
-  useEffect(( )=> {
-    if(userDetails) setFormData(userDetails);
-  },[userDetails])
+  useEffect(() => {
+    if (userDetails) setFormData(userDetails);
+  }, [userDetails]);
 
   const changeEducationData = (data) => {
     setFormData((oldData) => ({ ...oldData, educationData: data }));
@@ -51,24 +52,30 @@ const CareerDetails = ({userDetails}) => {
   };
 
   const handleEditProfile = async () => {
-    try {
-      const response = await axios.patch(
-        "http://localhost:5000/api/users/profile",
-        {
-          profile: {
-            ...formData,
+    // Scroll to top before making the API call
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Delay the API call to ensure scroll effect
+    setTimeout(async () => {
+      try {
+        const response = await axios.patch(
+          "http://localhost:5000/api/users/profile",
+          {
+            profile: {
+              ...formData,
+            },
           },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      navigate("/profile"); 
-    } catch (err) {
-      console.log(err);
-    }
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        navigate("/profile");
+      } catch (err) {
+        console.log(err);
+      }
+    }, 500); // Adjust the delay if necessary
   };
 
   const educationRef = useRef(null);
@@ -76,8 +83,6 @@ const CareerDetails = ({userDetails}) => {
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const personalDetailsRef = useRef(null);
-
-  // const [selectedDetail, setSelectedDetail] = useState(details[0]);
 
   const handleScroll = (ref) => {
     window.scrollTo({ top: window.scrollY - 1 });
@@ -106,7 +111,7 @@ const CareerDetails = ({userDetails}) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/**Adding Details */}
+      {/* Adding Details */}
       <Typography
         variant="h4"
         sx={{ fontWeight: "bold", color: "#032340", ml: 4 }}
@@ -118,7 +123,6 @@ const CareerDetails = ({userDetails}) => {
           display: "flex",
           justifyContent: "space-between",
           color: "#084C91",
-
           position: "relative",
         }}
       >
@@ -204,7 +208,7 @@ const CareerDetails = ({userDetails}) => {
             />
           </Box>
 
-          {/**Submit */}
+          {/* Submit */}
           <Box sx={{ m: 1, display: "flex", justifyContent: "flex-end" }}>
             <ButtonGroup aria-label="Loading button group">
               <Button variant="outlined" sx={{ m: 2 }}>
@@ -226,121 +230,3 @@ const CareerDetails = ({userDetails}) => {
 };
 
 export default CareerDetails;
-
-//   <Box
-//         sx={{
-//           p: 4,
-//           backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-//           backgroundSize: "100% 100%",
-//           backgroundRepeat: "no-repeat",
-//           color: "whitesmoke",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "left",
-//         }}
-//       >
-//         <Stack direction={"row"}>
-//           <Typography
-//             variant="h5"
-//             sx={{
-//               fontWeight: "bold",
-//               color: "#fff",
-//             }}
-//           >
-//             {" "}
-//             Add Skills
-//           </Typography>
-//           <SkillsEditBtn />
-//         </Stack>
-//       </Box>
-
-//       {/* Education */}
-//       <Box
-//         sx={{
-//           p: 4,
-//           backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-//           backgroundSize: "100% 100%",
-//           backgroundRepeat: "no-repeat",
-//           color: "whitesmoke",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "left",
-//         }}
-//       >
-//         <Stack direction={"row"}>
-//           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-//             {" "}
-//             Education
-//           </Typography>
-//           <EducationEditBtn />
-//         </Stack>
-//       </Box>
-
-//       {/* Experience */}
-
-//       <Box
-//         sx={{
-//           p: 4,
-//           backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-//           backgroundSize: "100% 100%",
-//           backgroundRepeat: "no-repeat",
-//           color: "whitesmoke",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "left",
-//         }}
-//       >
-//         <Stack direction={"row"}>
-//           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-//             {" "}
-//             Experience
-//           </Typography>
-//           <ExpEditBtn />
-//         </Stack>
-//       </Box>
-
-//       {/* Projects */}
-//       <Box
-//         sx={{
-//           p: 4,
-//           backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-//           backgroundSize: "100% 100%",
-//           backgroundRepeat: "no-repeat",
-//           color: "whitesmoke",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "left",
-//         }}
-//       >
-//         <Stack direction={"row"}>
-//           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-//             {" "}
-//             Add Projects
-//           </Typography>
-//           <AddProjectsBtn />
-//         </Stack>
-//       </Box>
-
-//       {/* Accomplishment*/}
-
-//       {/* Personal Details*/}
-//       <Box
-//         sx={{
-//           p: 4,
-//           backgroundImage: "linear-gradient(90deg,#084C91, #FFF)",
-//           backgroundSize: "100% 100%",
-//           backgroundRepeat: "no-repeat",
-//           color: "whitesmoke",
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "left",
-//         }}
-//       >
-//         <Stack direction={"row"}>
-//           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-//             {" "}
-//             Personal Details
-//           </Typography>
-//           <PersonalDeatailsBtn />
-//         </Stack>
-//      </Box>

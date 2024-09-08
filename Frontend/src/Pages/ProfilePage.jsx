@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import BasicDetails from "../Components/Job seeker Profile/BasicDetails";
-import CareerDetails from "../Components/Job seeker Profile/CareerDetails";
+import BasicDetails from "../Components/JobSeekerProfile/BasicDetails";
+import CareerDetails from "../Components/JobSeekerProfile/CareerDetails";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

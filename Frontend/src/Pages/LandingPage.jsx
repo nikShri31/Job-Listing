@@ -1,9 +1,9 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Heading from "../Components/Heading";
+import Heading from "../Components/Landing Page/Heading";
 //import Header from "../Header/Header";
-import LogoCollection from "../Components/LogoCollection";
-import Highlights from "../Components/Highlights";
+import LogoCollection from "../Components/Landing Page/LogoCollection";
+import Highlights from "../Components/Landing Page/Highlights";
 import { Grid } from "@mui/material";
 
 export default function LandingPage() {

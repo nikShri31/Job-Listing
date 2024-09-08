@@ -270,7 +270,7 @@ const Home = () => {
               }}
               value={query}
               onChange={handleInputChange}
-              sx={{ mr: 1, backgroundColor: "white" }}
+              sx={{ mr: 1, backgroundColor: "white", borderRadius:'40px' }}
             />
             <Button
               variant="contained"

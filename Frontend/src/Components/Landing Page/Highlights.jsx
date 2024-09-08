@@ -104,14 +104,17 @@ export default function Highlights() {
                   background: "transparent",
                   transition: "box-shadow 0.3s ease-in-out",
                   "&:hover": {
+                    color: "#032340",
                     transform: "scale(1.05) translateZ(30px)",
                     boxShadow: `10px 10px 10px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2)`,
+                    backgroundColor:'#FFFFFF',
                   },
                 }}
               >
                 <div>
-                  <Typography fontWeight="medium" gutterBottom>
-                    {item.title}
+              
+                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  {item.icon}  {item.title}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "black" }}>
                     {item.description}

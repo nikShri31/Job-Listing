@@ -17,7 +17,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginBtn from "../Authentication/LoginBtn";
-import NotificationMenu from "../Components/Notifications/Notification_Menu";
+import NotificationMenu from "../Components/Notification/Notification_Menu";
 
 const pages = ["Home", "My Jobs", "Profile"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -206,7 +206,7 @@ function Header_2() {
                   }}
                 >
                   <Button sx={headingStyles} onClick={() => navigate("/home")}>
-                    Home
+                  Jobs
                   </Button>
                   <Button
                     sx={headingStyles}
@@ -245,7 +245,7 @@ function Header_2() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <MenuItem onClick={() => navigate("/profile")}>
+                      <MenuItem onClick={()=> navigate("/profile")}>
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
                       <MenuItem>

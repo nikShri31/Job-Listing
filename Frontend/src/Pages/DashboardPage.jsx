@@ -1,6 +1,6 @@
 
 import { Box, Button, Stack, Typography } from '@mui/material'
-import AppliedJobs from '../Components/Dashboard/AppliedJobs'
+import AppliedJobs from '../Components/Dashboard/AppliedJobs/AppliedJobs'
 import Header_2 from '../Header/Header_2'
 import {useState} from 'react'
 
@@ -22,14 +22,10 @@ const Dashboard = () => {
     Dashboard
     </Typography>
 
-    <Stack direction={'row'} spacing={2} px={4}>
-      <Button>
-      <Typography variant="h5" sx={{fontWeight:'bold'}}> My Jobs</Typography>
-      </Button>
+    <Stack alignItems={'left'} spacing={2} px={4}>
+      
       <AppliedJobs/>
-      <Button>
-      <Typography variant="h5" sx={{fontWeight:'bold'}}> Notification</Typography>
-      </Button>
+      
       </Stack>
    
     </Box>

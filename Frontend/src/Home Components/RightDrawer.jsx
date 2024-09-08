@@ -53,6 +53,7 @@ const VisuallyHiddenInput = styled('input')({
   const chipStyle={
       mt: 2,
       mx: 1,
+      py:0.5,
         // Increase padding for a larger chip
       fontSize: "1rem",  // Increase the font size
       height: "auto",  // Allow the height to auto-adjust based on content

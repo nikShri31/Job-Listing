@@ -23,6 +23,7 @@ const jobListingSchema = new Schema({
             type : String,
             required : true
         }]
+
     },
     location : {
         type : String,

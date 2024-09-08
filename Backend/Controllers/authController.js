@@ -100,7 +100,7 @@ module.exports.signup = (async (req, res, next) => {
     const user = new User({ email, password, role, profile, username, name, phoneNo, workRole });
     const createdUser = await user.save();
     const token = generateToken(createdUser);
-    res.status(201).json({ status: 'success', message: 'User Created Successfully', token })
+    res.status(201).json({ status: 'success', message: 'User Created Successfully', token, userData : createdUser })
 })
 
 module.exports.orgLogin = async (req, res, next) => {

@@ -4,7 +4,7 @@ const { getDownloadUrl } = require('../utils/utilityFunctions');
 const User = require('../Models/userModel');
 const JobListing = require('../Models/jobListingModel');
 
-//employee
+//Application Apply. Takes in jobId from the params, the resume from the body (multipart form) and return the object with a msg and the application
 module.exports.apply = async (req, res, next) => {
     try {
         const { jobId } = req.params;
@@ -13,11 +13,7 @@ module.exports.apply = async (req, res, next) => {
         if (!req.files) {
             return next(new expressError('Please upload resume', 400));
         }
-        // console.log(req.files.resume);
         const resume = req.files.resume[0].key;
-        // console.log(resume);
-        // const coverLetter = req.files.coverLetter[0].key;
-
         const application = new Application(
             {
                 job: jobId,
@@ -26,33 +22,26 @@ module.exports.apply = async (req, res, next) => {
                     key: resume
                 }
             }
-        );
-        
+        );        
         const newApplication = await application.save();
-        
         await JobListing.findByIdAndUpdate(jobId, { $push: { applications: newApplication._id } });
         await User.findByIdAndUpdate(userId, { $push: { applications: newApplication._id } });
-
         res.status(201).json({ message: 'Application submitted successfully', application });
     } catch (error) {
         return next(new expressError(error.message, 400))
     }
 };
 
-//organisation and employee
+//Shows the application information. Including the user info, the job info and the resume applied. Avaialble to both user and organise. Returns the application
 module.exports.getApplicationById = async (req, res, next) => {
     const { applicationId } = req.params;
     const application = await Application.findById(applicationId).populate('job').populate('applicant');
-
     const resumeUrl = await getDownloadUrl(application.resume.key);
-    const coverLetterUrl = await getDownloadUrl(application.coverLetter.key);
-
     application.resume.downloadUrl = resumeUrl;
-    application.coverLetter.downloadUrl = coverLetterUrl;
-    application.save();
-
-    res.status(200).json({ application });
+    const updatedApplication = await application.save();
+    res.status(200).json({ ...updatedApplication });
 }
+
 
 module.exports.updateStatus = async (req, res, next) => {
     const { applicationId } = req.params;

@@ -95,7 +95,7 @@ const Auth = ({role}) => {
               <LockOutlinedIcon />
             </Avatar>
 
-            {isLogin ? <Login role={role}/> : role === "Individual" ? <SignupOrg/> : <Signup/>}
+            {isLogin ? <Login role={role}/> : role === "Individual" ?  <Signup/> : <SignupOrg/>}
           </Box>
 
           <Grid container>

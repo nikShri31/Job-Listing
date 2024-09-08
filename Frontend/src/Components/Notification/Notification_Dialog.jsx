@@ -35,7 +35,7 @@ export default function NotificationDialog({
 }) {
   const dispatch = useDispatch();
   //const notifications = useSelector((state) => state.notifications.notifications);
-  console.log(notifications);
+  // console.log(notifications);
   const unreadCount = useSelector((state) => state.notifications.unreadCount);
   console.log(unreadCount);
 
@@ -75,7 +75,7 @@ export default function NotificationDialog({
   return (
     <Box>
       <Dialog
-        sx={{ backgroundColor: "#E3F0FE",  }}
+        sx={{ backgroundColor: "#E3F0FE" }}
         fullScreen
         open={dialogOpen}
         onClose={handleDialogClose}
@@ -111,74 +111,98 @@ export default function NotificationDialog({
         {/* Same content as the menu */}
         <Box sx={{ backgroundColor: "#E3F0FE", position: "relative" }}>
           <Box sx={{ my: 9, py: 2, alignContent: "center" }}>
-          <Container>
-            {notifications.map((notification) => (
-              <Paper
+            <Container>
+              {notifications.map((notification, idx) => (
+                <Paper
+                  key={idx}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    py: 1,
+                    px: 6,
+                  }}
+                >
+                  <MenuItem
+                    key={notification.id}
                     sx={{
-                     
                       display: "flex",
-                      flexDirection: "column",
-                      width: "100%",
-                     py:1,
-                      px: 6,
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      backgroundColor: notification.read ? "#FFF" : "#f0f0f0",
                     }}
+                  >
+                    {/* Add a valid child like Box to wrap the elements */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
                     >
-                    <MenuItem 
-                    key={notification.id} 
-                    sx={{display:'flex', flexDirection:'row', justifyContent:'flex-start', 
-                      backgroundColor: notification.read ? '#FFF' : '#f0f0f0',
-                    }}
-                    >
-                    {!notification.read && (
+                      {!notification.read && (
+                        <Box
+                          sx={{
+                            width: 10,
+                            height: 10,
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            marginRight: "15px",
+                          }}
+                        />
+                      )}
                       <Box
                         sx={{
-                          width: 10,
-                          height: 10,
-                          backgroundColor: 'green',
-                          borderRadius: '50%',
-                          marginRight: '15px',
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
                         }}
-                      />
-                    )}
-                     <Box  sx={{display:'flex', flexDirection:'column', alignItems:'flex-start', }}>
-                    <Typography
-                      variant="body1"
-                      gutterBottom
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {notification.profile || "Profile"}
-                    </Typography>
-                    <Stack direction={"row"} alignItems={"center"} justifyContent={'flex-end'}>
-                      <Typography variant="subtitle2" gutterBottom>
-                        {notification.message}
-                      </Typography>
-                      <Stack
-                        direction={"row"}
-                        justifyContent={"flex-end"}
-                        sx={{ px: 15 }}
                       >
-                        {!notification.read && (
-                          <Button
-                            onClick={() => handleMarkAsRead(notification.id)}
-                          >
-                            Mark as Read
-                          </Button>
-                        )}
-                        <IconButton
-                          aria-label="delete"
-                          color="primary"
-                          onClick={() => handleDelete(notification.id)}
+                        <Typography
+                          variant="body1"
+                          gutterBottom
+                          sx={{ fontWeight: "bold" }}
                         >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    </Stack>
+                          {notification.profile || "Profile"}
+                        </Typography>
+                        <Stack
+                          direction={"row"}
+                          alignItems={"center"}
+                          justifyContent={"flex-end"}
+                        >
+                          <Typography variant="subtitle2" gutterBottom>
+                            {notification.message}
+                          </Typography>
+                          <Stack
+                            direction={"row"}
+                            justifyContent={"flex-end"}
+                            sx={{ px: 15 }}
+                          >
+                            {!notification.read && (
+                              <Button
+                                onClick={() =>
+                                  handleMarkAsRead(notification.id)
+                                }
+                              >
+                                Mark as Read
+                              </Button>
+                            )}
+                            <IconButton
+                              aria-label="delete"
+                              color="primary"
+                              onClick={() => handleDelete(notification.id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Stack>
+                        </Stack>
+                      </Box>
                     </Box>
-                    </MenuItem>
-                    <Divider />
-                    </Paper>
-                  ))}
-                  </Container>
+                  </MenuItem>
+                  <Divider />
+                </Paper>
+              ))}
+            </Container>
           </Box>
         </Box>
       </Dialog>

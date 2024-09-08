@@ -21,7 +21,7 @@ const upload = multer({
     })
 })
 
-module.exports.applicationUpload = () => upload.fields([{ name: 'resume', maxCount: 1 }, { name: 'coverLetter', maxCount: 1 }])
+module.exports.applicationUpload = () => upload.fields([{ name: 'resume', maxCount: 1 }])
 
 
 module.exports.isLogin = () => {

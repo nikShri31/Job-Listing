@@ -49,7 +49,7 @@ function SignupOrg() {
     );
     localStorage.setItem("token", response.data.token);
     console.log(localStorage.getItem("token"))
-    navigate('/')
+    navigate('/home')
   };
 
   return (

@@ -12,9 +12,10 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import RightDrawer from "./RightDrawer";
-import { useLocation, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUserSelectedJobId } from "../store/appliedJobsSlice";
+import axios from "axios";
 
 const logoStyle = {
   width: "50px",
@@ -35,18 +36,38 @@ const Home = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch("jobs.json")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Sample Job:", data[0]); // Debugging
-        setJobs(data);
+    const getJobs = async () => {
+      try {
+        const jobs = await axios.get("http://localhost:5000/api/job/getAll", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setJobs(jobs.data.jobs);
         setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching jobs:", error);
+      } catch (err) {
+        console.log(err);
         setIsLoading(false);
-      });
+      }
+    };
+    
+    getJobs();
   }, []);
+
+  // useEffect(() => {
+  //   fetch("jobs.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("Sample Job:", data[0]); // Debugging
+  //       setJobs(data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching jobs:", error);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
   // ----------- Input Filter -----------
   const handleInputChange = (event) => {
@@ -54,21 +75,22 @@ const Home = () => {
   };
 
   // ------------ Filter items in search bar  -----
-  const filteredItems = jobs.filter((job) =>
-    job.jobTitle.toLowerCase().includes(query.toLowerCase()) ||
-  job.jobLocation.toLowerCase().includes(query.toLowerCase())
+  const filteredItems = jobs.filter(
+    (job) =>
+      job.title.toLowerCase().includes(query.toLowerCase()) ||
+      job.location.toLowerCase().includes(query.toLowerCase())
   );
 
   // ----------- Radio Filtering -----------
   const handleChange = (event) => {
     setSelectedCategory(event.target.value);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
   // ------------ Button Filtering -----------
   const handleClick = (event) => {
     setSelectedCategory(event.target.value);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
   // Function to calculate the index range for the current page
@@ -89,7 +111,7 @@ const Home = () => {
 
     // Applying selected category filter
     if (selected) {
-      const selectedDate = new Date(selected); 
+      const selectedDate = new Date(selected);
 
       const lowerCaseSelected =
         typeof selected === "string" ? selected.toLowerCase() : "";
@@ -101,21 +123,22 @@ const Home = () => {
           maxPrice,
           postingDate,
           employmentType,
-        }) =>{
-            // Convert job posting date to a Date object
-        const jobPostingDate = new Date(postingDate);
+        }) => {
+          // Convert job posting date to a Date object
+          const jobPostingDate = new Date(postingDate);
 
-        // Check if the jobPostingDate is greater than or equal to the selectedDate
-        const isDateValid = jobPostingDate >= selectedDate;
-       return(
-          jobLocation.toLowerCase() === lowerCaseSelected ||
-         isDateValid||
-          (!isNaN(parseInt(maxPrice)) &&
-            parseInt(maxPrice) <= parseInt(selected)) ||
-          salaryType.toLowerCase() === lowerCaseSelected ||
-          experienceLevel.toLowerCase() === lowerCaseSelected ||
-          employmentType.toLowerCase() === lowerCaseSelected
-       )}  
+          // Check if the jobPostingDate is greater than or equal to the selectedDate
+          const isDateValid = jobPostingDate >= selectedDate;
+          return (
+            jobLocation.toLowerCase() === lowerCaseSelected ||
+            isDateValid ||
+            (!isNaN(parseInt(maxPrice)) &&
+              parseInt(maxPrice) <= parseInt(selected)) ||
+            salaryType.toLowerCase() === lowerCaseSelected ||
+            experienceLevel.toLowerCase() === lowerCaseSelected ||
+            employmentType.toLowerCase() === lowerCaseSelected
+          );
+        }
       );
     }
 
@@ -151,7 +174,9 @@ const Home = () => {
   // Drawer States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
-  const selectedJobId = useSelector((state) => state.appliedJobs.userSelectedJobId);
+  const selectedJobId = useSelector(
+    (state) => state.appliedJobs.userSelectedJobId
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -160,39 +185,38 @@ const Home = () => {
       if (pageNumber !== -1 && pageNumber !== currentPage) {
         setCurrentPage(pageNumber);
       } else {
-        const job = jobs.find((job) => job.id === selectedJobId);
+        const job = jobs.find((job) => job._id === selectedJobId);
         if (job) {
           setSelectedJob(job);
-          setIsDrawerOpen(true); // Open the drawer
-          dispatch(clearUserSelectedJobId()); // Clear the selected job ID after use
+          setIsDrawerOpen(true);
+          dispatch(clearUserSelectedJobId());
         }
       }
     }
   }, [selectedJobId, jobs, currentPage, dispatch]);
-  
+
   const findPageForJob = (jobId, jobs) => {
-    const index = jobs.findIndex((job) => job.id === jobId);
+    const index = jobs.findIndex((job) => job._id === jobId);
     if (index === -1) return -1; // Job not found
     return Math.floor(index / itemsPerPage) + 1;
   };
   // const [appliedJobs, setAppliedJobs] = useState({});
   // const [snackbarOpen, setSnackbarOpen] = useState(false);
- // const [isButtonReset, setButtonReset] = useState(false);
+  // const [isButtonReset, setButtonReset] = useState(false);
 
-//  const location = useLocation();
+  //  const location = useLocation();
 
-//  useEffect(() => {
-//    const params = new URLSearchParams(location.search);
-//    const jobId = params.get('jobId');
-//    if (jobId) {
-//      const job = jobs.find(j => j.id === jobId);
-//      if (job) {
-//        setSelectedJob(job);
-//        setIsDrawerOpen(true);
-//      }
-//    }
-//  }, [location, jobs]);
-
+  //  useEffect(() => {
+  //    const params = new URLSearchParams(location.search);
+  //    const jobId = params.get('jobId');
+  //    if (jobId) {
+  //      const job = jobs.find(j => j.id === jobId);
+  //      if (job) {
+  //        setSelectedJob(job);
+  //        setIsDrawerOpen(true);
+  //      }
+  //    }
+  //  }, [location, jobs]);
 
   const handleCardClick = (job) => {
     setSelectedJob(job);
@@ -203,17 +227,6 @@ const Home = () => {
     setIsDrawerOpen(false);
     //setButtonReset(false);
   };
-
-  
-
-  // Random skills
- const getRandomSkills = (skillsArray, numOfSkills)=> {
-    return skillsArray
-      .map((skill) => ({ skill, sort: Math.random() })) // Map to objects with random sort values
-      .sort((a, b) => a.sort - b.sort) // Sort the array by random values
-      .map(({ skill }) => skill) // Extract the skill names
-      .slice(0, numOfSkills); // Get the first numOfSkills items
-  }
 
   const handleSearch = () => {
     console.log("Search initiated");
@@ -327,17 +340,15 @@ const Home = () => {
 
       {/* Drawer Component */}
       <Box>
-      
-      <RightDrawer
-        isDrawerOpen={isDrawerOpen}
-        //appliedJobs={appliedJobs}
-        selectedJob={selectedJob}
-      //  snackbarOpen={snackbarOpen}
-        //isButtonReset={isButtonReset}
-        handleDrawerClose={handleDrawerClose}
-       // handleApply ={handleApply }
-        getRandomSkills={getRandomSkills}
-      />
+        <RightDrawer
+          isDrawerOpen={isDrawerOpen}
+          //appliedJobs={appliedJobs}
+          selectedJob={selectedJob}
+          //  snackbarOpen={snackbarOpen}
+          //isButtonReset={isButtonReset}
+          handleDrawerClose={handleDrawerClose}
+          // handleApply ={handleApply }
+        />
       </Box>
     </Box>
   );

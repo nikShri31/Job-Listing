@@ -40,6 +40,7 @@ function Login({ role }) {
         }
       );
       localStorage.setItem("token", response.data.token);
+      //save org data
       navigate("/profile");
     } catch (err) {
       console.log(err);
@@ -56,6 +57,7 @@ function Login({ role }) {
       password,
     });
     localStorage.setItem("token", response.data.token);
+    //save user Data
     navigate("/profile");
   };
 

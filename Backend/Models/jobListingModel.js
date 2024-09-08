@@ -44,7 +44,17 @@ const jobListingSchema = new Schema({
     applications : [{
         type : Schema.Types.ObjectId,
         ref : 'Application'
-    }]
+    }],
+    employmentType : {
+        type : String,
+        enum : ['Full-time', 'Part-time'],
+        required : true
+    },
+    jobType : {
+        type : String,
+        enum : ["On-site", "Remote", "Hybrid"],
+        required : true
+    }
 })
 
 const JobListing = mongoose.model('JobListing', jobListingSchema)

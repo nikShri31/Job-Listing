@@ -12,8 +12,3 @@ const Jobs = ({ result }) => {
 
 export default Jobs;
 
-{
-  /* <Box>
-     <Typography variant="h4" sx={{mb:2, fontWeight:'bold'}}>{result.length} Jobs</Typography>
-     </Box> */
-}

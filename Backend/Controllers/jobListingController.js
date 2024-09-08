@@ -48,6 +48,7 @@ exports.deleteJob = async (req, res, next) => {
     res.status(200).json({ message: 'Job deleted successfully' });
 }
 
+//employer select 1 job
 exports.getJob = async (req, res, next) => {
     const { jobId } = req.params;
     const job = await JobListing.findById(jobId).populate('organisation').populate('applications');
@@ -61,23 +62,7 @@ exports.getJobsByOrganisation = async (req, res, next) => {
 }
 
 exports.getAllJobs = async (req, res, next) => {
-    const { title, location, salary, experience, skills } = req.body;
-    const filter = {};
-    const titleLower = title ? title.toLowerCase() : undefined;
-    const locationLower = location ? location.toLowerCase() : undefined;
-    const skillsLower = skills ? skills.map(skill => skill.toLowerCase()) : undefined;
-
-    if (title) filter.title = { $regex: new RegExp(title, 'i') };4
-    if (location) {
-        filter.location = {$in: location.split(', ').map(loc => new RegExp(loc, 'i'))}
-    }
-    if (salary) filter.salary = { $gte: salary };
-    if (experience) filter['requirements.experience'] = { $lte: experience };
-    if (skills) {
-        const skillArray = Array.isArray(skills) ? skills : skills.split(',').map(skill => skill.trim());
-        filter['requirements.skills'] = { $in: skillArray };
-    }
-
-    const jobs = await JobListing.find(filter);
-    res.status(200).json({ jobs });
+    const jobs = await JobListing.find().populate('organisation');
+    console.log(jobs);
+    res.send({msg : "Jobs sent successfully", jobs});
 };

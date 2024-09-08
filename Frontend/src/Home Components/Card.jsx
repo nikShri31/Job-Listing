@@ -3,16 +3,24 @@ import { Box, Card, CardActionArea, CardMedia, Stack, Typography, Chip, Button }
 import { FiMapPin, FiClock, FiDollarSign, FiCalendar } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
+const getDateFormat = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = date.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+}
+
 const JobCard = ({ data, onClick  }) => {
   const {
     companyLogo,
-    jobTitle,
-    companyName,
-    jobLocation,
+    title,
+    organisation,
+    location,
     employmentType,
-    minPrice,
-    maxPrice,
-    postingDate,
+    salary,
+    postedDate,
     description,
   } = data;
 
@@ -37,7 +45,7 @@ const JobCard = ({ data, onClick  }) => {
         >
           <CardMedia
             component="img"
-            alt={jobTitle}
+            alt={title}
             height="100"
             sx={{ maxWidth: 175, objectFit: "contain",pt:2 }}
             image={companyLogo}
@@ -45,10 +53,10 @@ const JobCard = ({ data, onClick  }) => {
           />
           <Stack sx={{ flex: 1, p:2 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              {companyName}
+              {organisation?.name}
             </Typography>
             <Typography variant="h6" sx={{ mb: 1 }}>
-              {jobTitle}
+              {title}
             </Typography>
             <Box
               sx={{
@@ -63,7 +71,7 @@ const JobCard = ({ data, onClick  }) => {
                 component="span"
                 sx={{ display: "flex", alignItems: "center", mx: 1 }}
               >
-                <FiMapPin /> <Chip label={jobLocation} />
+                <FiMapPin /> <Chip label={location} />
               </Typography>
               <Typography
                 component="span"
@@ -75,13 +83,13 @@ const JobCard = ({ data, onClick  }) => {
                 component="span"
                 sx={{ display: "flex", alignItems: "center", mx: 1 }}
               >
-                <FiDollarSign /> <Chip label={`${minPrice}-${maxPrice} k`} />
+                <FiDollarSign /> <Chip label={`${salary}k`} />
               </Typography>
               <Typography
                 component="span"
                 sx={{ display: "flex", alignItems: "center", mx: 1 }}
               >
-                <FiCalendar /> <Chip label={postingDate} />
+                <FiCalendar /> <Chip label={getDateFormat(postedDate)} />
               </Typography>
             </Box>
             <Typography variant="body2" color="text.secondary"
@@ -129,13 +137,13 @@ export default JobCard;
 //   const {
 //     _id,
 //     companyLogo,
-//     jobTitle,
-//     companyName,
-//     jobLocation,
+//     title,
+//     organisation,
+//     location,
 //     employmentType,
 //     minPrice,
 //     maxPrice,
-//     postingDate,
+//     postedDate,
 //     description,
 //   } = data;
 //   const navigate = useNavigate();
@@ -151,7 +159,7 @@ export default JobCard;
 //       >
 //         <CardActionArea
 //           component={Link}
-//           to={companyName === "Bern Black" ? '/jd' : null}
+//           to={organisation === "Bern Black" ? '/jd' : null}
 //           sx={{
 //             display: "flex",
 //             alignItems: "flex-start",
@@ -161,7 +169,7 @@ export default JobCard;
 //         >
 //           <CardMedia
 //             component="img"
-//             alt={jobTitle}
+//             alt={title}
 //             height="80"
 //             sx={{ maxWidth: 145, objectFit: "cover" }}
 //             image={companyLogo}
@@ -169,10 +177,10 @@ export default JobCard;
 //           />
 //           <Stack sx={{ ml: 2, flex: 1, p: 2 }}>
 //             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-//               {companyName}
+//               {organisation}
 //             </Typography>
 //             <Typography variant="h6" sx={{ mb: 1 }}>
-//               {jobTitle}
+//               {title}
 //             </Typography>
 //             <Box
 //               sx={{
@@ -187,7 +195,7 @@ export default JobCard;
 //                 component="span"
 //                 sx={{ display: "flex", alignItems: "center", mx: 1 }}
 //               >
-//                 <FiMapPin />  <Chip label= {jobLocation} />
+//                 <FiMapPin />  <Chip label= {location} />
 //               </Typography>
               
 //               <Typography
@@ -210,7 +218,7 @@ export default JobCard;
 //                 component="span"
 //                 sx={{ display: "flex", alignItems: "center", mx: 1 }}
 //               >
-//                 <FiCalendar /> <Chip label= {postingDate} />
+//                 <FiCalendar /> <Chip label= {postedDate} />
 //               </Typography>
 //             </Box>
 //             <Typography variant="body2" color="text.secondary">

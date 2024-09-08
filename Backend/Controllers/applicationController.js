@@ -10,20 +10,18 @@ module.exports.apply = async (req, res, next) => {
         const { jobId } = req.params;
         const userId = req.user.id;
 
-        if (!req.files || !req.files.resume || !req.files.coverLetter) {
-            return next(new expressError('Please upload both resume and cover letter', 400));
+        if (!req.files) {
+            return next(new expressError('Please upload resume', 400));
         }
-
+        // console.log(req.files.resume);
         const resume = req.files.resume[0].key;
-        const coverLetter = req.files.coverLetter[0].key;
+        // console.log(resume);
+        // const coverLetter = req.files.coverLetter[0].key;
 
         const application = new Application(
             {
                 job: jobId,
                 applicant: userId,
-                coverLetter: {
-                    key: coverLetter
-                },
                 resume: {
                     key: resume
                 }
@@ -31,7 +29,9 @@ module.exports.apply = async (req, res, next) => {
         );
         
         const newApplication = await application.save();
+        
         await JobListing.findByIdAndUpdate(jobId, { $push: { applications: newApplication._id } });
+        await User.findByIdAndUpdate(userId, { $push: { applications: newApplication._id } });
 
         res.status(201).json({ message: 'Application submitted successfully', application });
     } catch (error) {

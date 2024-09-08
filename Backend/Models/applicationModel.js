@@ -12,13 +12,6 @@ const ApplicationSchema = new Schema({
     ref: 'User',
     required: true
   },
-  coverLetter: {
-    key: {
-      type: String,
-      required: true
-    },
-    downloadUrl : String
-  },
   resume: {
     key: {
       type: String,

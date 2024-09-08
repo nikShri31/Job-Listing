@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   Box,
@@ -11,36 +11,35 @@ import {
   DialogTitle,
   Drawer,
   Grid,
-  InputAdornment,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Rating,
   Snackbar,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
 import BusinessIcon from "@mui/icons-material/Business";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { setUserAppliedJobs } from "../store/appliedJobsSlice";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { styled, useTheme } from '@mui/material/styles';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { styled, useTheme } from "@mui/material/styles";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 1,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
@@ -50,51 +49,68 @@ const VisuallyHiddenInput = styled('input')({
 //     margin: "0 15px",
 //     opacity: 0.8,
 //   };
-  const chipStyle={
-      mt: 2,
-      mx: 1,
-      py:0.5,
-        // Increase padding for a larger chip
-      fontSize: "1rem",  // Increase the font size
-      height: "auto",  // Allow the height to auto-adjust based on content
-      color: "grey",
-      '& .MuiChip-label': {
-        fontSize: "1.1rem",  // Increase the font size of the label specifically
-      }
-  }
-  
+const chipStyle = {
+  mt: 2,
+  mx: 1,
+  py: 0.5,
+  // Increase padding for a larger chip
+  fontSize: "1rem", // Increase the font size
+  height: "auto", // Allow the height to auto-adjust based on content
+  color: "grey",
+  "& .MuiChip-label": {
+    fontSize: "1.1rem", // Increase the font size of the label specifically
+  },
+};
 
 const RightDrawer = ({
   isDrawerOpen,
   selectedJob,
   handleDrawerClose,
-  getRandomSkills
+  getRandomSkills,
 }) => {
+  const [resumeFile, setResumeFile] = useState(null);
+  const navigate = useNavigate();
+  //     const [appliedJobs, setAppliedJobs] = useState({});
+  //     const [snackbarOpen, setSnackbarOpen] = useState(false);
+  //      const dispatch = useDispatch();
+  //     // const userSelectedJob = useSelector((state) => state.appliedJobs.userSelectedJob);
 
-//     const [appliedJobs, setAppliedJobs] = useState({});
-//     const [snackbarOpen, setSnackbarOpen] = useState(false);   
-//      const dispatch = useDispatch();
-//     // const userSelectedJob = useSelector((state) => state.appliedJobs.userSelectedJob);
+  // // useEffect(() => {
+  // //   if (userSelectedJob) {
+  // //     // Open the drawer with the selected job details
+  // //     openJobDetailsDrawer(userSelectedJob);
+  // //   }
+  // // }, [userSelectedJob]);
 
-// // useEffect(() => {
-// //   if (userSelectedJob) {
-// //     // Open the drawer with the selected job details
-// //     openJobDetailsDrawer(userSelectedJob);
-// //   }
-// // }, [userSelectedJob]);
+  const handleApply = async (jobId) => {
+    const formData = new FormData();
+    formData.append("resume", resumeFile);
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/application/apply/${jobId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    //response.data is the applicationData
+    //global userData.application.push(response.data.application);
+    setSnackbarOpen(true);
+    navigate("/home");
+  };
 
-//     const handleApply = (jobId) => {
-//         setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
-//         setSnackbarOpen(true);
-//        dispatch(setUserAppliedJobs(selectedJob));
-//       };
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const dispatch = useDispatch();
 
-const [snackbarOpen, setSnackbarOpen] = useState(false);
-const dispatch = useDispatch();
-
-const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
+  const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
     setResumeBoxOpen(true);
@@ -104,24 +120,23 @@ const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
     setResumeBoxOpen(false);
   };
 
-// Get the applied jobs from Redux store
-const appliedJobs = useSelector((state) =>
-  state.appliedJobs.userAppliedJobs.map((job) => job?.id )
-);
+  // Get the applied jobs from Redux store
+  const appliedJobs = useSelector((state) =>
+    state.appliedJobs.userAppliedJobs.map((job) => job?.id)
+  );
 
-// Check if the current job has already been applied
-const isJobApplied = appliedJobs.includes(selectedJob?.id);
+  // Check if the current job has already been applied
+  const isJobApplied = appliedJobs.includes(selectedJob?._id);
 
-const handleApply = (jobId) => {
-  if (!isJobApplied) {
-    dispatch(setUserAppliedJobs(selectedJob));
-    setSnackbarOpen(true);
-    setResumeBoxOpen(false);
-  }
-};
+  // const handleApply = (jobId) => {
+  //   if (!isJobApplied) {
+  //     dispatch(setUserAppliedJobs(selectedJob));
+  //     setSnackbarOpen(true);
+  //     setResumeBoxOpen(false);
+  //   }
+  // };
 
-    
-return (
+  return (
     <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
       <Box sx={{ width: 500, py: 4, px: 3 }}>
         {selectedJob && (
@@ -150,8 +165,8 @@ return (
             >
               <Grid item xs={12} sm={2}>
                 <img
-                  src={selectedJob.companyLogo}
-                  alt={`${selectedJob.companyName} Logo`}
+                  src={selectedJob.logo}
+                  alt={`${selectedJob?.organisation?.name} Logo`}
                   style={{
                     width: "100%",
                     height: "auto",
@@ -170,7 +185,7 @@ return (
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {selectedJob.jobTitle}
+                    {selectedJob?.title}
                   </Typography>
                   <Stack direction="row" spacing={5} sx={{ ml: 2 }}>
                     <Stack
@@ -181,7 +196,7 @@ return (
                     >
                       <BusinessIcon />
                       <Typography variant="h6">
-                        {selectedJob.companyName}
+                        {selectedJob?.organisation?.name}
                       </Typography>
                     </Stack>
                     <Stack
@@ -191,7 +206,7 @@ return (
                     >
                       <PlaceIcon />
                       <Typography variant="h6">
-                        {selectedJob.jobLocation}
+                        {selectedJob?.location}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -203,12 +218,12 @@ return (
             <Stack direction={"row"} spacing={6} sx={{ mt: 0 }}>
               <Box sx={{ p: 2, bgcolor: "#EBEBEB", borderRadius: "10px" }}>
                 <Typography sx={{ fontWeight: "bold", color: "grey" }}>
-                  Avg Salary - {selectedJob.avgSalary || "34,331 per year"}
+                  Avg Salary - {selectedJob?.salary || "34,331"}k per year
                 </Typography>
               </Box>
               <Box sx={{ p: 2, bgcolor: "#EBEBEB", borderRadius: "10px" }}>
                 <Typography sx={{ fontWeight: "bold", color: "grey" }}>
-                  Job Type - {selectedJob.jobType || "Remote"}
+                  Job Type - {selectedJob?.jobType || "Remote"}
                 </Typography>
               </Box>
             </Stack>
@@ -224,7 +239,7 @@ return (
               >
                 About the Job
               </Typography>
-              <Typography sx={{ ml: 1 }}>{selectedJob.description}</Typography>
+              <Typography sx={{ ml: 1 }}>{selectedJob?.description}</Typography>
             </Box>
 
             {/* Skills */}
@@ -239,12 +254,8 @@ return (
                 Required Skills
               </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                {getRandomSkills(selectedJob.skills, 8).map((skill, index) => (
-                  <Chip
-                    key={index}
-                    label={skill}
-                    sx={chipStyle}
-                  />
+                {selectedJob?.requirements?.skills.map((skill, index) => (
+                  <Chip key={index} label={skill} sx={chipStyle} />
                 ))}
               </Box>
             </Box>
@@ -277,7 +288,7 @@ return (
               </List>
             </Box>
 
-           {/* Apply Button */}
+            {/* Apply Button */}
             <Box
               sx={{
                 mt: "auto",
@@ -290,72 +301,73 @@ return (
               }}
             >
               <Button
-              variant="contained"
-              fullWidth
-             
-              disabled={isJobApplied} 
+                variant="contained"
+                fullWidth
+                disabled={isJobApplied}
                 sx={{}}
               >
-              {isJobApplied ? 
-                
-              ("Applied") : ( 
-
-                <React.Fragment>
-                <Button variant="outline" color="white" onClick={handleClickOpen}>
-                  Add Your Resume
-                </Button>
-                <Dialog
-                  fullScreen={fullScreen}
-                  open={resumeBoxOpen}
-                  onClose={handleDialogClose}
-                  aria-labelledby="Add Your Resume"
-                >
-                  <DialogTitle id="responsive-dialog-title">
-                    {"Add Resume"}
-                  </DialogTitle>
-                  <DialogContent>
-                  <Button
-                  component="label"
-                  role={undefined}
-                  variant="contained"
-                  tabIndex={-1}
-                  startIcon={<CloudUploadIcon />}
-                >
-                  Upload Resume
-                  <VisuallyHiddenInput
-                    type="file"
-                    onChange={(event) => console.log(event.target.files)}
-                    multiple
-                  />
-                </Button>
-                <DialogContentText>
-                `Resume should be in (.pdf ,.docx,) upto 2MB `
-              </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button autoFocus onClick={handleDialogClose}>
-                      Cancel
-                    </Button>
-                    <Button 
-                    onClick={() => {
-                      handleApply(selectedJob.id);
-                    }}
-                    disabled={isJobApplied} // Disable apply if already applied
-                    variant="contained"
-                    autoFocus
+                {isJobApplied ? (
+                  "Applied"
+                ) : (
+                  <React.Fragment>
+                    <Button
+                      variant="outline"
+                      color="white"
+                      onClick={handleClickOpen}
                     >
-                      Apply Now
+                      Add Your Resume
                     </Button>
-                  </DialogActions>
-                </Dialog>
-              </React.Fragment>
-     
-
+                    <Dialog
+                      fullScreen={fullScreen}
+                      open={resumeBoxOpen}
+                      onClose={handleDialogClose}
+                      aria-labelledby="Add Your Resume"
+                    >
+                      <DialogTitle id="responsive-dialog-title">
+                        {"Add Resume"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <Button
+                          component="label"
+                          role={undefined}
+                          variant="contained"
+                          tabIndex={-1}
+                          startIcon={<CloudUploadIcon />}
+                        >
+                          Upload Resume
+                          <VisuallyHiddenInput
+                            type="file"
+                            onChange={(event) =>
+                              console.log(event.target.files)
+                            }
+                            multiple
+                          />
+                        </Button>
+                        <DialogContentText>
+                          `Resume should be in (.pdf ,.docx,) upto 2MB `
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button autoFocus onClick={handleDialogClose}>
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleApply(selectedJob?._id);
+                          }}
+                          disabled={isJobApplied} // Disable apply if already applied
+                          variant="contained"
+                          autoFocus
+                        >
+                          Apply Now
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </React.Fragment>
                 )}
               </Button>
             </Box>
-  {
- /**
+            {/**
   * 
 
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -408,8 +420,7 @@ export default function ResponsiveDialog() {
 }
 
   * 
-  */
-}
+  */}
 
             {/* Snackbar */}
             <Snackbar
@@ -459,34 +470,31 @@ export default function ResponsiveDialog() {
                           textAlign: "center",
                         }}
                       >
-                        {selectedJob.companyName}
+                        {selectedJob?.organisation?.name}
                       </Typography>
-                      <Rating
+                      {/* <Rating
                         name="company-rating"
                         sx={{ ml: 3, color: "black" }}
                         defaultValue={4.5}
                         precision={0.5}
                         readOnly
-                      />
+                      /> */}
                     </Box>
                   </ListItemText>
                   <ListItemText sx={{ color: "black" }}>
                     <Typography variant="body2" color="text.secondary">
-                      {selectedJob.companyDescription ||
+                      {selectedJob?.orgnaisation?.description ||
                         "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."}
                     </Typography>
                   </ListItemText>
                   <ListItemText sx={{ color: "black" }}>
-                    Main Office: {selectedJob.jobLocation}
+                    Main Office: {selectedJob?.location}
                   </ListItemText>
                   <ListItemText sx={{ color: "black" }}>
-                    Web:{" "}
-                    {selectedJob.companyWebsite ||
-                      `${selectedJob.companyName.trim()}.com`}
+                    Web: {selectedJob?.organisation?.website}
                   </ListItemText>
                   <ListItemText sx={{ color: "black" }}>
-                    Email:{" "}
-                    {selectedJob.contactEmail || "carrier.bern@gmail.com"}
+                    Email: {selectedJob?.organisation?.contactInfo?.email || ""}
                   </ListItemText>
                 </ListItem>
               </List>

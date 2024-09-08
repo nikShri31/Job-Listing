@@ -81,10 +81,8 @@ export default function PersonalDetailsBtn({ formData, changeData }) {
   };
 
   useEffect(() => {
-    if (formData) {
-      setLocalFormData(formData);
-    }
-  }, [formData]);
+    if (formData && JSON.stringify(formData) !== JSON.stringify(localFormData)) setLocalFormData(formData);
+  }, [formData, localFormData]);
 
   return (
     <Box sx={style}>

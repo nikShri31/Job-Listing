@@ -53,7 +53,7 @@ const organisationSchema = new Schema({
     password : {
         type : String,
         required : true
-    }
+    },
 });
 
 organisationSchema.pre('save', async function (next) {

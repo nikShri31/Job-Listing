@@ -106,7 +106,9 @@ export default function Heading() {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-           <LoginBtn role="Login to get started" variant={"outlined"}/>
+          {// <LoginBtn role="Login to get started" variant={"outlined"}/>
+            }
+            login here
           </Stack>
          
         </Stack>

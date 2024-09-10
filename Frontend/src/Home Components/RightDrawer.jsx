@@ -62,16 +62,9 @@ const chipStyle = {
   },
 };
 
-const RightDrawer = ({
-  isDrawerOpen,
-  selectedJob,
-  handleDrawerClose,
-  getRandomSkills,
-}) => {
-  const [resumeFile, setResumeFile] = useState(null);
-  const navigate = useNavigate();
+const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
   //     const [appliedJobs, setAppliedJobs] = useState({});
-  //     const [snackbarOpen, setSnackbarOpen] = useState(false);
+  //   const [snackbarOpen, setSnackbarOpen] = useState(false);
   //      const dispatch = useDispatch();
   //     // const userSelectedJob = useSelector((state) => state.appliedJobs.userSelectedJob);
 
@@ -81,6 +74,14 @@ const RightDrawer = ({
   // //     openJobDetailsDrawer(userSelectedJob);
   // //   }
   // // }, [userSelectedJob]);
+
+  // Resume State
+  const [resumeFile, setResumeFile] = useState(null);
+  const navigate = useNavigate();
+
+  const handleResumeFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   const handleApply = async (jobId) => {
     const formData = new FormData();
@@ -105,6 +106,7 @@ const RightDrawer = ({
     navigate("/home");
   };
 
+  // Snackbar state
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -300,14 +302,16 @@ const RightDrawer = ({
                 py: 2,
               }}
             >
-              <Button
-                variant="contained"
-                fullWidth
-                disabled={isJobApplied}
-                sx={{}}
-              >
-                {isJobApplied ? (
-                  "Applied"
+              <>
+            {isJobApplied ? (
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={isJobApplied}
+                  sx={{color:'black'}}
+                > 
+                  Applied  
+                </Button>
                 ) : (
                   <React.Fragment>
                     <Button
@@ -317,6 +321,7 @@ const RightDrawer = ({
                     >
                       Add Your Resume
                     </Button>
+
                     <Dialog
                       fullScreen={fullScreen}
                       open={resumeBoxOpen}
@@ -328,21 +333,27 @@ const RightDrawer = ({
                       </DialogTitle>
                       <DialogContent>
                         <Button
+                          variant="contained"
                           component="label"
                           role={undefined}
-                          variant="contained"
                           tabIndex={-1}
                           startIcon={<CloudUploadIcon />}
+                          onClick={handleFileUpload}
                         >
-                          Upload Resume
-                          <VisuallyHiddenInput
+                          Select Resume
+                          <input
                             type="file"
-                            onChange={(event) =>
-                              console.log(event.target.files)
-                            }
-                            multiple
+                            hidden
+                            onChange={handleResumeFileChange}
                           />
                         </Button>
+
+                        {selectedFile && (
+                          <Typography variant="body1" sx={{ marginTop: 2 }}>
+                            Selected file: {selectedFile.name}
+                          </Typography>
+                        )}
+
                         <DialogContentText>
                           `Resume should be in (.pdf ,.docx,) upto 2MB `
                         </DialogContentText>
@@ -365,10 +376,9 @@ const RightDrawer = ({
                     </Dialog>
                   </React.Fragment>
                 )}
-              </Button>
+              </>
             </Box>
-            {/**
-  * 
+{  /** 
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -419,7 +429,6 @@ export default function ResponsiveDialog() {
   );
 }
 
-  * 
   */}
 
             {/* Snackbar */}
@@ -429,17 +438,27 @@ export default function ResponsiveDialog() {
               onClose={() => setSnackbarOpen(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
-              <Alert
-                onClose={() => setSnackbarOpen(false)}
-                severity="success"
-                sx={{ width: "100%" }}
-              >
-                Successfully Applied!
-              </Alert>
+              {resumeFile ? (
+                <Alert
+                  onClose={() => setSnackbarOpen(false)}
+                  severity="success"
+                  sx={{ width: "100%" }}
+                >
+                  Successfully Applied!
+                </Alert>
+              ) : (
+                <Alert
+                  onClose={() => setSnackbarOpen(false)}
+                  severity="error"
+                  sx={{ width: "100%" }}
+                >
+                  please select a file...
+                </Alert>
+              )}
             </Snackbar>
 
             {/* Company Details */}
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ my: 2 }}>
               <Typography
                 gutterBottom
                 variant="h5"

@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginBtn from "../Authentication/LoginBtn";
 import NotificationMenu from "../Components/Notification/Notification_Menu";
+import { logout } from "../store/authSlice";
+
 
 const pages = ["Home", "My Jobs", "Profile"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -37,33 +39,28 @@ const headingStyles = {
 
 function Header_2() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const { isAuthenticated, role, user, loading, error } = useSelector((state) => state.auth);
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  console.log("Auth State:", { isAuthenticated, role, user });
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const dispatch = useDispatch();
-  const { isAuthenticated, userRole, userInfo } = useSelector( (state) => state.auth );
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     handleCloseUserMenu();
-    navigate("/")
-    // dispatch(logout());
+    dispatch(logout()); // Dispatch the logout action to clear the auth state
+    navigate("/"); // Redirect to home page after logout
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
 
   return (
     <Box>
@@ -71,7 +68,7 @@ function Header_2() {
         position="sticky"
         sx={{
           boxShadow: 0,
-          bgcolor: " #E3F0FE",
+          bgcolor: "#E3F0FE",
           pt: 1,
         }}
       >
@@ -87,16 +84,14 @@ function Header_2() {
               bgcolor: "primary",
               backdropFilter: "blur(30px)",
               maxHeight: 40,
-
               border: "1px solid",
               borderColor: "divider",
               boxShadow: 1,
             }}
           >
-            <AdbIcon
-              sx={{ display: { xs: "none", md: "flex", lg: "flex" }, mr: 1 }}
-            />
-
+            {/* Logo */}
+            <Box sx={{display:'flex'}}>
+            <AdbIcon sx={{ display: { xs: "none", md: "flex", lg: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -114,7 +109,10 @@ function Header_2() {
             >
               JOBS
             </Typography>
-            {/** Small screen */}
+
+            </Box>
+            
+            {/* Small screen menu */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -126,14 +124,14 @@ function Header_2() {
               >
                 <MenuIcon />
               </IconButton>
-              <MenuItem
+              <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchororigin={{
                   vertical: "bottom",
                   horizontal: "left",
                 }}
-                keepmounted="true"
+                keepMounted
                 transformorigin={{
                   vertical: "top",
                   horizontal: "left",
@@ -144,21 +142,22 @@ function Header_2() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </MenuItem>
+                <MenuItem onClick={() => navigate("/jobs")}>
+                  <Typography textAlign="center">Jobs</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard")}>
+                  <Typography textAlign="center">My Jobs</Typography>
+                </MenuItem>
+              </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
 
+            {/* Main logo for small screen */}
+            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
               component="a"
               href="#"
-              color="text.primary"
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -166,38 +165,20 @@ function Header_2() {
                 fontFamily: "monospace",
                 fontWeight: "bold",
                 letterSpacing: ".3rem",
-
                 textDecoration: "none",
+                color: "black",
               }}
             >
               JOBS
             </Typography>
 
-          { isAuthenticated ? (
-              <React.Fragment>
-                <Box
-                  sx={{
-                    display: { xs: "none", md: "flex", lg: "flex" },
-                    gap: 0.5,
-                    alignItems: "right",
-                    transition: "box-shadow 0.3s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1) translateZ(30px)",
-                    },
-                  }}
-                >
-                  <LoginBtn
-                    role="Individual"
-                    variant={"outlined"}
-                    bgColor={"grey"}
-                  />
-                  <LoginBtn
-                    role="Organisation"
-                    variant={"outlined"}
-                    bgColor={"black"}
-                  />
-                </Box>
-              </React.Fragment>
+            {/* Conditional rendering based on authentication */}
+            {!isAuthenticated ? (
+              <Box sx={{ display: "flex", gap: 2 }}>
+                {/* Login Buttons */}
+                <LoginBtn role="employee" variant="!outlined" bgColor="primary" />
+                <LoginBtn role="employer" variant="!outlined" bgColor="secondary" />
+              </Box>
             ) : (
               <React.Fragment>
                 <Box
@@ -206,29 +187,24 @@ function Header_2() {
                     display: { xs: "none", md: "flex", lg: "flex" },
                   }}
                 >
-                  <Button sx={headingStyles} onClick={() => navigate("/home")}>
-                  Jobs
+                  <Button sx={headingStyles} onClick={() => navigate("/jobs")}>
+                    Home
                   </Button>
-                  <Button
-                    sx={headingStyles}
-                    onClick={() => navigate("/dashboard")}
-                  >
-                    MyJobs
+                  <Button sx={headingStyles} onClick={() => navigate("/dashboard")}>
+                    My Jobs
                   </Button>
                 </Box>
 
                 <Box sx={{ flexGrow: 0 }}>
                   <Stack direction={"row"} spacing={3}>
                     <MenuItem>
-                     <NotificationMenu/>
+                      <NotificationMenu />
                     </MenuItem>
 
+                    {/* Profile and Logout */}
                     <Tooltip title="Open settings">
                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar
-                          alt="Remy Sharp"
-                          src="/static/images/avatar/2.jpg"
-                        />
+                        <Avatar alt={user?.name} src={user?.avatar} />
                       </IconButton>
                     </Tooltip>
                     <Menu
@@ -246,11 +222,11 @@ function Header_2() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <MenuItem onClick={()=> navigate("/profile")}>
+                      <MenuItem onClick={() => navigate("/profile")}>
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
-                      <MenuItem>
-                        <Typography textAlign="center">Dashboard</Typography>
+                      <MenuItem onClick={() => navigate("/dashboard")}>
+                        <Typography textAlign="center">My Jobs</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleLogout}>
                         <Typography textAlign="center">Logout</Typography>
@@ -260,7 +236,9 @@ function Header_2() {
                 </Box>
               </React.Fragment>
             )
-         }
+          }
+
+            {error && <Typography color="error">{error}</Typography>}
           </Toolbar>
         </Container>
       </AppBar>
@@ -268,6 +246,239 @@ function Header_2() {
   );
 }
 export default Header_2;
+
+//   function Header_2() {
+//   const navigate = useNavigate();
+//   const [anchorElNav, setAnchorElNav] = useState(null);
+//   const [anchorElUser, setAnchorElUser] = useState(null);
+
+//   const handleOpenNavMenu = (event) => {
+//     setAnchorElNav(event.currentTarget);
+//   };
+//   const handleOpenUserMenu = (event) => {
+//     setAnchorElUser(event.currentTarget);
+//   };
+
+//   const handleCloseNavMenu = () => {
+//     setAnchorElNav(null);
+//   };
+
+//   const handleCloseUserMenu = () => {
+//     setAnchorElUser(null);
+//   };
+
+//   const dispatch = useDispatch();
+//   const { isAuthenticated, userRole, userInfo } = useSelector( (state) => state.auth );
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     handleCloseUserMenu();
+//     navigate("/")
+//     // dispatch(logout());
+//   };
+
+//   return (
+//     <Box>
+//       <AppBar
+//         position="sticky"
+//         sx={{
+//           boxShadow: 0,
+//           bgcolor: " #E3F0FE",
+//           pt: 1,
+//         }}
+//       >
+//         <Container maxWidth="xl">
+//           <Toolbar
+//             variant="regular"
+//             sx={{
+//               display: "flex",
+//               alignItems: "center",
+//               justifyContent: "space-between",
+//               flexShrink: 0,
+//               borderRadius: "999px",
+//               bgcolor: "primary",
+//               backdropFilter: "blur(30px)",
+//               maxHeight: 40,
+
+//               border: "1px solid",
+//               borderColor: "divider",
+//               boxShadow: 1,
+//             }}
+//           >
+//             <AdbIcon
+//               sx={{ display: { xs: "none", md: "flex", lg: "flex" }, mr: 1 }}
+//             />
+
+//             <Typography
+//               variant="h6"
+//               noWrap
+//               component="a"
+//               href="#"
+//               sx={{
+//                 mr: 2,
+//                 display: { xs: "none", md: "flex", lg: "flex" },
+//                 fontFamily: "monospace",
+//                 fontWeight: "bold",
+//                 letterSpacing: ".3rem",
+//                 color: "black",
+//                 textDecoration: "none",
+//               }}
+//             >
+//               JOBS
+//             </Typography>
+//             { Small screen }
+//             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+//               <IconButton
+//                 size="large"
+//                 aria-label="account of current user"
+//                 aria-controls="menu-appbar"
+//                 aria-haspopup="true"
+//                 onClick={handleOpenNavMenu}
+//                 color="inherit"
+//               >
+//                 <MenuIcon />
+//               </IconButton>
+//               <MenuItem
+//                 id="menu-appbar"
+//                 anchorEl={anchorElNav}
+//                 anchororigin={{
+//                   vertical: "bottom",
+//                   horizontal: "left",
+//                 }}
+//                 keepmounted="true"
+//                 transformorigin={{
+//                   vertical: "top",
+//                   horizontal: "left",
+//                 }}
+//                 open={Boolean(anchorElNav)}
+//                 onClose={handleCloseNavMenu}
+//                 sx={{
+//                   display: { xs: "block", md: "none" },
+//                 }}
+//               >
+//                 {pages.map((page) => (
+//                   <MenuItem key={page} onClick={handleCloseNavMenu}>
+//                     <Typography textAlign="center">{page}</Typography>
+//                   </MenuItem>
+//                 ))}
+//               </MenuItem>
+//             </Box>
+//             <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+
+//             <Typography
+//               variant="h5"
+//               noWrap
+//               component="a"
+//               href="#"
+//               color="text.primary"
+//               sx={{
+//                 mr: 2,
+//                 display: { xs: "flex", md: "none" },
+//                 flexGrow: 1,
+//                 fontFamily: "monospace",
+//                 fontWeight: "bold",
+//                 letterSpacing: ".3rem",
+
+//                 textDecoration: "none",
+//               }}
+//             >
+//               JOBS
+//             </Typography>
+
+//           { isAuthenticated ? (
+//               <React.Fragment>
+//                 <Box
+//                   sx={{
+//                     display: { xs: "none", md: "flex", lg: "flex" },
+//                     gap: 0.5,
+//                     alignItems: "right",
+//                     transition: "box-shadow 0.3s ease-in-out",
+//                     "&:hover": {
+//                       transform: "scale(1.1) translateZ(30px)",
+//                     },
+//                   }}
+//                 >
+//                   <LoginBtn
+//                     role="Individual"
+//                     variant={"outlined"}
+//                     bgColor={"grey"}
+//                   />
+//                   <LoginBtn
+//                     role="Organisation"
+//                     variant={"outlined"}
+//                     bgColor={"black"}
+//                   />
+//                 </Box>
+//               </React.Fragment>
+//             ) : (
+//               <React.Fragment>
+//                 <Box
+//                   sx={{
+//                     flexGrow: 1,
+//                     display: { xs: "none", md: "flex", lg: "flex" },
+//                   }}
+//                 >
+//                   <Button sx={headingStyles} onClick={() => navigate("/home")}>
+//                   Jobs
+//                   </Button>
+//                   <Button
+//                     sx={headingStyles}
+//                     onClick={() => navigate("/dashboard")}
+//                   >
+//                     MyJobs
+//                   </Button>
+//                 </Box>
+
+//                 <Box sx={{ flexGrow: 0 }}>
+//                   <Stack direction={"row"} spacing={3}>
+//                     <MenuItem>
+//                      <NotificationMenu/>
+//                     </MenuItem>
+
+//                     <Tooltip title="Open settings">
+//                       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+//                         <Avatar
+//                           alt="Remy Sharp"
+//                           src="/static/images/avatar/2.jpg"
+//                         />
+//                       </IconButton>
+//                     </Tooltip>
+//                     <Menu
+//                       sx={{ mt: "45px" }}
+//                       id="menu-appbar"
+//                       anchorEl={anchorElUser}
+//                       anchorOrigin={{
+//                         vertical: "top",
+//                         horizontal: "right",
+//                       }}
+//                       transformOrigin={{
+//                         vertical: "top",
+//                         horizontal: "right",
+//                       }}
+//                       open={Boolean(anchorElUser)}
+//                       onClose={handleCloseUserMenu}
+//                     >
+//                       <MenuItem onClick={()=> navigate("/profile")}>
+//                         <Typography textAlign="center">Profile</Typography>
+//                       </MenuItem>
+//                       <MenuItem>
+//                         <Typography textAlign="center">Dashboard</Typography>
+//                       </MenuItem>
+//                       <MenuItem onClick={handleLogout}>
+//                         <Typography textAlign="center">Logout</Typography>
+//                       </MenuItem>
+//                     </Menu>
+//                   </Stack>
+//                 </Box>
+//               </React.Fragment>
+//             )
+//          }
+//           </Toolbar>
+//         </Container>
+//       </AppBar>
+//     </Box>
+//   );
+// }
 
 // import React, { useState } from "react";
 // import AppBar from "@mui/material/AppBar";

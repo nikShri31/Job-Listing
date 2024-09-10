@@ -1,5 +1,5 @@
 import { Backdrop, Box, Button, Fade, Modal } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Auth from "./Auth";
 import { pink } from "@mui/material/colors";
 
@@ -19,7 +19,7 @@ const style = {
   overflowY: "scroll",
 };
 const LoginBtn = ({role,variant,bgColor}) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -48,7 +48,7 @@ const LoginBtn = ({role,variant,bgColor}) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Auth role={role === "Organisation" ? "Organisation" : "Login"}/>
+            <Auth role={role}/>
           </Box>
         </Fade>
       </Modal>

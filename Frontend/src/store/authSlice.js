@@ -57,7 +57,7 @@ export const login = createAsyncThunk( "/login", async ({ loginData, role }, { r
       };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || error.message || "Login failed"
+        error?.response?.data || error.message || "Login failed"
       );
     }
   }
@@ -89,20 +89,20 @@ export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, 
 );
 
 // Token-based login
-export const loginWithToken = createAsyncThunk( "auth/loginWithToken", async (token, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return { userData: response.data, token };
-    } catch (error) {
-      localStorage.removeItem("token");
-      return rejectWithValue(
-        error.response?.data || error.message || "Token login failed"
-      );
-    }
-  }
-);
+// export const loginWithToken = createAsyncThunk( "auth/loginWithToken", async (token, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.get("http://localhost:5000/api/user", {
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       return { userData: response.data, token };
+//     } catch (error) {
+//       localStorage.removeItem("token");
+//       return rejectWithValue(
+//         error.response?.data || error.message || "Token login failed"
+//       );
+//     }
+//   }
+// );
 
 const authSlice = createSlice({
   name: "auth",
@@ -134,6 +134,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Login failed.";
         state.isAuthenticated = false;
+        console.log(action.payload)
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -152,26 +153,26 @@ const authSlice = createSlice({
         state.error = action.payload || "Signup failed.";
         state.isAuthenticated = false;
       })
-      .addCase(loginWithToken.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginWithToken.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.userData;
-        state.token = action.payload.token;
-        state.role = action.payload.userData.role;
-        state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token);
-      })
-      .addCase(loginWithToken.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Token login failed.";
-        state.isAuthenticated = false;
-        state.token = null;
-        state.user = null;
-        state.role = null;
-      });
+      // .addCase(loginWithToken.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(loginWithToken.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.user = action.payload.userData;
+      //   state.token = action.payload.token;
+      //   state.role = action.payload.userData.role;
+      //   state.isAuthenticated = true;
+      //   localStorage.setItem("token", action.payload.token);
+      // })
+      // .addCase(loginWithToken.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload || "Token login failed.";
+      //   state.isAuthenticated = false;
+      //   state.token = null;
+      //   state.user = null;
+      //   state.role = null;
+      // });
   },
 });
 

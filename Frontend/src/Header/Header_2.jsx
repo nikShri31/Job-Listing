@@ -57,7 +57,7 @@ function Header_2() {
     dispatch(logout()); // Dispatch the logout action to clear the auth state
     navigate("/"); // Redirect to home page after logout
   };
-
+  
   if (loading) {
     return <div>Loading...</div>; // Or a loading spinner
   }
@@ -238,7 +238,7 @@ function Header_2() {
             )
           }
 
-            {error && <Typography color="error">{error}</Typography>}
+            {error && <Typography color="error">{error?.message}</Typography>}
           </Toolbar>
         </Container>
       </AppBar>

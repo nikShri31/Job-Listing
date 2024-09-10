@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid, CssBaseline, Paper, Box, Avatar, Link, Button, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { login, signup, loginWithToken} from '../store/authSlice.js'; // Update the import path as needed
+import { login, signup} from '../store/authSlice.js'; // Update the import path as needed
 import Login from './Login';
 import Signup from './Signup';
 import SignupOrg from './SignupOrg';
@@ -47,12 +47,12 @@ const Auth = ({ role }) => {
 
   const { loading, error, isAuthenticated, user } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(loginWithToken(token));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     dispatch(loginWithToken(token));
+  //   }
+  // }, [dispatch]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -95,8 +95,7 @@ const Auth = ({ role }) => {
               ) : (
                 <SignupOrg formData={formData} setFormData={setFormData} />
               )}
-
-              {error && <Typography color="error">{error}</Typography>}
+              {error && <Typography color="error">{error?.message || "Internal Server Error"}</Typography>}
 
               <Button
                 type="submit"

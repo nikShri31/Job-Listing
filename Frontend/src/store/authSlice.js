@@ -20,7 +20,7 @@ const initialState = {
   user: null,
   token: localStorage.getItem("token") || null,
   role: null,
-  isAuthenticated: localStorage.getItem("token"),
+ isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -37,19 +37,15 @@ const getApiEndpoint = (role, type) => {
       ? `${base}/organisation/login`
       : `${base}/organisation/signup`;
   }
-  throw new Error("Invalid role");
+  if (!endpoints[role]) throw new Error("Invalid role");
+  return endpoints[role][type];
 };
 
 export const login = createAsyncThunk( "/login", async ({ loginData, role }, { rejectWithValue }) => {
     try {
       const apiEndpoint = getApiEndpoint(role, "login");
       const response = await axios.post(apiEndpoint, loginData);
-
       const { userData, token } = response.data;
-
-      if (!token) {
-        throw new Error("Token not provided in the response");
-      }
 
       return {
         userData,
@@ -67,14 +63,8 @@ export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, 
     try {
       const apiEndpoint = getApiEndpoint(role, "signup");
       const response = await axios.post(apiEndpoint, signupData);
-
       const { userData, token } = response.data;
-      console.log('signupauth');
-      console.log({userData, token});
-
-      if (!token) {
-        throw new Error("Token not provided in the response");
-      }
+     console.log({userData, token});
 
       return {
         userData,
@@ -88,21 +78,7 @@ export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, 
   }
 );
 
-// Token-based login
-export const loginWithToken = createAsyncThunk( "auth/loginWithToken", async (token, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("/api/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return { userData: response.data, token };
-    } catch (error) {
-      localStorage.removeItem("token");
-      return rejectWithValue(
-        error.response?.data || error.message || "Token login failed"
-      );
-    }
-  }
-);
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -152,28 +128,15 @@ const authSlice = createSlice({
         state.error = action.payload || "Signup failed.";
         state.isAuthenticated = false;
       })
-      .addCase(loginWithToken.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginWithToken.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.userData;
-        state.token = action.payload.token;
-        state.role = action.payload.userData.role;
-        state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token);
-      })
-      .addCase(loginWithToken.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Token login failed.";
-        state.isAuthenticated = false;
-        state.token = null;
-        state.user = null;
-        state.role = null;
-      });
+     
   },
 });
+
+export const authLoading = (state)=> state.auth.loading;
+
+export const authError =(state)=> state.auth.error;
+console.log("authError:",authError);
+
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

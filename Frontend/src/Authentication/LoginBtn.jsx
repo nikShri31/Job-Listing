@@ -48,7 +48,7 @@ const LoginBtn = ({role,variant,bgColor}) => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Auth role={role}/>
+            <Auth role={role} handleClose={handleClose}/>
           </Box>
         </Fade>
       </Modal>

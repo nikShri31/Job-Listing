@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid, CssBaseline, Paper, Box, Avatar, Link, Button, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { login, signup, loginWithToken} from '../store/authSlice.js'; // Update the import path as needed
+import { authError, authLoading, login, signup} from '../store/authSlice.js'; // Update the import path as needed
 import Login from './Login';
 import Signup from './Signup';
 import SignupOrg from './SignupOrg';
@@ -39,40 +39,48 @@ const defaultTheme = createTheme({
 });
 
 
-const Auth = ({ role }) => {
+const Auth = ({ role,handleClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const isLoading = useSelector(authLoading);
+  const error = useSelector(authError);
+  
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(loginWithToken(token));
-    }
-  }, [dispatch]);
+  
 
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      navigate(user.role === 'employer'?"/jobs":'/jobs');
-    }
-  }, [isAuthenticated, user, navigate]);
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLogin) {
       dispatch(login({ loginData: formData, role }));
+      
     } else {
       dispatch(signup({ signupData: formData, role }));
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      handleClose()
+      navigate(user.role === 'employer'?"/jobs":'/jobs');
+    }
+  }, [isAuthenticated, user, navigate, handleClose]);
+
+
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
     setFormData({ email: "", password: "" }); // Reset form data when switching modes
   };
+
+  useEffect(() => {
+    if (error) {
+      setFormData({ email: "", password: "" });
+    }
+  }, [error]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -96,16 +104,22 @@ const Auth = ({ role }) => {
                 <SignupOrg formData={formData} setFormData={setFormData} />
               )}
 
-              {error && <Typography color="error">{error}</Typography>}
+              { error && (
+                  <Typography color="error">
+                  {typeof error === "object" && error.error && error.error.message 
+                    ? error.error.message 
+                    : JSON.stringify(error)}
+                  </Typography>
+                )}
 
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 1, mb: 1 }}
-                disabled={loading}
+                disabled={isLoading}
               >
-                {loading ? "Processing..." : (isLogin ? "Log In" : "Sign Up")}
+                {isLoading ? "Processing..." : (isLogin ? "Log In" : "Sign Up")}
               </Button>
             </form>
 

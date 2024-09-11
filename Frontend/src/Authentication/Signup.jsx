@@ -24,11 +24,26 @@ const Signup = ({ formData, setFormData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "phoneNo" && !/^\d*$/.test(value)) return;
     setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
   };
+
+  // Handle changes for profile-related fields
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      profile: {
+        ...prevData.profile,
+        [name]: value,
+      },
+    }));
+  };
+
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
@@ -65,6 +80,7 @@ const Signup = ({ formData, setFormData }) => {
               onChange={handleChange}
             />
           </Grid>
+        {/* Profile-specific fields */}
           <Grid item xs={12}>
             <TextField
               size="small"
@@ -72,7 +88,7 @@ const Signup = ({ formData, setFormData }) => {
               required
               fullWidth
               id="role"
-              label="Role (e.g., Developer)"
+              label="Profile Role (e.g., Developer)"
               value={formData?.role || ''}
               onChange={handleChange}
             />
@@ -88,6 +104,16 @@ const Signup = ({ formData, setFormData }) => {
               name="phoneNo"
               value={formData?.phoneNo || ''}
               onChange={handleChange}
+              helperText={
+                formData.phoneNo && formData.phoneNo.length !== 10
+                  ? "Phone number must be exactly 10 digits"
+                  : ""
+              }
+              inputProps={{
+                maxLength: 10, 
+                pattern: "[0-9]*",
+                inputMode: "numeric" // Numeric keyboard on mobile devices
+              }}
             />
           </Grid>
           <Grid item xs={12}>

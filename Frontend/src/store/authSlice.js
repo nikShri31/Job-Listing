@@ -53,7 +53,7 @@ export const login = createAsyncThunk( "/login", async ({ loginData, role }, { r
       };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || error.message || "Login failed"
+        error?.response?.data || error.message || "Login failed"
       );
     }
   }
@@ -110,6 +110,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Login failed.";
         state.isAuthenticated = false;
+        console.log(action.payload)
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;

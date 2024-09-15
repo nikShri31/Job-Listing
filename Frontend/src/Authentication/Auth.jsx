@@ -59,6 +59,7 @@ const Auth = ({ role,handleClose }) => {
       dispatch(login({ loginData: formData, role }));
       
     } else {
+      formData.profile = formData.profile ? formData.profile : {}; 
       dispatch(signup({ signupData: formData, role }));
     }
   };

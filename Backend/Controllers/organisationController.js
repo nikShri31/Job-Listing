@@ -7,7 +7,7 @@ module.exports.searchOrg = async(req,res,next) => {
     if(!org){
         return next(new expressError('Organisation not found', 400));
     }
-    res.status(200).json({status: 'success', org});
+    res.status(200).json({status: 'success', organisationData : org});
 }
 
 module.exports.updateOrganisation = async(req, res, next) => {
@@ -23,7 +23,7 @@ module.exports.updateOrganisation = async(req, res, next) => {
     org.industry = industry;
     org.description = description;
     await org.save();
-    res.status(200).json({status: 'success', org});
+    res.status(200).json({status: 'success', organisationData : org});
 }
 
 module.exports.getOrganisation = async(req, res, next) => {
@@ -32,5 +32,5 @@ module.exports.getOrganisation = async(req, res, next) => {
     if(!org) {
         return next(new expressError('Organisation not found', 400));
     }
-    res.status(200).json({status: 'success', organisation});
+    res.status(200).json({status: 'success', organisationData : organisation});
 }

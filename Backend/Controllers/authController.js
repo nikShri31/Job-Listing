@@ -96,8 +96,9 @@ module.exports.login = async (req, res, next) => {
 }
 
 module.exports.signup = (async (req, res, next) => {
-    const { email, password, role, profile, username, name, phoneNo, workRole } = req.body;
-    const user = new User({ email, password, role, profile, username, name, phoneNo, workRole });
+    const { email, password, profile, username, name, phoneNo, workRole } = req.body;
+    const user = new User({ email, password, profile, username, name, phoneNo, workRole });
+    user.role = 'employee';
     const createdUser = await user.save();
     const token = generateToken(createdUser);
     res.status(201).json({ status: 'success', message: 'User Created Successfully', token, userData : createdUser })
@@ -111,7 +112,7 @@ module.exports.orgLogin = async (req, res, next) => {
     }
     const token = generateToken(org);
     const orgData = await Organisation.findById(org._id).populate('jobs');
-    res.status(200).json({ status: 'success', token, orgData })
+    res.status(200).json({ status: 'success', token, organisationData : orgData })
 }
 
 module.exports.createOrganisation = async (req, res, next) => {
@@ -132,7 +133,7 @@ module.exports.createOrganisation = async (req, res, next) => {
     })
     const org = await newOrganisation.save();
     const token = generateToken(org);
-    res.status(201).json({ status: 'success', message: 'Organisation Created Successfully', token })
+    res.status(201).json({ status: 'success', message: 'Organisation Created Successfully', token, organisationData : org })
 }
 
 module.exports.changePassword = async (req, res, next) => {

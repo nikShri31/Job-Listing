@@ -25,6 +25,15 @@ const initialState = {
   error: null,
 };
 
+/**
+ isAuthenticated: !!localStorage.getItem("token")-->
+ 
+Double negation (!!) is a common JavaScript trick to convert any value into a boolean:
+If localStorage.getItem("token") returns a truthy value (i.e., a non-empty string, such as a valid token), !! will convert it to true.
+If localStorage.getItem("token") returns a falsy value (null, undefined, "", etc.), !! will convert it to false.
+This ensures that isAuthenticated is always a boolean (true or false), which is often more predictable and useful in authentication checks. 
+ */
+
 // Helper function to choose API route based on role
 const getApiEndpoint = (role, type) => {
   const base = "http://localhost:5000/api";
@@ -101,6 +110,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.userData;
+        console.log(state.user);
         state.token = action.payload.token;
         state.role = action.payload.userData.role;
         state.isAuthenticated = true;
@@ -119,6 +129,7 @@ const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.userData;
+        console.log(state.user);
         state.token = action.payload.token;
         state.role = action.payload.userData.role;
         state.isAuthenticated = true;

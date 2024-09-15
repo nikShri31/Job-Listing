@@ -11,6 +11,7 @@ import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import SettingsSuggestRoundedIcon from "@mui/icons-material/SettingsSuggestRounded";
 import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
 import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
+import { useResponsive, useWidth } from "../../hooks/use-responsive";
 
 const items = [
   {
@@ -51,53 +52,78 @@ const items = [
   },
 ];
 
+
+
 export default function Highlights() {
+
+  const isSmallScreen = useResponsive('down', 'sm');
+  const isMediumScreen = useResponsive('between', 'sm', 'md');
+  const isLargeScreen = useResponsive('up', 'md');
+  const width = useWidth();
+
   return (
     <Box
       id="highlights"
       sx={{
-        height: "100vh",
+      
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        pt: { xs: 4, sm: 12 },
-        pb: { xs: 8, sm: 16 },
+        pt: isSmallScreen ? 6 : 12,
+        pb: isSmallScreen ? 8 : 16,
+        px: width === 'xs' || width === 'sm' ? 2 : 4, // Add padding to avoid x-overflow
         color: "white",
         backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF ,#CEE5FD)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
+        overflowX:isSmallScreen && "hidden", // Ensure no x-overflow
+        overflowY:'hidden',
         width: "100%",
       }}
     >
-      <Container maxWidth="lg" disableGutters>
+      <Container maxWidth="lg" 
+      disableGutters
+      sx={{
+        px: width === 'xs' || width === 'sm' ? 2 : 4, // Padding inside the container to control spacing
+      }}
+      >
         <Box
           sx={{
+            display: "flex",
+            flexDirection:'column',
+            alignItems: "center",
+            justifyContent: "center",
             width: "100%",
             textAlign: "center",
             mb: 4,
+            px: width === 'xs' || width === 'sm' ? 1 : 0, // Adjust margin/padding for smaller screens
           }}
         >
-          <Typography component="h2" variant="h4" color={"grey"} >
+          <Typography component="h2" variant={isSmallScreen ? "h5" : "h2"} color={"grey"} >
             Highlights
           </Typography>
-          <Typography variant="body1" sx={{ color: "black",my:3 }}>
+          <Typography variant="body1" sx={{ color: "black", my:3, fontSize: isSmallScreen ? '1rem' : '1.5rem'  }}>
             Explore all the top opportunities, Excel your Career, Grow your
             skills with US !!!
           </Typography>
         </Box>
-        <Grid container spacing={3.5}>
+        <Grid container spacing={isSmallScreen ? 2 : 3.5}>
           {items.map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid item xs={isSmallScreen && 10} sm={6} md={4} key={index}>
               <Stack
                 direction="column"
                 color="black"
+                alignItems= {isSmallScreen && "center"}
+                justifyContent= {isSmallScreen && "center"}
                 component={Card}
                 spacing={1}
                 useFlexGap
                 sx={{
-                  p: 3,
+                  p: isSmallScreen ? 2 : 3,
                   mb: 3,
                   height: "100%",
+               
+                  justifyContent: isSmallScreen && 'center',
                   border: "1px solid",
                   borderColor: "grey.400",
                   borderRadius: "20px",

@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled, keyframes } from "@mui/material";
+import { useResponsive } from "../../hooks/use-responsive";
 
 const logos = [
   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f4d4d8b829a89976a419c_Bern-black.svg",
@@ -11,12 +12,7 @@ const logos = [
   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/655f5ca4e548b0deb1041c33_Ankara-black.svg",
 ];
 
-const logoStyle = {
-  width: "100px",
-  height: "80px",
-  margin: "0 16px",
-  opacity: 0.7,
-};
+
 
 const scroll = keyframes`
   0% {
@@ -35,6 +31,20 @@ const LogoContainer = styled(Box)(({ theme }) => ({
 }));
 
 export default function LogoCollection() {
+
+  const isSmallScreen = useResponsive("down", "sm");
+  const isMediumScreen = useResponsive("between", "sm", "md");
+  const isLargeScreen = useResponsive("up", "md");
+
+  const logoStyle = {
+    width: isSmallScreen ? "50px" : isMediumScreen ? "80px" : "100px",
+    height: isSmallScreen ? "40px" : isMediumScreen ? "60px" : "80px",
+    margin: isSmallScreen ? "0 8px" : isMediumScreen ? "0 12px" : "0 16px",
+    opacity: 0.7,
+  };
+
+  const animationDuration = isSmallScreen ? "15s" : isMediumScreen ? "20s" : "25s";
+
   return (
     <Box
       id="logoCollection"
@@ -42,6 +52,7 @@ export default function LogoCollection() {
         py: 4,
         backgroundImage: "linear-gradient(0deg, #CEE5FD, #FFF)",
         overflowX: "hidden",
+        visibility: isSmallScreen && 'hidden',
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -58,7 +69,7 @@ export default function LogoCollection() {
         >
           Trusted by the best companies
         </Typography>
-        <LogoContainer>
+        <LogoContainer sx={{animationDuration: animationDuration,}}>
           {logos.map((logo, index) => (
             <Box key={index} sx={{ flexShrink: 0 }}>
               <img

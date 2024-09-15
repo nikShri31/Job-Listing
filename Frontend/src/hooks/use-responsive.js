@@ -45,3 +45,19 @@ export function useWidth() {
     }, null) || 'xs'
   );
 }
+
+
+/**
+ * mediaUp: useMediaQuery(theme.breakpoints.up(start)) checks if the screen width is greater than or equal to the start breakpoint.
+Example: useResponsive('up', 'md') returns true if the screen width is equal to or larger than the "md" (medium, usually 960px) breakpoint.
+
+mediaDown: useMediaQuery(theme.breakpoints.down(start)) checks if the screen width is less than or equal to the start breakpoint.
+Example: useResponsive('down', 'sm') returns true if the screen width is less than or equal to the "sm" (small, usually 600px) breakpoint.
+
+mediaBetween: useMediaQuery(theme.breakpoints.between(start, end)) checks if the screen width is between the start and end breakpoints.
+Example: useResponsive('between', 'sm', 'md') returns true if the screen width is between 600px and 960px.
+
+mediaOnly: useMediaQuery(theme.breakpoints.only(start)) checks if the screen width is exactly at the start breakpoint.
+Example: useResponsive('only', 'lg') returns true if the screen width is exactly at 1280px (large breakpoint).
+ * 
+ */

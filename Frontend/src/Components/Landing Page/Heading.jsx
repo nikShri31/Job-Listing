@@ -4,11 +4,17 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import LoginBtn from "../../Authentication/LoginBtn"
+import { useResponsive, useWidth } from "../../hooks/use-responsive";
 
 export default function Heading() {
   const [login, setLogin] = useState(false)
   const [displayedText, setDisplayedText] = useState('');
   const fullText ='!!Get Your DREAM JOB!!'
+
+  const isSmallScreen = useResponsive('down', 'sm');
+  const isMediumScreen = useResponsive('between', 'sm', 'md');
+  const isLargeScreen = useResponsive('up', 'md');
+  const width = useWidth(); // Add the useWidth hook for further control
 
   useEffect(()=>{
     let index =0;
@@ -28,42 +34,56 @@ export default function Heading() {
   const secondPart = displayedText.slice(9,19);
 
   return (
+    <Box sx={{bgcolor:'white'}}>
     <Box
       id="hero"
       sx={{
        
         backgroundImage:'url(https://www.zimyo.com/wp-content/uploads/2023/08/NA_October_10-1-768x439.jpg)',
-        backgroundSize:{xs:'100% 100%', sm:'50%,100%', lg:'50% 100%'},
+        backgroundSize: isSmallScreen ? '100% 100%' : '50% 100%',
         backgroundRepeat: 'no-repeat',
-        backdropFilter:'blur(20px)'
+        backdropFilter:'blur(20px)',
+        opacity: isSmallScreen && '0.8',
+        zIndex: 0,
+        height: '100vh',
+        overflowX: 'hidden',
       }}
     >
       <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-end',
-        
-          pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
-       
+         
+          zIndex: 1,
+          alignItems: isSmallScreen ? 'center' : 'flex-end',
+          pt: isSmallScreen ? 14 : isMediumScreen ? 18 : 25,
+          pb: isSmallScreen ? 8 : 12,
+          px: width === 'xs' || width === 'sm' ? 2 : 4, // Padding control to prevent x-overflow
+          overflowX: 'hidden', // Ensure no x-overflow inside the container
+          overflowX: isSmallScreen && 'hidden', // Ensure no x-overflow inside the container
         }}
       >
-        <Stack spacing={2} useFlexGap 
-        sx={{ 
-          width: { xs: '100%', sm: '70%' },
-          
-       }}
+        <Stack
+         spacing={2} 
+         useFlexGap 
+         sx={{
+          width: isSmallScreen ? '100%' : '70%',
+          alignItems: 'center',
+          px: width === 'xs' || width === 'sm' ? 1 : 2, // Additional padding control for content
+        
+        
+        }}
         >
           <Typography
-            variant="h1"
+            variant= {isSmallScreen ? 'h3' : 'h1'}
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
+              flexDirection:  'row',
+             
               alignSelf: 'center',
               textAlign: 'center',
-              fontSize: 'clamp(3.5rem, 10vw, 4rem)',
-              color:'lightslategrey'
+              fontSize: isSmallScreen ? '2.5rem' : 'clamp(3.5rem, 10vw, 4rem)',
+              color: 'lightslategrey',
             }}
           >
            {firstPart}&nbsp;
@@ -72,9 +92,9 @@ export default function Heading() {
               variant="h1"
               
               sx={{
-                fontWeight:'bold',
-                fontSize: 'clamp(3rem, 10vw, 4rem)',
-                color:'#032B53',
+                fontWeight: 'bold',
+                fontSize: isSmallScreen ? '2.5rem' : 'clamp(3rem, 10vw, 4rem)',
+                color: '#032B53',
               }}
             >
          {secondPart}
@@ -83,18 +103,20 @@ export default function Heading() {
           </Typography>
           <Typography
            component="div"
+           variant= {isMediumScreen || isLargeScreen && 'h5'}
             textAlign="center"
             color="text.secondary"
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
+            sx={{ alignSelf: 'center', width: { sm: '100%', md: '90%' }, px: width === 'xs' || width === 'sm' ? 1 : 4 }}
           >
           We have 100000+ great Job Offers for every Domain....
          
           </Typography>
           <Typography
            component="div"
+           variant= {isMediumScreen || isLargeScreen && 'h5'}
             textAlign="center"
             color="text.secondary"
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
+            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' }, px: width === 'xs' || width === 'sm' ? 1 : 2 }}
           >
         
           Join Us to get Hired and achive your Career Goals !!
@@ -104,7 +126,10 @@ export default function Heading() {
             alignSelf="center"
             spacing={1}
             useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
+            sx={{ pt: 2,
+               width: isSmallScreen ? '100%' : 'auto',
+               px: width === 'xs' || width === 'sm' ? 1 : 2, // Ensure responsive padding for buttons
+                }}
           >
           {// <LoginBtn role="Login to get started" variant={"outlined"}/>
             }
@@ -113,6 +138,7 @@ export default function Heading() {
          
         </Stack>
       </Container>
+    </Box>
     </Box>
   );
 }

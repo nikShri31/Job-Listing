@@ -29,7 +29,6 @@ const router = createBrowserRouter(
      <Route path="/" element={<LandingPage />}/>
       <Route path="/jobs" element={<HomePage />} />
    
-      <Route path="/jd" element={<JD />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/account" element={<AccountPage />} />

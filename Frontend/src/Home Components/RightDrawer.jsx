@@ -24,12 +24,13 @@ import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
 import BusinessIcon from "@mui/icons-material/Business";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setUserAppliedJobs } from "../store/appliedJobsSlice";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { styled, useTheme } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { applyJob } from "../store/appliedJobsSlice";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -80,35 +81,36 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
   const navigate = useNavigate();
 
   const handleResumeFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setResumeFile(event.target.files[0]);
   };
 
-  const handleApply = async (jobId) => {
-    const formData = new FormData();
-    formData.append("resume", resumeFile);
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/api/application/apply/${jobId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-    //response.data is the applicationData
-    //global userData.application.push(response.data.application);
-    setSnackbarOpen(true);
-    navigate("/home");
-  };
+  // const handleApply = async (jobId) => {
+  //   const formData = new FormData();
+  //   formData.append("resume", resumeFile);
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:5000/api/application/apply/${jobId}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   //response.data is the applicationData
+  //   //global userData.application.push(response.data.application);
+  //   setSnackbarOpen(true);
+  //   navigate("/jobs");
+  // };
 
   // Snackbar state
+ 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const dispatch = useDispatch();
+ 
 
   const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
   const theme = useTheme();
@@ -129,6 +131,21 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
 
   // Check if the current job has already been applied
   const isJobApplied = appliedJobs.includes(selectedJob?._id);
+
+  // handle apply
+   const dispatch = useDispatch();
+
+  const handleApply = () => {
+    if (!resumeFile) {
+      setSnackbarOpen(true);
+      return;
+    }
+
+    dispatch(applyJob({ jobId: selectedJob?._id, resumeFile }));
+    setSnackbarOpen(true);
+    navigate("/dashboard"); // Navigate to dashboard after applying
+  };
+
 
   // const handleApply = (jobId) => {
   //   if (!isJobApplied) {
@@ -338,7 +355,7 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                           role={undefined}
                           tabIndex={-1}
                           startIcon={<CloudUploadIcon />}
-                          onClick={handleFileUpload}
+                        
                         >
                           Select Resume
                           <input
@@ -348,9 +365,9 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                           />
                         </Button>
 
-                        {selectedFile && (
+                        {resumeFile && (
                           <Typography variant="body1" sx={{ marginTop: 2 }}>
-                            Selected file: {selectedFile.name}
+                            Selected file: {resumeFile.name}
                           </Typography>
                         )}
 
@@ -378,58 +395,6 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                 )}
               </>
             </Box>
-{  /** 
-
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-
-export default function ResponsiveDialog() {
-  const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-}
-
-  */}
 
             {/* Snackbar */}
             <Snackbar

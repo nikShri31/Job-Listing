@@ -4,6 +4,17 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
+/**
+ merge (from Lodash): Lodash is a utility library that simplifies JavaScript programming.
+  Its merge function deeply merges two objects.
+  In this case, it’s used to merge custom chart options with predefined base options.
+ */
+
+/**
+  alpha is a helper function from MUI that adjusts the opacity (alpha channel) of a given color. 
+  For example, alpha(theme.palette.grey[500], 0.16) makes the grey color 16% opaque.
+ */
+
 // ----------------------------------------------------------------------
 
 export default function useChart(options) {
@@ -37,7 +48,7 @@ export default function useChart(options) {
       theme.palette.error.main,
       theme.palette.success.main,
       theme.palette.warning.dark,
-      theme.palette.success.darker,
+      theme.palette.success.dark,
       theme.palette.info.dark,
       theme.palette.info.darker,
     ],

@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import {
   Box,
   Button,
+  CircularProgress,
   Grid,
   InputAdornment,
   TextField,
@@ -14,8 +15,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import RightDrawer from "./RightDrawer";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserSelectedJobId } from "../store/appliedJobsSlice";
+import { clearUserSelectedJobView } from "../store/appliedJobsSlice";
 import axios from "axios";
+import { fetchAllJobs } from "../store/allJobsSlice";
 
 const logoStyle = {
   width: "50px",
@@ -27,33 +29,42 @@ const logoStyle = {
 const Home = () => {
   // Initialize selectedCategory as null
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
 
-  const { id } = useParams();
+ 
+
+  // useEffect(() => {
+  //   const getJobs = async () => {
+  //     try {
+  //       const jobs = await axios.get("http://localhost:5000/api/job/getAll", {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       setJobs(jobs.data.jobs);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       console.log(err);
+  //       setIsLoading(false);
+  //     }
+  //   };
+    
+  //   getJobs();
+  // }, []);
+
+
+// fetching jobs from store
+  const dispatch = useDispatch();
+  const { jobs, isLoading, error } = useSelector((state) => state.allJobs);
 
   useEffect(() => {
-    const getJobs = async () => {
-      try {
-        const jobs = await axios.get("http://localhost:5000/api/job/getAll", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setJobs(jobs.data.jobs);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-        setIsLoading(false);
-      }
-    };
-    
-    getJobs();
-  }, []);
+    dispatch(fetchAllJobs());
+  }, [dispatch]);
+
+ 
 
   // useEffect(() => {
   //   fetch("jobs.json")
@@ -78,7 +89,8 @@ const Home = () => {
   const filteredItems = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(query.toLowerCase()) ||
-      job.location.toLowerCase().includes(query.toLowerCase())
+      job.location.toLowerCase().includes(query.toLowerCase()) ||
+      job.organisation.toLowerCase().includes(query.toLowerCase())
   );
 
   // ----------- Radio Filtering -----------
@@ -177,7 +189,7 @@ const Home = () => {
   const selectedJobId = useSelector(
     (state) => state.appliedJobs.userSelectedJobId
   );
-  const dispatch = useDispatch();
+ 
 
   useEffect(() => {
     if (selectedJobId) {
@@ -299,8 +311,18 @@ const Home = () => {
           {/* Job Cards */}
           <Box sx={{ bgcolor: "white", p: 2 }}>
             {isLoading ? (
-              <Typography variant="body1">Loading...</Typography>
-            ) : paginatedJobs.length > 0 ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <CircularProgress />
+            </Box>
+            ) 
+            : error ? (
+              <Typography color="error">
+                  {typeof error === "object" && error.error && error.error.message 
+                    ? error.error.message 
+                    : JSON.stringify(error)}
+                  </Typography>
+            ) 
+            : paginatedJobs.length > 0 ? (
               paginatedJobs.map((job) => (
                 <JobCard
                   key={job._id}
@@ -309,7 +331,7 @@ const Home = () => {
                 />
               ))
             ) : (
-              <Typography variant="h6">No data found</Typography>
+              <Typography variant="h6">No jobs found</Typography>
             )}
 
             {/* Pagination */}

@@ -35,3 +35,22 @@ function result(format, key = '.00') {
 
   return isInteger ? format.replace(key, '') : format;
 }
+
+
+
+/**
+ * 
+ * import { fCurrency, fShortenNumber, fPercent, fData } from './utils/numeralUtils';
+
+function JobCard({ job }) {
+  return (
+    <div>
+      <h2>{job.title}</h2>
+      <p>Salary: {fCurrency(job.salary)}</p>
+      <p>Number of Applicants: {fShortenNumber(job.applicants)}</p>
+      <p>Application Success Rate: {fPercent(job.successRate)}</p>
+      <p>File Size: {fData(job.resumeFileSize)}</p>
+    </div>
+  );
+}
+ */

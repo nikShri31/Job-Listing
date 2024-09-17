@@ -13,9 +13,11 @@ import {
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NotificationDialog from "./Notification_Dialog"; // Import Dialog component
 import { useDispatch, useSelector } from "react-redux";
+import {  useNavigate } from "react-router-dom";
 
 export default function NotificationMenu() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const notifications = useSelector(
     (state) => state.notifications.notifications
   );
@@ -29,8 +31,13 @@ export default function NotificationMenu() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+
+  const handleMenuClose=()=>{
+    setAnchorEl(null); 
+  };
+  const handleMenuItemClick = () => {
+    setAnchorEl(null);  // menu close
+   navigate('/dashboard');
   };
 
   //Dialog state
@@ -89,17 +96,17 @@ export default function NotificationMenu() {
         </Box>
 
         {lastNotifications.length === 0 ? (
-          <MenuItem onClick={handleMenuClose}>
+          <MenuItem >
             <Typography variant="body1">No notifications</Typography>
           </MenuItem>
         ) : (
           lastNotifications.map((notification) => (
-            <Box sx={{ display: "flex", flexDirection: "column", mt: 1 , px:4}}>
+            <Box   key={notification.id} sx={{ display: "flex", flexDirection: "column", mt: 1 , px:4}}>
             <MenuItem
-              key={notification.id}
-              onClick={handleMenuClose}
+            
+              onClick={handleMenuItemClick}
               sx={{ 
-                minWidth: { xs: "none", md: 420 }, 
+                minWidth: { xs: "none", md: 320 }, 
               display: "flex", flexDirection: "row", mt: 1, justifyContent:'flex-start' 
             }}
             >
@@ -130,7 +137,7 @@ export default function NotificationMenu() {
      
 
         {/* SEE all Button */}
-        {lastNotifications.length !== 0 && (
+        { lastNotifications.length !== 0 && (
           <>
             <Divider variant="middle" component="li" />
             <Box sx={{ display: "flex", justifyContent: "center",mt:1 }}>
@@ -152,13 +159,7 @@ export default function NotificationMenu() {
   );
 }
 
-// import { useState } from "react";
-// import Button from "@mui/material/Button";
-// import Menu from "@mui/material/Menu";
-// import MenuItem from "@mui/material/MenuItem";
-// import { Badge, Box, Divider, IconButton, Paper, Typography } from "@mui/material";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
-// import NotificationDialog from "./Notification_Dialog";
+
 
 // export default function NotificationMenu() {
 //   const [anchorEl, setAnchorEl] = useState(null);

@@ -59,6 +59,7 @@ const Home = () => {
 // fetching jobs from store
   const dispatch = useDispatch();
   const { jobs, isLoading, error } = useSelector((state) => state.allJobs);
+  const appliedJobs = useSelector(state => state.appliedJobs.userAppliedJobs);
 
   useEffect(() => {
     dispatch(fetchAllJobs());
@@ -280,10 +281,10 @@ const Home = () => {
         {/* Search and Job Listings */}
         <Grid item xs={12} md={9} mt={-4}>
           {/* Search Bar */}
-          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1,}}>
             <TextField
               fullWidth
-              size="small"
+              size="medium"
               variant="outlined"
               placeholder="Search.... job Location / job Profile..."
               InputProps={{
@@ -295,21 +296,21 @@ const Home = () => {
               }}
               value={query}
               onChange={handleInputChange}
-              sx={{ mr: 1, backgroundColor: "white", borderRadius:'40px' }}
+              sx={{ mr: 1, backgroundColor: "white", borderRadius:'40px',fontSize:'2rem' }}
             />
             <Button
               variant="contained"
               size="small"
               color="primary"
               onClick={handleSearch}
-              sx={{ py: 1 }}
+              sx={{ backgroundColor:'#032B53', color:'white',py:1 }}
             >
               Search
             </Button>
           </Box>
 
           {/* Job Cards */}
-          <Box sx={{ bgcolor: "white", p: 2 }}>
+          <Box sx={{ bgcolor: "white", p: 2 ,}}>
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <CircularProgress />

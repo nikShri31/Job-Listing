@@ -26,8 +26,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AppliedJobs() {
   const navigate = useNavigate();
-  const { userAppliedJobs, userSelectedJob,isLoading ,error } = useSelector((state) => state.appliedJobs);
-  console.log('applied jobs :', userAppliedJobs);
+  const {isLoading ,error } = useSelector((state) => state.appliedJobs);
+  const userAppliedJobs = useSelector((state) =>state.appliedJobs.userAppliedJobs);
+  
+  console.log('applied jobs:', userAppliedJobs.map(job => job.title));
+
+
   const dispatch = useDispatch();
 
   // const handleViewDetails = (jobId) => {
@@ -37,7 +41,7 @@ export default function AppliedJobs() {
 
   const handleViewDetails = (job) => {
     dispatch(setUserSelectedJobView(job)); // Set the selected job view
-    setIsDrawerOpen(true);
+    //setIsDrawerOpen(true);
   };
 
   const [alignment, setAlignment] = useState('Today');
@@ -138,9 +142,8 @@ export default function AppliedJobs() {
               : JSON.stringify(error)}
             </Typography>
       ) 
-      :    userAppliedJobs?.length > 0 ? (
-        userAppliedJobs?.map((job) => (
-          <>
+      :   userAppliedJobs && userAppliedJobs.length > 0 ? (
+        userAppliedJobs.map((job) => (
             <Container
               key={job._id}
               sx={{
@@ -209,7 +212,7 @@ export default function AppliedJobs() {
                 </Box>
               </Stack>
             </Container>
-          </>
+          
         ))
       ) : (
         <Typography variant='h3'> No Jobs Applied ....</Typography>

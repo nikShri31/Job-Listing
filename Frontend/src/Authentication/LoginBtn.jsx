@@ -18,7 +18,7 @@ const style = {
  scrollbarWidth: "none",
   overflowY: "scroll",
 };
-const LoginBtn = ({role,variant,bgColor}) => {
+const LoginBtn = ({role}) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -26,8 +26,9 @@ const LoginBtn = ({role,variant,bgColor}) => {
   return (
     <>
       <Button
-        variant={variant}
-        size="small"
+        variant='contained'
+         color="inherit"
+        size="medium"
         component="a"
         onClick={handleOpen}
         sx={{ backgroundColor:'#032B53', color:'white' }} 

@@ -14,7 +14,7 @@ export default function Heading() {
   const isSmallScreen = useResponsive('down', 'sm');
   const isMediumScreen = useResponsive('between', 'sm', 'md');
   const isLargeScreen = useResponsive('up', 'md');
-  const width = useWidth(); // Add the useWidth hook for further control
+  const width = useWidth();
 
   useEffect(()=>{
     let index =0;
@@ -34,7 +34,7 @@ export default function Heading() {
   const secondPart = displayedText.slice(9,19);
 
   return (
-    <Box sx={{bgcolor:'white'}}>
+    <Box sx={{bgcolor:'white', height: '100vh',}}>
     <Box
       id="hero"
       sx={{
@@ -45,7 +45,7 @@ export default function Heading() {
         backdropFilter:'blur(20px)',
         opacity: isSmallScreen && '0.8',
         zIndex: 0,
-        height: '100vh',
+       
         overflowX: 'hidden',
       }}
     >

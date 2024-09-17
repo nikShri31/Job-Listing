@@ -7,14 +7,22 @@ export const applyJob = createAsyncThunk(
   async ({ jobId, resumeFile }, { getState, rejectWithValue }) => {
 
     const { appliedJobs } = getState(); // Get current applied jobs
+    console.log(appliedJobs.title);
+    
 
     // Check if the job has already been applied
-    if (appliedJobs.jobs.some(job => job.jobId === jobId)) {
+    if (appliedJobs.userAppliedJobs.some(job => job.jobId === jobId)) {
       return rejectWithValue({ message: "You have already applied for this job." });
     }
+    
 
     const formData = new FormData();
     formData.append('resume', resumeFile);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+    
     try {
       const response = await axios.post(
         `http://localhost:5000/api/application/apply/${jobId}`,
@@ -26,9 +34,11 @@ export const applyJob = createAsyncThunk(
           },
         }
       );
+      console.log(response.data); 
       return { jobId, ...response.data }; // Include additional job response data
     } catch (err) {
-      return rejectWithValue(err.response.data);
+     return rejectWithValue(err.response?.data || { message: 'An error occurred' });
+
     }
   }
 );
@@ -58,7 +68,7 @@ const appliedJobsSlice = createSlice({
       })
       .addCase(applyJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state. userAppliedJobs.push(action.payload); // Add applied job to state
+        state.userAppliedJobs.push(action.payload); 
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.isLoading = false;

@@ -21,10 +21,12 @@ import NotificationMenu from '../Components/Notification/Notification_Menu';
 import { authError, authLoading, logout } from '../store/authSlice';
 import { useResponsive, useWidth } from '../hooks/use-responsive';
 
-const pages = ['Home', 'My Jobs', 'Profile'];
+const pages = ['Home', 'My Jobs', ''];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const headingStyles = {
   my: 2,
+  mx:1,
+   fontSize: "1.1rem",
   textDecoration: 'none',
   display: 'block',
   transition: 'box-shadow 0.3s ease-in-out',
@@ -109,7 +111,7 @@ function Header_2() {
                 variant="h6"
                 noWrap
                 component="a"
-                href="#"
+                href="/"
                 sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex', lg: 'flex' },
@@ -166,10 +168,10 @@ function Header_2() {
 
            {/* Buttons and User Menu for Large Screens */}
            {isLargeScreen && (
-            <Box sx={{ flexGrow: 1, display: 'flex' }}>
+            <Box sx={{ flexGrow: 1, display: 'flex',px:1 }}>
               <Button sx={headingStyles} onClick={() => navigate('/jobs')}>Home</Button>
               <Button sx={headingStyles} onClick={() => navigate('/dashboard')}>My Jobs</Button>
-              <Button sx={headingStyles} onClick={() => navigate('/profile')}>Profile</Button>
+            
             </Box>
           )}
 

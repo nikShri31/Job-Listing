@@ -73,7 +73,7 @@ export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, 
       const apiEndpoint = getApiEndpoint(role, "signup");
       const response = await axios.post(apiEndpoint, signupData);
       const { userData, token } = response.data;
-     console.log({userData, token});
+     
 
       return {
         userData,
@@ -120,7 +120,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Login failed.";
         state.isAuthenticated = false;
-        console.log(action.payload)
+     
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -129,7 +129,7 @@ const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.userData;
-        console.log(state.user);
+      
         state.token = action.payload.token;
         state.role = action.payload.userData.role;
         state.isAuthenticated = true;
@@ -147,7 +147,7 @@ const authSlice = createSlice({
 export const authLoading = (state)=> state.auth.loading;
 
 export const authError =(state)=> state.auth.error;
-console.log("authError:",authError);
+
 
 
 export const { logout } = authSlice.actions;

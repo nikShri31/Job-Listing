@@ -73,7 +73,7 @@ export default function Highlights() {
         pb: isSmallScreen ? 8 : 16,
         px: width === 'xs' || width === 'sm' ? 2 : 4, // Add padding to avoid x-overflow
         color: "white",
-        backgroundImage: "linear-gradient(180deg, #CEE5FD, #FFF ,#CEE5FD)",
+        backgroundImage: "linear-gradient(180deg, #E3F0FE, #F8F0FF ,#E3F0FE)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",
         overflowX:isSmallScreen && "hidden", // Ensure no x-overflow

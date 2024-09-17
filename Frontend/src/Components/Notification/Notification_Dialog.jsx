@@ -75,13 +75,13 @@ export default function NotificationDialog({
   return (
     <Box>
       <Dialog
-        sx={{ backgroundColor: "#E3F0FE" }}
+     
         fullScreen
         open={dialogOpen}
         onClose={handleDialogClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: "fixed" }}>
+        <AppBar sx={{ position: "fixed",backgroundColor:'#E3F0FE' }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -91,17 +91,24 @@ export default function NotificationDialog({
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+            <Typography sx={{ ml: 2, flex: 1,color:'#032B53' }} variant="h6" component="div">
               Notifications ({unreadCount})
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleDeleteAll}>
+            <Button 
+            autoFocus 
+              color="inherit"
+            variant="contained"
+            onClick={handleDeleteAll}
+            sx={{ mx:2, backgroundColor:'#032B53', color:'white','&:hover':{color:'#032B53'} }} 
+            >
               Delete All
             </Button>
             <Button
               autoFocus
               color="inherit"
               onClick={handleAddNotification}
-              variant="outlined"
+              variant="contained"
+              sx={{ backgroundColor:'#032B53', color:'white','&:hover':{color:'#032B53'} }} 
             >
               Add Notification
             </Button>

@@ -18,12 +18,11 @@ function App() {
         <Suspense
           fallback={
             <Typography variant="h2">
-              {' '}
-              (
+              
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress />
               </Box>
-              ){' '}
+              
             </Typography>
           }
         >

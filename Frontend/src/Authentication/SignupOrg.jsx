@@ -18,14 +18,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import axios from "axios";
-import { signup } from "../store/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+
 
 
 const SignupOrg = ({ formData, setFormData }) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  if (name === "phoneNo" && !/^\d*$/.test(value)) return;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -63,11 +62,11 @@ const SignupOrg = ({ formData, setFormData }) => {
             <Typography variant="h6">Contact Info</Typography>
             <Stack direction={"row"} spacing={2} sx={{ mt: 1 }}>
               <TextField
-                name="contactEmail"
+                name="email"
                 required
                 label="Contact Email"
                 size="small"
-                value={formData.contactEmail || ''}
+                value={formData?.email || ''}
                 onChange={handleChange}
               />
               <TextField

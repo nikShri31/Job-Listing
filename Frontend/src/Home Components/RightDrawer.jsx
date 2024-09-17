@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { styled, useTheme } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { applyJob } from "../store/appliedJobsSlice";
 
@@ -54,10 +54,11 @@ const chipStyle = {
   mt: 2,
   mx: 1,
   py: 0.5,
+  bgcolor:'lightgrey',
   // Increase padding for a larger chip
   fontSize: "1rem", // Increase the font size
   height: "auto", // Allow the height to auto-adjust based on content
-  color: "grey",
+  color: "#032B53",
   "& .MuiChip-label": {
     fontSize: "1.1rem", // Increase the font size of the label specifically
   },
@@ -125,35 +126,30 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
   };
 
   // Get the applied jobs from Redux store
-  const appliedJobs = useSelector((state) =>
-    state.appliedJobs.userAppliedJobs.map((job) => job?.id)
+  const userAppliedJobs = useSelector((state) =>
+    state.appliedJobs.userAppliedJobs.map((job) => job?._id)
   );
 
   // Check if the current job has already been applied
-  const isJobApplied = appliedJobs.includes(selectedJob?._id);
+  const isJobApplied = userAppliedJobs.includes(selectedJob?._id);
 
   // handle apply
    const dispatch = useDispatch();
 
   const handleApply = () => {
     if (!resumeFile) {
-      setSnackbarOpen(true);
+      setResumeBoxOpen(true);
       return;
     }
 
     dispatch(applyJob({ jobId: selectedJob?._id, resumeFile }));
     setSnackbarOpen(true);
-    navigate("/dashboard"); // Navigate to dashboard after applying
+    navigate("/jobs"); 
+    setResumeBoxOpen(false);
   };
 
 
-  // const handleApply = (jobId) => {
-  //   if (!isJobApplied) {
-  //     dispatch(setUserAppliedJobs(selectedJob));
-  //     setSnackbarOpen(true);
-  //     setResumeBoxOpen(false);
-  //   }
-  // };
+ 
 
   return (
     <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
@@ -162,6 +158,7 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
           <Box
             sx={{
               display: "flex",
+              color:'#032B53',
               flexDirection: "column",
               alignItems: "left",
               gap: { xs: 4, sm: 3 },
@@ -307,122 +304,7 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
               </List>
             </Box>
 
-            {/* Apply Button */}
-            <Box
-              sx={{
-                mt: "auto",
-                position: "fixed",
-                bottom: 0,
-                right: 10,
-                width: 500,
-                px: 4,
-                py: 2,
-              }}
-            >
-              <>
-            {isJobApplied ? (
-                <Button
-                  variant="contained"
-                  fullWidth
-                  disabled={isJobApplied}
-                  sx={{color:'black'}}
-                > 
-                  Applied  
-                </Button>
-                ) : (
-                  <React.Fragment>
-                    <Button
-                      variant="outline"
-                      color="white"
-                      onClick={handleClickOpen}
-                    >
-                      Add Your Resume
-                    </Button>
-
-                    <Dialog
-                      fullScreen={fullScreen}
-                      open={resumeBoxOpen}
-                      onClose={handleDialogClose}
-                      aria-labelledby="Add Your Resume"
-                    >
-                      <DialogTitle id="responsive-dialog-title">
-                        {"Add Resume"}
-                      </DialogTitle>
-                      <DialogContent>
-                        <Button
-                          variant="contained"
-                          component="label"
-                          role={undefined}
-                          tabIndex={-1}
-                          startIcon={<CloudUploadIcon />}
-                        
-                        >
-                          Select Resume
-                          <input
-                            type="file"
-                            hidden
-                            onChange={handleResumeFileChange}
-                          />
-                        </Button>
-
-                        {resumeFile && (
-                          <Typography variant="body1" sx={{ marginTop: 2 }}>
-                            Selected file: {resumeFile.name}
-                          </Typography>
-                        )}
-
-                        <DialogContentText>
-                          `Resume should be in (.pdf ,.docx,) upto 2MB `
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button autoFocus onClick={handleDialogClose}>
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            handleApply(selectedJob?._id);
-                          }}
-                          disabled={isJobApplied} // Disable apply if already applied
-                          variant="contained"
-                          autoFocus
-                        >
-                          Apply Now
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </React.Fragment>
-                )}
-              </>
-            </Box>
-
-            {/* Snackbar */}
-            <Snackbar
-              open={snackbarOpen}
-              autoHideDuration={1000}
-              onClose={() => setSnackbarOpen(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              {resumeFile ? (
-                <Alert
-                  onClose={() => setSnackbarOpen(false)}
-                  severity="success"
-                  sx={{ width: "100%" }}
-                >
-                  Successfully Applied!
-                </Alert>
-              ) : (
-                <Alert
-                  onClose={() => setSnackbarOpen(false)}
-                  severity="error"
-                  sx={{ width: "100%" }}
-                >
-                  please select a file...
-                </Alert>
-              )}
-            </Snackbar>
-
-            {/* Company Details */}
+             {/* Company Details */}
             <Box sx={{ my: 2 }}>
               <Typography
                 gutterBottom
@@ -483,6 +365,125 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                 </ListItem>
               </List>
             </Box>
+
+            {/* Apply Button */}
+            <Box
+              sx={{
+                mt: "auto",
+                position: "fixed",
+                bottom: 0,
+                right: 10,
+                width: 500,
+                px: 4,
+                py: 2,
+              }}
+            >
+              
+            {isJobApplied ? (
+                <Button
+                  variant="contained"
+                  fullWidth
+                  disabled={isJobApplied}
+                  sx={{color:'black'}}
+                > 
+                  Applied  
+                </Button>
+                ) : (
+                  <>
+                    <Button
+                    fullWidth
+                      variant="outlined"
+                      sx={{'&:hover':{backgroundColor:'#032B53', color:'white'},  backdropFilter: "blur(5px)",  }}
+                      onClick={handleClickOpen}
+                    >
+                      Add Your Resume
+                    </Button>
+
+                    <Dialog
+                      fullScreen={fullScreen}
+                      open={resumeBoxOpen}
+                      onClose={handleDialogClose}
+                      aria-labelledby="Add Your Resume"
+                    >
+                      <DialogTitle id="responsive-dialog-title">
+                        {"Add Resume"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <Button
+                          variant="contained"
+                          component="label"
+                          
+                          role={undefined}
+                          tabIndex={-1}
+                          startIcon={<CloudUploadIcon />}
+                        
+                        >
+                          Select Resume
+                          <input
+                            type="file"
+                            hidden
+                            onChange={handleResumeFileChange}
+                          />
+                        </Button>
+
+                        {resumeFile && (
+                          <Typography variant="body1" sx={{ marginTop: 2 }}>
+                            Selected file: {resumeFile.name}
+                          </Typography>
+                        )}
+
+                        <DialogContentText>
+                          `Resume should be in (.pdf ,.docx,) upto 2MB `
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button autoFocus onClick={handleDialogClose}>
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleApply(selectedJob?._id);
+                          }}
+                            sx={{backgroundColor:'#032B53', color:'white' }}
+                          disabled={isJobApplied} // Disable apply if already applied
+                          variant="contained"
+                          autoFocus
+                        >
+                          Apply Now
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                )}
+            </Box>
+
+            {/* Snackbar */}
+            <Snackbar
+              open={snackbarOpen}
+              autoHideDuration={1000}
+              onClose={() => setSnackbarOpen(false)}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              {resumeFile ? (
+                <Alert
+                  onClose={() => setSnackbarOpen(false)}
+                  severity="success"
+                  sx={{ width: "100%" }}
+                >
+                  Successfully Applied!
+                </Alert>
+              ) : (
+                <Alert
+                  onClose={() => setSnackbarOpen(false)}
+                  severity="error"
+                  sx={{ width: "100%" }}
+                >
+                  please select a file...
+                </Alert>
+              )}
+            </Snackbar>
+
+           
           </Box>
         )}
       </Box>

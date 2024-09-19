@@ -15,6 +15,15 @@ import NotificationDialog from "./Notification_Dialog"; // Import Dialog compone
 import { useDispatch, useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 
+const useNoOutlineStyles = () => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "none", // Removes TextField outline
+  },
+  "&:focus": {
+    outline: "none", // Removes outline on focus for buttons
+  },
+});
+
 export default function NotificationMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,13 +63,14 @@ export default function NotificationMenu() {
       {/* Icon Button to trigger the menu */}
       <IconButton
         color="text.primary"
-        size="large"
+        size="medium"
         aria-controls={open ? "notification-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={[useNoOutlineStyles()]}
       >
-        <Badge badgeContent={""} color="error">
+        <Badge badgeContent={''} color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
@@ -83,12 +93,12 @@ export default function NotificationMenu() {
             textAlign={"center"}
             sx={{ fontWeight: "bold" }}
           >
-            {" "}
+           
             Notifications
           </Typography>
           {lastNotifications.length !== 0 && (
             <Typography variant="body2" textAlign={"center"}>
-              {" "}
+       
               You have new Notifications
             </Typography>
           )}
@@ -138,14 +148,14 @@ export default function NotificationMenu() {
 
         {/* SEE all Button */}
         { lastNotifications.length !== 0 && (
-          <>
+          <Box>
             <Divider variant="middle" component="li" />
             <Box sx={{ display: "flex", justifyContent: "center",mt:1 }}>
               <Button variant="outlined" onClick={handleDialogOpen}>
                 View All
               </Button>
             </Box>
-          </>
+          </Box>
         )}
       </Menu>
 

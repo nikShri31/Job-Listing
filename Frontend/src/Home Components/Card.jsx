@@ -49,7 +49,7 @@ const JobCard = ({ data, onClick  }) => {
             height="100"
             sx={{ maxWidth: 175, objectFit: "contain",pt:2 }}
             image={companyLogo}
-            backgroundSize="Contained"
+           
           />
           <Stack sx={{ flex: 1, p:2 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>

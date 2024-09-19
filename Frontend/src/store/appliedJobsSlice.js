@@ -1,21 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const initialState= {
+    userAppliedJobs:[], //  applied jobs 
+    userSelectedJobId: null, // Job selected for "view details"
+    isLoading: false,
+    error: null,
+  }
+
 // Async thunk to handle the job application
 export const applyJob = createAsyncThunk(
   'appliedJobs/applyJob',
   async ({ jobId, resumeFile }, { getState, rejectWithValue }) => {
 
-    const { appliedJobs } = getState(); // Get current applied jobs
-    console.log(appliedJobs.title);
-    
+    const State = getState();
+    console.log(State);
 
-    // Check if the job has already been applied
-    if (appliedJobs.userAppliedJobs.some(job => job.jobId === jobId)) {
-      return rejectWithValue({ message: "You have already applied for this job." });
+    const appliedJobIds = new Set(State.appliedJobs.userAppliedJobs.map(job => job.job)); // Use job._id or job.job based on your structure
+
+    if (appliedJobIds.has(jobId)) {
+      return rejectWithValue({ message: "Job already applied" });
     }
     
-
     const formData = new FormData();
     formData.append('resume', resumeFile);
 
@@ -34,10 +40,10 @@ export const applyJob = createAsyncThunk(
           },
         }
       );
-      console.log(response.data); 
-      return { jobId, ...response.data }; // Include additional job response data
+      console.log('API response:', response.data);
+      return response.data;  // Include additional job response data
     } catch (err) {
-     return rejectWithValue(err.response?.data || { message: 'An error occurred' });
+     return rejectWithValue(err.response?.data || { message: 'An error occurred in applied jobs' });
 
     }
   }
@@ -45,20 +51,15 @@ export const applyJob = createAsyncThunk(
 
 const appliedJobsSlice = createSlice({
   name: 'appliedJobs',
-  initialState: {
-    userAppliedJobs: [], //  applied jobs 
-    userSelectedJob: null, // Job selected for "view details"
-    isLoading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    setUserSelectedJobView(state, action) {
-      state.userSelectedJob= action.payload; 
+    setUserSelectedJobId(state, action) {
+      state.userSelectedJobId= action.payload; 
     },
    
-    clearUserSelectedJobView(state) {
-      state.userSelectedJob = null;
-    },
+    // clearUserSelectedJobView(state) {
+    //   state.userSelectedJobId = null;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -69,6 +70,7 @@ const appliedJobsSlice = createSlice({
       .addCase(applyJob.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userAppliedJobs.push(action.payload); 
+      
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.isLoading = false;
@@ -76,7 +78,7 @@ const appliedJobsSlice = createSlice({
       });
   },
 });
-export const {  setUserSelectedJobView,  clearUserSelectedJobView } = appliedJobsSlice.actions
+export const {  setUserSelectedJobId } = appliedJobsSlice.actions;
 export default appliedJobsSlice.reducer;
 
 

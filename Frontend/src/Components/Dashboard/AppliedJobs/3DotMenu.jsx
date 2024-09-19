@@ -7,7 +7,7 @@ import { Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const options = [
- 'View and Manage Details',
+ 'View Details',
  
 ];
 
@@ -25,7 +25,7 @@ export default function ThreeDotMenu({handleViewDetails ,job}) {
   };
 
   return (
-    <Box sx={{display:'flex', alignItems:'flex-start'}} nowrap>
+    <Box sx={{display:'flex', alignItems:'flex-start'}} >
       <IconButton
         aria-label="more"
         id="long-button"
@@ -70,7 +70,7 @@ export default function ThreeDotMenu({handleViewDetails ,job}) {
       >
         {options.map((option) => (
           <MenuItem key={option} onClick={handleClose}>
-           <Button sx={{m:-1,}} onClick={()=> handleViewDetails(job.id)} >
+           <Button sx={{m:-1,}} onClick={()=> handleViewDetails(job._id)} >
            {option}
            </Button>
           </MenuItem>

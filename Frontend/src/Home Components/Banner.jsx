@@ -15,7 +15,7 @@ const Banner = () => {
  
 
   return (
-    <Box fullWidth sx={{ textAlign: "center", py: 4, px: { xs: 2, sm: 4 },}}>
+    <Box sx={{ textAlign: "center", py: 4, px: { xs: 2, sm: 4 },}}>
       <Typography
         variant="h1"
         sx={{

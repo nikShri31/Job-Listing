@@ -65,17 +65,7 @@ const chipStyle = {
 };
 
 const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
-  //     const [appliedJobs, setAppliedJobs] = useState({});
-  //   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  //      const dispatch = useDispatch();
-  //     // const userSelectedJob = useSelector((state) => state.appliedJobs.userSelectedJob);
-
-  // // useEffect(() => {
-  // //   if (userSelectedJob) {
-  // //     // Open the drawer with the selected job details
-  // //     openJobDetailsDrawer(userSelectedJob);
-  // //   }
-  // // }, [userSelectedJob]);
+  
 
   // Resume State
   const [resumeFile, setResumeFile] = useState(null);
@@ -126,27 +116,34 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
   };
 
   // Get the applied jobs from Redux store
-  const userAppliedJobs = useSelector((state) =>
-    state.appliedJobs.userAppliedJobs.map((job) => job?._id)
-  );
 
-  // Check if the current job has already been applied
-  const isJobApplied = userAppliedJobs.includes(selectedJob?._id);
+  const userAppliedJob = useSelector((state) => state.appliedJobs.userAppliedJobs);
 
-  // handle apply
-   const dispatch = useDispatch();
+// Check if the current job has already been applied
+const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);
 
-  const handleApply = () => {
-    if (!resumeFile) {
-      setResumeBoxOpen(true);
-      return;
-    }
 
-    dispatch(applyJob({ jobId: selectedJob?._id, resumeFile }));
+// Dispatch initialization
+const dispatch = useDispatch();
+
+const handleApply = async (jobId) => {
+  if (!resumeFile) {
+    setResumeBoxOpen(true); // Prompt user to upload a resume
+    return;
+  }
+  try {
+    // Dispatch the apply job action and wait for its completion
+    await dispatch(applyJob({ jobId , resumeFile })).unwrap();
+    
+    // If successful, show the snackbar and close the resume box
     setSnackbarOpen(true);
-    navigate("/jobs"); 
     setResumeBoxOpen(false);
-  };
+  
+  } catch (error) {
+    console.error('Failed to apply:', error);
+    // Optionally, show an error message or handle failure gracefully
+  }
+};
 
 
  
@@ -441,11 +438,9 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                           Cancel
                         </Button>
                         <Button
-                          onClick={() => {
-                            handleApply(selectedJob?._id);
-                          }}
+                          onClick={()=>handleApply(selectedJob?._id)}
                             sx={{backgroundColor:'#032B53', color:'white' }}
-                          disabled={isJobApplied} // Disable apply if already applied
+                          
                           variant="contained"
                           autoFocus
                         >
@@ -461,10 +456,10 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
             <Snackbar
               open={snackbarOpen}
               autoHideDuration={1000}
-              onClose={() => setSnackbarOpen(false)}
+               onClose={() => setSnackbarOpen(false)}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
-              {resumeFile ? (
+              {resumeFile && (
                 <Alert
                   onClose={() => setSnackbarOpen(false)}
                   severity="success"
@@ -472,15 +467,7 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
                 >
                   Successfully Applied!
                 </Alert>
-              ) : (
-                <Alert
-                  onClose={() => setSnackbarOpen(false)}
-                  severity="error"
-                  sx={{ width: "100%" }}
-                >
-                  please select a file...
-                </Alert>
-              )}
+              ) }
             </Snackbar>
 
            

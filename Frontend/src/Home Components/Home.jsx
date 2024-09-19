@@ -8,6 +8,8 @@ import {
   CircularProgress,
   Grid,
   InputAdornment,
+  Skeleton,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -15,16 +17,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import RightDrawer from "./RightDrawer";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserSelectedJobView } from "../store/appliedJobsSlice";
-import axios from "axios";
+import { setUserSelectedJobId } from "../store/appliedJobsSlice";
+
 import { fetchAllJobs } from "../store/allJobsSlice";
 
-const logoStyle = {
-  width: "50px",
-  height: "50px",
-  margin: "0 15px",
-  opacity: 0.8,
-};
+
+// for textfield and buttons
+const useNoOutlineStyles = () => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "none", // Removes TextField outline
+  },
+  "&:focus": {
+    outline: "none", // Removes outline on focus for buttons
+  },
+});
 
 const Home = () => {
   // Initialize selectedCategory as null
@@ -32,7 +38,8 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [query, setQuery] = useState("");
-
+  
+  const dispatch = useDispatch();
  
 
   // useEffect(() => {
@@ -57,10 +64,8 @@ const Home = () => {
 
 
 // fetching jobs from store
-  const dispatch = useDispatch();
   const { jobs, isLoading, error } = useSelector((state) => state.allJobs);
-  const appliedJobs = useSelector(state => state.appliedJobs.userAppliedJobs);
-
+  
   useEffect(() => {
     dispatch(fetchAllJobs());
   }, [dispatch]);
@@ -187,9 +192,13 @@ const Home = () => {
   // Drawer States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
-  const selectedJobId = useSelector(
-    (state) => state.appliedJobs.userSelectedJobId
-  );
+  const selectedJobId = useSelector((state) => state.appliedJobs?.userSelectedJobId);
+
+  const handleCardClick = (job) => {
+    setSelectedJob(job);
+    setIsDrawerOpen(true);
+    dispatch(setUserSelectedJobId(job._id));
+  };
  
 
   useEffect(() => {
@@ -202,11 +211,13 @@ const Home = () => {
         if (job) {
           setSelectedJob(job);
           setIsDrawerOpen(true);
-          dispatch(clearUserSelectedJobId());
+        
+        }else {
+          console.error(`Job with id ${selectedJobId} not found`);
         }
       }
     }
-  }, [selectedJobId, jobs, currentPage, dispatch]);
+  }, [selectedJobId, jobs, currentPage]);
 
   const findPageForJob = (jobId, jobs) => {
     const index = jobs.findIndex((job) => job._id === jobId);
@@ -231,10 +242,7 @@ const Home = () => {
   //    }
   //  }, [location, jobs]);
 
-  const handleCardClick = (job) => {
-    setSelectedJob(job);
-    setIsDrawerOpen(true);
-  };
+
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
@@ -245,6 +253,14 @@ const Home = () => {
     console.log("Search initiated");
     setCurrentPage(1); // Reset to first page on search
   };
+
+  const userAppliedJob = useSelector((state) => state.appliedJobs.userAppliedJobs || []);
+
+  // Check if the current job has already been applied
+  const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);
+
+// sanckbar
+const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   return (
     <Box
@@ -261,7 +277,7 @@ const Home = () => {
     >
       {/* Banner */}
       <Box
-        fullWidth
+       
         sx={{ width: "100%", maxWidth: 1200, px: { xs: 2, sm: 4 } }}
       >
         <Banner query={query} handleInputChange={handleInputChange} />
@@ -274,7 +290,7 @@ const Home = () => {
         sx={{ width: "100%", maxWidth: 1200, px: { xs: 2, sm: 4 } }}
       >
         {/* Sidebar */}
-        <Grid item xs={12} md={3} sx={{ bgcolor: "#FFF", p: 2 }}>
+        <Grid item  md={3} sx={{ bgcolor: "#FFF", p: 2, display:{xs:'none', md:'flex'} }}>
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </Grid>
 
@@ -284,7 +300,7 @@ const Home = () => {
           <Box sx={{ display: "flex", alignItems: "center", mb: 1,}}>
             <TextField
               fullWidth
-              size="medium"
+              size={"medium"}
               variant="outlined"
               placeholder="Search.... job Location / job Profile..."
               InputProps={{
@@ -292,18 +308,25 @@ const Home = () => {
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                ),
+                )
               }}
               value={query}
               onChange={handleInputChange}
-              sx={{ mr: 1, backgroundColor: "white", borderRadius:'40px',fontSize:'2rem' }}
+              sx={[
+                useNoOutlineStyles(),
+               { mr: 1,
+                backgroundColor: "white",
+                borderRadius: '40px',
+                fontSize: {xs:'1rem', md:'2rem'},
+                '&:hover':{border:'1px solid #aaa',borderRadius:'40px'}
+              }]}
             />
             <Button
               variant="contained"
-              size="small"
-              color="primary"
+              color='inherit'
+              size="medium"
               onClick={handleSearch}
-              sx={{ backgroundColor:'#032B53', color:'white',py:1 }}
+              sx={[ useNoOutlineStyles(),{ color:'#032B53',py:{xs:0, md:1},border:'none' }]}
             >
               Search
             </Button>
@@ -313,7 +336,7 @@ const Home = () => {
           <Box sx={{ bgcolor: "white", p: 2 ,}}>
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <CircularProgress />
+              <Skeleton animation='wave' variant="rectangular" width='100vw' height={100} />
             </Box>
             ) 
             : error ? (
@@ -332,7 +355,7 @@ const Home = () => {
                 />
               ))
             ) : (
-              <Typography variant="h6">No jobs found</Typography>
+              <Typography color={"primary"} variant="h4" textAlign={'center'}>No Jobs Found !!!</Typography>
             )}
 
             {/* Pagination */}
@@ -373,6 +396,9 @@ const Home = () => {
           // handleApply ={handleApply }
         />
       </Box>
+
+     
+           
     </Box>
   );
 };

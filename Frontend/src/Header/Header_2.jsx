@@ -12,14 +12,23 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Badge, Drawer, List, ListItem, ListItemText, Stack } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Drawer, List, ListItem, ListItemText, Stack } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginBtn from '../Authentication/LoginBtn';
 import NotificationMenu from '../Components/Notification/Notification_Menu';
 import { authError, authLoading, logout } from '../store/authSlice';
 import { useResponsive, useWidth } from '../hooks/use-responsive';
+
+const useNoOutlineStyles = () => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "none", // Removes TextField outline
+  },
+  "&:focus": {
+    outline: "none", // Removes outline on focus for buttons
+  },
+});
 
 const pages = ['Home', 'My Jobs', ''];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -49,7 +58,7 @@ function Header_2() {
   const { isAuthenticated, role, user } = useSelector((state) => state.auth);
   const isLoading = useSelector(authLoading);
   const error = useSelector(authError);
-  console.log('Error:', error);
+  
 
   console.log('Auth State:', { isAuthenticated, role, user });
 
@@ -82,7 +91,7 @@ function Header_2() {
         position="sticky"
         sx={{
           boxShadow: 0,
-          bgcolor: '#E3F0FE',
+          bgcolor:'white',
           pt: currentWidth < 400 ? 0.5 : 1,
           width: isMobile ? '100%':'100%'
         }}
@@ -95,8 +104,8 @@ function Header_2() {
               alignItems: 'center',
               justifyContent: 'space-between',
               flexShrink: 0,
-              borderRadius: '999px',
-              bgcolor: 'primary',
+              borderRadius:'99px',
+              bgcolor: '#E3F0FE',
               backdropFilter: 'blur(30px)',
               maxHeight: 40,
               border: '1px solid',
@@ -190,7 +199,7 @@ function Header_2() {
                       <NotificationMenu />
                     </MenuItem>
                     <Tooltip title="Open settings">
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <IconButton onClick={handleOpenUserMenu} sx={[useNoOutlineStyles(),{ p: 0 }]}>
                         <Avatar alt={user?.name} src={user?.avatar} />
                       </IconButton>
                     </Tooltip>
@@ -202,10 +211,10 @@ function Header_2() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <MenuItem onClick={() => navigate('/profile')}>
+                      <MenuItem onClick={() => {navigate('/profile'); handleCloseUserMenu();}}>
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
-                      <MenuItem onClick={() => navigate('/dashboard')}>
+                      <MenuItem onClick={() => {navigate('/dashboard'); handleCloseUserMenu();}}>
                         <Typography textAlign="center">My Jobs</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleLogout}>

@@ -24,7 +24,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 const SignupOrg = ({ formData, setFormData }) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  if (name === "phoneNo" && !/^\d*$/.test(value)) return;
+  // if (name === "phoneNo" && !/^\d*$/.test(value)) return;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({

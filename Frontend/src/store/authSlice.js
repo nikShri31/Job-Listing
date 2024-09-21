@@ -20,7 +20,7 @@ const initialState = {
   user: null,
   token: localStorage.getItem("token") || null,
   role: null,
- isAuthenticated: !!localStorage.getItem("token"),
+  isAuthenticated: !!localStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -47,17 +47,22 @@ const getApiEndpoint = (role, type) => {
       : `${base}/organisation/signup`;
   }
   if (!endpoints[role]) throw new Error("Invalid role");
-  return endpoints[role][type];
+  // return endpoints[role][type];
 };
 
 export const login = createAsyncThunk( "/login", async ({ loginData, role }, { rejectWithValue }) => {
     try {
       const apiEndpoint = getApiEndpoint(role, "login");
+      if(role === 'employer') loginData.adminEmail = loginData.email;
+
       const response = await axios.post(apiEndpoint, loginData);
-      const { userData, token } = response.data;
+      const apiData = response.data;
+      const data = apiData.userData ? apiData.userData : apiData.organisationData;
+      const { token } = apiData;
+      // console.log(data)
 
       return {
-        userData,
+        data,
         token,
       };
     } catch (error) {
@@ -72,11 +77,13 @@ export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, 
     try {
       const apiEndpoint = getApiEndpoint(role, "signup");
       const response = await axios.post(apiEndpoint, signupData);
-      const { userData, token } = response.data;
+      const apiData = response.data;
+      const data = apiData.userData ? apiData.userData : apiData.organisationData;
+      const { token } = apiData;
      
 
       return {
-        userData,
+        data,
         token,
       };
     } catch (error) {
@@ -109,10 +116,9 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.userData;
-        console.log(state.user);
+        state.user = action.payload.data;
         state.token = action.payload.token;
-        state.role = action.payload.userData.role;
+        state.role = action.payload.data.role;
         state.isAuthenticated = true;
         localStorage.setItem("token", action.payload.token);
       })
@@ -128,10 +134,10 @@ const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.userData;
+        state.user = action.payload.data;
       
         state.token = action.payload.token;
-        state.role = action.payload.userData.role;
+        state.role = action.payload.data.role;
         state.isAuthenticated = true;
         localStorage.setItem("token", action.payload.token);
       })

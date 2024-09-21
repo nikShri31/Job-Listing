@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useReducer, useCallback } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import {
@@ -14,6 +14,43 @@ import {
   TextField,
 } from "@mui/material";
 
+// Initial state for the form
+const initialState = {
+  employment: "",
+  employmentType: "",
+  experience: "",
+  employmentRecord: {
+    organisation: "",
+    role: "",
+  },
+};
+
+// Reducer function to manage state transitions
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_STATE":
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case "UPDATE_FIELD":
+      return {
+        ...state,
+        [action.field]: action.value,
+      };
+    case "UPDATE_NESTED_FIELD":
+      return {
+        ...state,
+        [action.field]: {
+          ...state[action.field],
+          [action.subField]: action.value,
+        },
+      };
+    default:
+      return state;
+  }
+};
+
 const style = {
   color: "#032340",
   width: "80%",
@@ -21,36 +58,41 @@ const style = {
 };
 
 export default function ExpEditBtn({ formData, changeData }) {
-  const [localFormData, setLocalFormData] = useState(() => ({
-    ...formData,
-  }));
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Sync localFormData with formData from props
+  // Update the state when formData changes
   useEffect(() => {
     if (formData) {
-      setLocalFormData(formData);
+      dispatch({ type: "SET_STATE", payload: { ...initialState, ...formData } });
     }
+    // Only run this effect when formData changes
   }, [formData]);
 
-  // Memoize handleChange to avoid unnecessary re-renders
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    setLocalFormData((prevData) => {
-      const updatedData = {
-        ...prevData,
-        [name]: value,
-      };
       if (name === "organisation" || name === "role") {
-        updatedData.employmentRecord = {
-          ...prevData?.employmentRecord,
-          [name]: value,
-        };
+        dispatch({
+          type: "UPDATE_NESTED_FIELD",
+          field: "employmentRecord",
+          subField: name,
+          value,
+        });
+        changeData({
+          ...state,
+          employmentRecord: {
+            ...state.employmentRecord,
+            [name]: value,
+          },
+        });
+      } else {
+        dispatch({ type: "UPDATE_FIELD", field: name, value });
+        changeData({ ...state, [name]: value });
       }
-      changeData(updatedData); // Call changeData after updating local state
-      return updatedData;
-    });
-  }, [changeData]);
+    },
+    [state, changeData]
+  );
 
   return (
     <Box sx={style}>
@@ -67,11 +109,11 @@ export default function ExpEditBtn({ formData, changeData }) {
         Employment
       </Typography>
       <FormControl required sx={{ m: 1, minWidth: "70%" }}>
-        <InputLabel id="demo-simple-select-required-label">Employment</InputLabel>
+        <InputLabel id="employment-label">Employment</InputLabel>
         <Select
-          labelId="demo-simple-select-required-label"
-          id="demo-simple-select-required"
-          value={localFormData?.employment || ""}
+          labelId="employment-label"
+          id="employment-select"
+          value={state.employment}
           label="Employment"
           name="employment"
           onChange={handleChange}
@@ -83,22 +125,30 @@ export default function ExpEditBtn({ formData, changeData }) {
       </FormControl>
 
       {/* Employment Type */}
-      <FormControl m={2}>
-        <FormLabel id="demo-row-radio-buttons-group-label">Type</FormLabel>
+      <FormControl sx={{ m: 1 }}>
+        <FormLabel id="employment-type-label">Type</FormLabel>
         <RadioGroup
           row
-          aria-labelledby="demo-row-radio-buttons-group-label"
+          aria-labelledby="employment-type-label"
           name="employmentType"
-          value={localFormData?.employmentType || ""}
+          value={state.employmentType}
           onChange={handleChange}
         >
-          <FormControlLabel value="FullTime" control={<Radio />} label="Full Time" />
-          <FormControlLabel value="Internship" control={<Radio />} label="Internship" />
+          <FormControlLabel
+            value="FullTime"
+            control={<Radio />}
+            label="Full Time"
+          />
+          <FormControlLabel
+            value="Internship"
+            control={<Radio />}
+            label="Internship"
+          />
         </RadioGroup>
       </FormControl>
 
       {/* Experience */}
-      <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+      <Typography id="experience-label" sx={{ mt: 2 }}>
         Experience
       </Typography>
       <FormControl sx={{ m: 1, minWidth: 300 }}>
@@ -106,7 +156,7 @@ export default function ExpEditBtn({ formData, changeData }) {
           id="experience-input"
           label="Experience in Years"
           type="number"
-          value={localFormData?.experience || 0}
+          value={state.experience}
           name="experience"
           onChange={handleChange}
           InputLabelProps={{
@@ -116,11 +166,11 @@ export default function ExpEditBtn({ formData, changeData }) {
       </FormControl>
 
       {/* Previous Employment Record */}
-      <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+      <Typography id="employment-record-label" sx={{ mt: 2 }}>
         Previous Employment Record
       </Typography>
       <Box
-        component="form"
+        component="div"
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
         }}
@@ -128,42 +178,20 @@ export default function ExpEditBtn({ formData, changeData }) {
         autoComplete="off"
       >
         <TextField
-          id="outlined"
+          id="organisation-input"
           label="Organisation"
-          value={localFormData?.employmentRecord?.organisation || ""}
+          value={state.employmentRecord.organisation}
           name="organisation"
           onChange={handleChange}
         />
         <TextField
-          id="outlined"
+          id="role-input"
           label="Job Profile"
-          value={localFormData?.employmentRecord?.role || ""}
+          value={state.employmentRecord.role}
           name="role"
           onChange={handleChange}
         />
       </Box>
-
-      {/* Notice Period (Optional) */}
-      {/* Uncomment and implement if needed
-      <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-        Notice Period
-      </Typography>
-      <FormControl sx={{ m: 1, minWidth: 300 }}>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={notice}
-          onChange={handleNoticeChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={15}>15 Days or Less</MenuItem>
-          <MenuItem value={30}>30 Days</MenuItem>
-          <MenuItem value={60}>60 Days or More</MenuItem>
-        </Select>
-      </FormControl>
-      */}
     </Box>
   );
 }

@@ -93,10 +93,12 @@ const Home = () => {
 
   // ------------ Filter items in search bar  -----
   const filteredItems = jobs.filter(
-    (job) =>
-      job.title.toLowerCase().includes(query.toLowerCase()) ||
+    (job) =>{
+      return job.title.toLowerCase().includes(query.toLowerCase()) ||
       job.location.toLowerCase().includes(query.toLowerCase()) ||
-      job.organisation.toLowerCase().includes(query.toLowerCase())
+      job.organisation.name.toLowerCase().includes(query.toLowerCase());
+    }
+      
   );
 
   // ----------- Radio Filtering -----------

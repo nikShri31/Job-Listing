@@ -4,7 +4,7 @@ const User = require('../Models/userModel');
 
 //Employer 
 exports.createJob = async (req, res, next) => {
-    const { title, description, company, location, salary, requirements } = req.body;
+    const { title, description, company, location, salary, requirements, jobType, employmentType } = req.body;
     const organisationId = req.user.id;
     const newJob = new JobListing({
         title: title.toLowerCase(),
@@ -18,6 +18,8 @@ exports.createJob = async (req, res, next) => {
             skills: requirements.skills.map(skill => skill.toLowerCase()),
             education: requirements.education
         },
+        jobType,
+        employmentType
     });
     await newJob.save();
     const organisation = await Organisation.findById(organisationId);

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState= {
-    userAppliedJobs:[], //  applied jobs 
-    userSelectedJobId: null, // Job selected for "view details"
-    isLoading: false,
-    error: null,
-  }
+const initialState = {
+  userAppliedJobs: [], //  applied jobs 
+  userSelectedJobId: null, // Job selected for "view details"
+  isLoading: false,
+  error: null,
+}
 
 // Async thunk to handle the job application
 export const applyJob = createAsyncThunk(
@@ -14,21 +14,20 @@ export const applyJob = createAsyncThunk(
   async ({ jobId, resumeFile }, { getState, rejectWithValue }) => {
 
     const State = getState();
-    console.log(State);
 
     const appliedJobIds = new Set(State.appliedJobs.userAppliedJobs.map(job => job.job)); // Use job._id or job.job based on your structure
 
     if (appliedJobIds.has(jobId)) {
       return rejectWithValue({ message: "Job already applied" });
     }
-    
+
     const formData = new FormData();
     formData.append('resume', resumeFile);
-
+    // console.log(formData)
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
-    
+
     try {
       const response = await axios.post(
         `http://localhost:5000/api/application/apply/${jobId}`,
@@ -43,7 +42,7 @@ export const applyJob = createAsyncThunk(
       console.log('API response:', response.data);
       return response.data;  // Include additional job response data
     } catch (err) {
-     return rejectWithValue(err.response?.data || { message: 'An error occurred in applied jobs' });
+      return rejectWithValue(err.response?.data || { message: 'An error occurred in applied jobs' });
 
     }
   }
@@ -54,9 +53,9 @@ const appliedJobsSlice = createSlice({
   initialState,
   reducers: {
     setUserSelectedJobId(state, action) {
-      state.userSelectedJobId= action.payload; 
+      state.userSelectedJobId = action.payload;
     },
-   
+
     // clearUserSelectedJobView(state) {
     //   state.userSelectedJobId = null;
     // },
@@ -69,8 +68,8 @@ const appliedJobsSlice = createSlice({
       })
       .addCase(applyJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userAppliedJobs.push(action.payload); 
-      
+        state.userAppliedJobs.push(action.payload);
+
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.isLoading = false;
@@ -78,7 +77,7 @@ const appliedJobsSlice = createSlice({
       });
   },
 });
-export const {  setUserSelectedJobId } = appliedJobsSlice.actions;
+export const { setUserSelectedJobId } = appliedJobsSlice.actions;
 export default appliedJobsSlice.reducer;
 
 

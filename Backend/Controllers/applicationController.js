@@ -24,9 +24,10 @@ module.exports.apply = async (req, res, next) => {
             }
         );        
         const newApplication = await application.save();
+        const populatedApplication = await Application.findById(newApplication._id).populate('job');
         await JobListing.findByIdAndUpdate(jobId, { $push: { applications: newApplication._id } });
         await User.findByIdAndUpdate(userId, { $push: { applications: newApplication._id } });
-        res.status(201).json({ message: 'Application submitted successfully', application });
+        res.status(201).json({ message: 'Application submitted successfully', application : populatedApplication });
     } catch (error) {
         return next(new expressError(error.message, 400))
     }

@@ -7,13 +7,14 @@ import { Suspense, useState } from 'react';
 import Header_2 from './Header/Header_2';
 import Footer from './Footer/Foooter';
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
+import Header from './Org_Dashboard/layouts/dashboard/Header';
 
 function App() {
   const [loading, setLoading] = useState(false);
 
   return (
     <>
-      <Header_2 />
+      <Header />
       <main>
         <Suspense
           fallback={

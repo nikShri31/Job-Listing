@@ -16,8 +16,6 @@ import {
   Typography,
 } from '@mui/material';
 
-
-
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
 import JobStatus from './JobStatus';
@@ -31,12 +29,24 @@ import { applyJob } from '../../../store/appliedJobsSlice';
 export default function AppliedJobs() {
   const navigate = useNavigate();
   const { isLoading, error, userAppliedJobs } = useSelector((state) => {
-    
-    return state.appliedJobs
+    return state.appliedJobs;
   });
 
-  console.log("UserApplied Jobs :",userAppliedJobs);
+  console.log('UserApplied Jobs :', userAppliedJobs);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const apiCall = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/application/all/me', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        apiCall();
+      } catch (err) {}
+    };
+  }, []);
 
   useEffect(() => {
     if (userAppliedJobs.length === 0) {
@@ -44,9 +54,7 @@ export default function AppliedJobs() {
     }
   }, [dispatch, userAppliedJobs.length]);
 
-  
   //const userAppliedJobs = useSelector((state) => state.appliedJobs.userAppliedJobs);
-
 
   // const handleViewDetails = (jobId) => {
   //  // dispatch(setUserSelectedJob(jobId));
@@ -158,7 +166,7 @@ export default function AppliedJobs() {
                   : JSON.stringify(error)}
               </Typography>
             ) : userAppliedJobs && userAppliedJobs.length > 0 ? (
-              userAppliedJobs.map(({application}) => (
+              userAppliedJobs.map(({ application }) => (
                 <Container
                   key={application._id}
                   sx={{
@@ -199,7 +207,7 @@ export default function AppliedJobs() {
                         {application.job?.title}
                       </Link>
 
-                      {/** company */ }
+                      {/** company */}
                       <Stack direction={'row'} spacing={1} py={1}>
                         <BusinessIcon />
                         <Typography variant="h6">{application.organisation?.name}</Typography>

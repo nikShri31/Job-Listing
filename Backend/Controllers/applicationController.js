@@ -14,8 +14,7 @@ module.exports.apply = async (req, res, next) => {
             return next(new expressError('Please upload resume', 400));
         }
 
-        const job = await JobListing.findById(jobId).populate('organisation');
-
+        const jobInfo = await JobListing.findById(jobId).populate('organisation');
         const resume = req.files.resume[0].key;
         const application = new Application(
             {
@@ -24,11 +23,11 @@ module.exports.apply = async (req, res, next) => {
                 resume: {
                     key: resume
                 },
-                organisation : job.organisation
+                organisation : jobInfo.organisation
             }
         );        
         const newApplication = await application.save();
-        const populatedApplication = await Application.findById(newApplication._id).populate('job');
+        const populatedApplication = await Application.findById(newApplication._id).populate('job organisation');
         await JobListing.findByIdAndUpdate(jobId, { $push: { applications: newApplication._id } });
         await User.findByIdAndUpdate(userId, { $push: { applications: newApplication._id } });
         res.status(201).json({ message: 'Application submitted successfully', application : populatedApplication });
@@ -40,7 +39,7 @@ module.exports.apply = async (req, res, next) => {
 //Shows the application information. Including the user info, the job info and the resume applied. Avaialble to both user and organise. Returns the application
 module.exports.getApplicationById = async (req, res, next) => {
     const { applicationId } = req.params;
-    const application = await Application.findById(applicationId).populate('job').populate('applicant');
+    const application = await Application.findById(applicationId).populate('job applicant');
     const resumeUrl = await getDownloadUrl(application.resume.key);
     application.resume.downloadUrl = resumeUrl;
     const updatedApplication = await application.save();

@@ -48,7 +48,7 @@ const jobListingSchema = new Schema({
     }],
     employmentType : {
         type : String,
-        enum : ['Full-time', 'Part-time'],
+        enum : ['Full-Time', 'Part-time'],
         required : true
     },
     jobType : {

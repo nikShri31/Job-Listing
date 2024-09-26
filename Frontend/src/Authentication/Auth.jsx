@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+
+import { createTheme } from '@mui/material/styles';
 import { Grid, CssBaseline, Paper, Box, Avatar, Link, Button, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { authError, authLoading, login, signup} from '../store/authSlice.js'; // Update the import path as needed
@@ -27,7 +29,7 @@ function Copyright(props) {
   );
 }
 
-const defaultTheme = createTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "rgb(3 65 183 / 97%)",
@@ -83,10 +85,11 @@ const Auth = ({ role,handleClose }) => {
     }
   }, [error]);
 
+  //<ThemeProvider theme={defaultTheme}>
+
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Grid container component="main" maxWidth="xs" minWidth="md" sx={{ backgroundPosition: "center" }}>
-        <CssBaseline />
         <Grid item xs={12} sm={8} md={12} component={Paper} elevation={6} sx={{ backgroundColor: "", borderRadius: "9px" }}>
           <Box sx={{ mx: 4, display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

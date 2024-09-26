@@ -68,8 +68,8 @@ const appliedJobsSlice = createSlice({
       })
       .addCase(applyJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userAppliedJobs.push(action.payload);
-
+        state.userAppliedJobs = [...state.userAppliedJobs, action.payload];
+      
       })
       .addCase(applyJob.rejected, (state, action) => {
         state.isLoading = false;

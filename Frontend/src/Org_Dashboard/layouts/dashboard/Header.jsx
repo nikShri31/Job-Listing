@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authError, authLoading, logout } from '../../../store/authSlice';
 import { Button, Divider, Typography } from '@mui/material';
 import LoginBtn from '../../../Authentication/LoginBtn';
-import NotificationMenu from '../../../Components/Notification/Notification_Menu';
+// import NotificationMenu from '../../../Components/Notification/Notification_Menu';
 
 // ----------------------------------------------------------------------
 const headingStyles = {
@@ -118,7 +118,7 @@ export default function Header({ onOpenNav }) {
           <>
             <Searchbar />
             <NotificationsPopover/>
-           <NotificationMenu/>
+          
             <AccountPopover />
           </>
         )}

@@ -15,14 +15,7 @@ import NotificationDialog from "./Notification_Dialog"; // Import Dialog compone
 import { useDispatch, useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 
-const useNoOutlineStyles = () => ({
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "none", // Removes TextField outline
-  },
-  "&:focus": {
-    outline: "none", // Removes outline on focus for buttons
-  },
-});
+
 
 export default function NotificationMenu() {
   const dispatch = useDispatch();
@@ -151,7 +144,7 @@ export default function NotificationMenu() {
           <Box>
             <Divider variant="middle" component="li" />
             <Box sx={{ display: "flex", justifyContent: "center",mt:1 }}>
-              <Button variant="outlined" onClick={handleDialogOpen}>
+              <Button  fullWidth disableRipple onClick={handleDialogOpen}>
                 View All
               </Button>
             </Box>

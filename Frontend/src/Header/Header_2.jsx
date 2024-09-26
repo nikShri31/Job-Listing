@@ -60,7 +60,7 @@ function Header_2() {
   const error = useSelector(authError);
   
 
-  console.log('Auth State:', { isAuthenticated, role, user });
+  //console.log('Auth State:', { isAuthenticated, role, user });
 
   const isMobile = useResponsive('down', 'sm'); // Small screens
   const isMediumScreen = useResponsive('between', 'sm', 'md'); // Medium screens
@@ -180,6 +180,7 @@ function Header_2() {
             <Box sx={{ flexGrow: 1, display: 'flex',px:1 }}>
               <Button sx={headingStyles} onClick={() => navigate('/jobs')}>Home</Button>
               <Button sx={headingStyles} onClick={() => navigate('/dashboard')}>My Jobs</Button>
+              <Button sx={headingStyles} onClick={() => navigate('/org')}>OrgHome</Button>
             
             </Box>
           )}

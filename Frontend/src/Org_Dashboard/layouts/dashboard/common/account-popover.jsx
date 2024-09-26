@@ -10,42 +10,74 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { account } from '../../../../_mock/account';
+import { logout } from '../../../../store/authSlice';
+
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
     label: 'Home',
+    path:'jobs',
     icon: 'eva:home-fill',
   },
   {
     label: 'Profile',
+    path:'profile',
     icon: 'eva:person-fill',
   },
   {
-    label: 'Settings',
+    label: 'Users',
+    path:'org/user',
     icon: 'eva:settings-2-fill',
   },
 ];
 
+const useNoOutlineStyles = () => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "none", // Removes TextField outline
+  },
+  "&:focus": {
+    outline: "none", // Removes outline on focus for buttons
+  },
+});
+
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+
+
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleNavigate = (path) => {
+    navigate(`/${path}`);
     setOpen(null);
   };
+  const handleClose = (path) => {
+    setOpen(null);
+  };
+  
+
+  const handleLogout =()=>{
+    setOpen(null);
+    dispatch(logout()); // Dispatch the logout action to clear the auth state
+    navigate('/'); // Redirect to home page after logout
+  }
 
   return (
     <>
       <IconButton
         onClick={handleOpen}
-        sx={{
+        sx={[useNoOutlineStyles(),{
           width: 40,
           height: 40,
           background: (theme) => alpha(theme.palette.grey[500], 0.08),
@@ -53,7 +85,7 @@ export default function AccountPopover() {
             background: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
           }),
-        }}
+        }]}
       >
         <Avatar
           src={account.photoURL}
@@ -95,9 +127,9 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         {MENU_OPTIONS.map((option) => (
-          <MenuItem key={option.label} onClick={handleClose}>
-            {option.label}
-          </MenuItem>
+          <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
+          {option.label}
+        </MenuItem>
         ))}
 
         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
@@ -105,7 +137,7 @@ export default function AccountPopover() {
         <MenuItem
           disableRipple
           disableTouchRipple
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
           Logout

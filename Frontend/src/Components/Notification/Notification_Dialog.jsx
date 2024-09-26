@@ -37,11 +37,11 @@ export default function NotificationDialog({
   //const notifications = useSelector((state) => state.notifications.notifications);
   // console.log(notifications);
   const unreadCount = useSelector((state) => state.notifications.unreadCount);
-  console.log(unreadCount);
+  //console.log(unreadCount);
 
   const handleMarkAsRead = (notificationId) => {
     dispatch(markAsRead(notificationId));
-    variant = "body2";
+    // variant = "body2";
     disable;
   };
 

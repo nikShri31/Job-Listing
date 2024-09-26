@@ -1,45 +1,78 @@
-import React, { lazy } from "react";
-import ReactDOM from "react-dom/client";
+import React, { lazy, Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
 //import App from './App.jsx'
-import "./index.css";
+import './index.css';
 // import { RouterProvider } from 'react-router-dom'
 // import router from './Router/Router'
-import App from "./App";
+import App from './App';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from "react-router-dom";
-import ProfilePage from "./Pages/ProfilePage";
-import HomePage from "./Pages/HomePage";
-//import Dashboard from "./Pages/Dashboard";
-import AccountPage from "./Pages/AccountPage";
-import JD from "./Pages/Jd_Page";
-import LandingPage from "./Pages/LandingPage";
+} from 'react-router-dom';
+import {
+  LandingPage,
+  HomePage,
+  ProfilePage,
+  Dashboard,
+  AppPage,
+  DashboardLayout,
+  UserPage,
+  ProductsPage,
+} from './Pages/index';
+// import AccountPage from "./Pages/AccountPage";
+// import JD from "./Pages/Jd_Page";
 
-const Dashboard = lazy(()=> import("./Pages/DashboardPage"));
-
-import { store } from "./store/store";
+import { PersistGate } from 'redux-persist/integration/react';
+import { store,persistor } from './store/store';
 import { Provider } from 'react-redux';
+import { Box } from '@mui/system';
+import { CircularProgress } from '@mui/material';
+import { HelmetProvider } from 'react-helmet-async';
+import NotFoundPage from './Pages/page-not-found';
+
+const LazyLoader = (
+  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <CircularProgress />
+  </Box>
+);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-     <Route path="/" element={<LandingPage />}/>
-      <Route path="/jobs" element={<HomePage />} />
-   
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/account" element={<AccountPage />} />
+    <Route
+      path="/"
+      element={
+        <Suspense fallback={LazyLoader}>
+          <App />
+        </Suspense>
+      }
+    >
+      <Route index element={<LandingPage />} />
+      <Route path="jobs" element={<HomePage />} />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="profile" element={<ProfilePage />} />
+      <Route path="org" element={<DashboardLayout />}>
+        <Route index element={<AppPage />} />
+        <Route path='user' element={<UserPage />} />
+        <Route path='products' element={<ProductsPage />} />
+      </Route>
+     <Route path='404' element={<NotFoundPage/>}  />
+     <Route path="*" element={<NotFoundPage />} /> 
     </Route>
   )
 );
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-  <Provider store={store}>
-  <RouterProvider router={router} />
-</Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+    <RouterProvider router={router} />
+    </PersistGate>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
+
+// <Route path="/account" element={<AccountPage />} />

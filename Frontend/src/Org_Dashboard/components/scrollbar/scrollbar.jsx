@@ -9,7 +9,7 @@ import { StyledScrollbar, StyledRootScrollbar } from './styles';
 
 const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
   const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
-  console.log(userAgent);
+  //console.log(userAgent);
 
   const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 

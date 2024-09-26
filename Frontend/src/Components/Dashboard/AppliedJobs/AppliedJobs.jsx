@@ -16,110 +16,37 @@ import {
   Typography,
 } from '@mui/material';
 
-//State.appliedJobs.userAppliedJobs.map( (ele) => {
-      // ele.application.job.[field]
-      // you can get field from
-
-    //   {
-    //     "job": {
-    //         "requirements": {
-    //             "experience": 1,
-    //             "education": "Undergraduate",
-    //             "skills": [
-    //                 "mern",
-    //                 "firebase",
-    //                 "sql"
-    //             ]
-    //         },
-    //         "_id": "66ec60085a527cae4274aa29",
-    //         "title": "test job 3",
-    //         "description": "Bhad m ja 3",
-    //         "location": "delhi",
-    //         "salary": 21,
-    //         "organisation": {
-    //             "contactInfo": {
-    //                 "phone": 8765432190,
-    //                 "email": "test@gmail.com"
-    //             },
-    //             "_id": "66dd71788657485e32d2a1f5",
-    //             "name": "Testing Company",
-    //             "adminEmail": "test123@gmail.com",
-    //             "role": "Organisation",
-    //             "website": "www.testing.com",
-    //             "industry": "Testing",
-    //             "jobs": [
-    //                 "66dd73518657485e32d2a200",
-    //                 "66ec5fec5a527cae4274aa21",
-    //                 "66ec5ffe5a527cae4274aa25",
-    //                 "66ec60085a527cae4274aa29",
-    //                 "66ec60155a527cae4274aa2d"
-    //             ],
-    //             "password": "$2a$10$miK5LsFTNaMI6J9AvpMsm.QuFWSRU7hfzDfVFB/VzzA8VXhKFrP9i",
-    //             "createdAt": "2024-09-08T09:42:16.838Z",
-    //             "__v": 5
-    //         },
-    //         "applications": [
-    //             {
-    //                 "resume": {
-    //                     "key": "7196ab6cb911fad3d3cc725b93748346f20d8955089e0c3632894084d605d7c4-kota-jpr- 13.pdf"
-    //                 },
-    //                 "_id": "66ebbc5ba7de8a4dcc9e6677",
-    //                 "job": "66ec60085a527cae4274aa29",
-    //                 "applicant": "66ebb2f3a7de8a4dcc9e664c",
-    //                 "status": "pending",
-    //                 "applicationDate": "2024-09-19T05:53:31.197Z",
-    //                 "__v": 0
-    //             },
-    //             {
-    //                 "resume": {
-    //                     "key": "7faa4b7931fb19dab71a16934953da2fa71b1b9824675f2ea491dc0ee0512f8c-Dhruv's Resume.pdf"
-    //                 },
-    //                 "_id": "66eea8055a527cae4274ab0c",
-    //                 "job": "66ec60085a527cae4274aa29",
-    //                 "applicant": "66d7524ac6fcd2b40714776f",
-    //                 "status": "pending",
-    //                 "applicationDate": "2024-09-21T11:03:33.892Z",
-    //                 "__v": 0
-    //             },
-    //             {
-    //                 "resume": {
-    //                     "key": "1c9ff0e8ff25e19d90a9220790b8c4a7cf837f06aca45be44f3deae4deb023c8-Dhruv's Resume.pdf"
-    //                 },
-    //                 "_id": "66eeaa025a527cae4274ab5a",
-    //                 "job": "66ec60085a527cae4274aa29",
-    //                 "applicant": "66e6c2f84e978403da7d35de",
-    //                 "status": "pending",
-    //                 "applicationDate": "2024-09-21T11:12:02.647Z",
-    //                 "__v": 0
-    //             }
-    //         ],
-    //         "employmentType": "Part-time",
-    //         "jobType": "Hybrid",
-    //         "postedDate": "2024-09-19T17:31:52.470Z",
-    //         "__v": 0
-    //     }
-    // }
-  // })
 
 
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
 import JobStatus from './JobStatus';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ThreeDotMenu from './3DotMenu';
 import { useSelector, useDispatch } from 'react-redux';
 //import { setUserSelectedJobId, clearUserSelectedJobView } from '../../../store/appliedJobsSlice';
 import { useNavigate } from 'react-router-dom';
+import { applyJob } from '../../../store/appliedJobsSlice';
 
 export default function AppliedJobs() {
   const navigate = useNavigate();
   const { isLoading, error, userAppliedJobs } = useSelector((state) => {
-    console.log(state);
+    
     return state.appliedJobs
   });
+
+  console.log("UserApplied Jobs :",userAppliedJobs);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userAppliedJobs.length === 0) {
+      dispatch(applyJob());
+    }
+  }, [dispatch, userAppliedJobs.length]);
+
+  
   //const userAppliedJobs = useSelector((state) => state.appliedJobs.userAppliedJobs);
 
-  // const dispatch = useDispatch();
 
   // const handleViewDetails = (jobId) => {
   //  // dispatch(setUserSelectedJob(jobId));
@@ -231,9 +158,9 @@ export default function AppliedJobs() {
                   : JSON.stringify(error)}
               </Typography>
             ) : userAppliedJobs && userAppliedJobs.length > 0 ? (
-              userAppliedJobs.map((job) => (
+              userAppliedJobs.map(({application}) => (
                 <Container
-                  key={job._id}
+                  key={application._id}
                   sx={{
                     backgroundImage: 'linear-gradient(130deg,#CEE5FD, #FFF)',
                     backgroundSize: '100% 100%',
@@ -269,22 +196,22 @@ export default function AppliedJobs() {
                           },
                         }}
                       >
-                        {job.title}
+                        {application.job?.title}
                       </Link>
 
-                      {/** company */}
+                      {/** company */ }
                       <Stack direction={'row'} spacing={1} py={1}>
                         <BusinessIcon />
-                        <Typography variant="h6">{job.organisation?.name}</Typography>
+                        <Typography variant="h6">{application.organisation?.name}</Typography>
                       </Stack>
 
                       {/** Location */}
                       <Stack direction={'row'} spacing={1}>
                         <PlaceIcon />
-                        <Typography>{job.location}</Typography>
+                        <Typography>{application.job?.location}</Typography>
 
                         <Typography color={'text.secondary'} sx={{ px: 3 }}>
-                          Applied on: {new Date(job.appliedDate).toLocaleDateString()}
+                          Applied on: {new Date(application.applicationDate).toLocaleDateString()}
                         </Typography>
                       </Stack>
 
@@ -309,3 +236,90 @@ export default function AppliedJobs() {
     </Grid>
   );
 }
+/*
+//State.appliedJobs.userAppliedJobs.map( (ele) => {
+  // ele.application.job.[field]
+  // you can get field from
+
+//   {
+//     "job": {
+//         "requirements": {
+//             "experience": 1,
+//             "education": "Undergraduate",
+//             "skills": [
+//                 "mern",
+//                 "firebase",
+//                 "sql"
+//             ]
+//         },
+//         "_id": "66ec60085a527cae4274aa29",
+//         "title": "test job 3",
+//         "description": "Bhad m ja 3",
+//         "location": "delhi",
+//         "salary": 21,
+//         "organisation": {
+//             "contactInfo": {
+//                 "phone": 8765432190,
+//                 "email": "test@gmail.com"
+//             },
+//             "_id": "66dd71788657485e32d2a1f5",
+//             "name": "Testing Company",
+//             "adminEmail": "test123@gmail.com",
+//             "role": "Organisation",
+//             "website": "www.testing.com",
+//             "industry": "Testing",
+//             "jobs": [
+//                 "66dd73518657485e32d2a200",
+//                 "66ec5fec5a527cae4274aa21",
+//                 "66ec5ffe5a527cae4274aa25",
+//                 "66ec60085a527cae4274aa29",
+//                 "66ec60155a527cae4274aa2d"
+//             ],
+//             "password": "$2a$10$miK5LsFTNaMI6J9AvpMsm.QuFWSRU7hfzDfVFB/VzzA8VXhKFrP9i",
+//             "createdAt": "2024-09-08T09:42:16.838Z",
+//             "__v": 5
+//         },
+//         "applications": [
+//             {
+//                 "resume": {
+//                     "key": "7196ab6cb911fad3d3cc725b93748346f20d8955089e0c3632894084d605d7c4-kota-jpr- 13.pdf"
+//                 },
+//                 "_id": "66ebbc5ba7de8a4dcc9e6677",
+//                 "job": "66ec60085a527cae4274aa29",
+//                 "applicant": "66ebb2f3a7de8a4dcc9e664c",
+//                 "status": "pending",
+//                 "applicationDate": "2024-09-19T05:53:31.197Z",
+//                 "__v": 0
+//             },
+//             {
+//                 "resume": {
+//                     "key": "7faa4b7931fb19dab71a16934953da2fa71b1b9824675f2ea491dc0ee0512f8c-Dhruv's Resume.pdf"
+//                 },
+//                 "_id": "66eea8055a527cae4274ab0c",
+//                 "job": "66ec60085a527cae4274aa29",
+//                 "applicant": "66d7524ac6fcd2b40714776f",
+//                 "status": "pending",
+//                 "applicationDate": "2024-09-21T11:03:33.892Z",
+//                 "__v": 0
+//             },
+//             {
+//                 "resume": {
+//                     "key": "1c9ff0e8ff25e19d90a9220790b8c4a7cf837f06aca45be44f3deae4deb023c8-Dhruv's Resume.pdf"
+//                 },
+//                 "_id": "66eeaa025a527cae4274ab5a",
+//                 "job": "66ec60085a527cae4274aa29",
+//                 "applicant": "66e6c2f84e978403da7d35de",
+//                 "status": "pending",
+//                 "applicationDate": "2024-09-21T11:12:02.647Z",
+//                 "__v": 0
+//             }
+//         ],
+//         "employmentType": "Part-time",
+//         "jobType": "Hybrid",
+//         "postedDate": "2024-09-19T17:31:52.470Z",
+//         "__v": 0
+//     }
+// }
+// })
+
+*/

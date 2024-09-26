@@ -3,6 +3,9 @@ import BasicDetails from "../Components/JobSeekerProfile/BasicDetails";
 import CareerDetails from "../Components/JobSeekerProfile/CareerDetails";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
+
+// ----------------------------------------------------------------------
 
 const ProfilePage = () => {
   const [userDetails, setUserDetails] = useState({});
@@ -33,10 +36,16 @@ const ProfilePage = () => {
   };
 
   return (
-    <Box >
-      <BasicDetails userDetails={userDetails} onDataChange={handleDataChange} />
-      <CareerDetails userDetails={userDetails.profile} />
-    </Box>
+    <>
+    <Helmet>
+    <title> Applicant's Profile | Jobber </title>
+  </Helmet>
+  <Box>
+  <BasicDetails userDetails={userDetails} onDataChange={handleDataChange} />
+  <CareerDetails userDetails={userDetails.profile} />
+</Box>
+    </>
+   
   );
 };
 

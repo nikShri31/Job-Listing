@@ -72,12 +72,19 @@ import NotificationDialog from '../../../../Components/Notification/Notification
 //     description: 'Feedback received for Mary Johnson',
 //     avatar: null,
 //     type: 'feedback_received',
-//     createdAt: sub(new Date(), { days: 3, hours: 1, minutes: 15 }),
+    //createdAt: sub(new Date(), { days: 3, hours: 1, minutes: 15 }),
 //     isUnRead: false,
 //   },
 // ];
 
-
+const useNoOutlineStyles = () => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "none", // Removes TextField outline
+  },
+  "&:focus": {
+    outline: "none", // Removes outline on focus for buttons
+  },
+});
 
 export default function NotificationsPopover() {
 
@@ -105,7 +112,7 @@ export default function NotificationsPopover() {
 
   const handleMarkAllAsRead = () => {
   
-      notifications.map((notification) => ({
+    lastNotifications.map((notification) => ({
         ...notification,
         isUnRead: false,
       }))
@@ -122,7 +129,7 @@ export default function NotificationsPopover() {
 
   return (
     <>
-      <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen}>
+      <IconButton color={open ? 'primary' : 'default'} onClick={handleOpen} sx={[useNoOutlineStyles()]}>
         <Badge badgeContent={totalUnRead} color="error">
           <Iconify width={24} icon="solar:bell-bing-bold-duotone" />
         </Badge>
@@ -170,7 +177,7 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(0, 2).map((notification) => (
+            {lastNotifications.slice(0, 2).map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
@@ -183,7 +190,7 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(2, 5).map((notification) => (
+            {lastNotifications.slice(2, 5).map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>

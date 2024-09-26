@@ -29,8 +29,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { styled, useTheme } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { applyJob } from "../store/appliedJobsSlice";
+
+// ----------------------------------------------------------------------
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -64,48 +66,29 @@ const chipStyle = {
   },
 };
 
-const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
-  
-
-  // Resume State
-  const [resumeFile, setResumeFile] = useState(null);
+const JobDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose,handleApplySuccess }) => {
+ 
   const navigate = useNavigate();
+  const location = useLocation(); // This gives you access to the current route
+  const [resumeFile, setResumeFile] = useState(null);
+    const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+    const dispatch = useDispatch();
+    const userAppliedJob = useSelector((state) => state.appliedJobs.userAppliedJobs);    // Get the applied jobs from Redux store
+    
+    
+   const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);  // Check if the current job has already been applied
 
-  const handleResumeFileChange = (event) => {
+  //Resume File Change
+   const handleResumeFileChange = (event) => {
     setResumeFile(event.target.files[0]);
   };
 
-  // const handleApply = async (jobId) => {
-  //   const formData = new FormData();
-  //   formData.append("resume", resumeFile);
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:5000/api/application/apply/${jobId}`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   //response.data is the applicationData
-  //   //global userData.application.push(response.data.application);
-  //   setSnackbarOpen(true);
-  //   navigate("/jobs");
-  // };
 
   // Snackbar state
+ //const [snackbarOpen, setSnackbarOpen] = useState(false);
  
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
- 
-
-  const [resumeBoxOpen, setResumeBoxOpen] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
     setResumeBoxOpen(true);
@@ -115,16 +98,16 @@ const RightDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose }) => {
     setResumeBoxOpen(false);
   };
 
-  // Get the applied jobs from Redux store
+  useEffect(() => {
+    handleDrawerClose(); // Ensure the drawer closes on component mount
+  }, [location]); // This runs every time the location (route) changes
 
-  const userAppliedJob = useSelector((state) => state.appliedJobs.userAppliedJobs);
 
-// Check if the current job has already been applied
-const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);
+
+
 
 
 // Dispatch initialization
-const dispatch = useDispatch();
 
 const handleApply = async (jobId) => {
   if (!resumeFile) {
@@ -136,8 +119,8 @@ const handleApply = async (jobId) => {
     await dispatch(applyJob({ jobId , resumeFile })).unwrap();
     
     // If successful, show the snackbar and close the resume box
-    setSnackbarOpen(true);
     setResumeBoxOpen(false);
+    handleApplySuccess();
   
   } catch (error) {
     console.error('Failed to apply:', error);
@@ -438,7 +421,7 @@ const handleApply = async (jobId) => {
                           Cancel
                         </Button>
                         <Button
-                          onClick={()=>handleApply(selectedJob?._id)}
+                          onClick={()=>{handleApply(selectedJob?._id),handleDrawerClose()}}
                             sx={{backgroundColor:'#032B53', color:'white' }}
                           
                           variant="contained"
@@ -452,24 +435,6 @@ const handleApply = async (jobId) => {
                 )}
             </Box>
 
-            {/* Snackbar */}
-            <Snackbar
-              open={snackbarOpen}
-              autoHideDuration={1000}
-               onClose={() => setSnackbarOpen(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              {resumeFile && (
-                <Alert
-                  onClose={() => setSnackbarOpen(false)}
-                  severity="success"
-                  sx={{ width: "100%" }}
-                >
-                  Successfully Applied!
-                </Alert>
-              ) }
-            </Snackbar>
-
            
           </Box>
         )}
@@ -478,4 +443,52 @@ const handleApply = async (jobId) => {
   );
 };
 
-export default RightDrawer;
+export default JobDrawer;
+
+
+{
+/*
+******* Getting data of applied jobs from APIs {backend}**********
+
+  // const handleApply = async (jobId) => {
+  //   const formData = new FormData();
+  //   formData.append("resume", resumeFile);
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:5000/api/application/apply/${jobId}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   //response.data is the applicationData
+  //   //global userData.application.push(response.data.application);
+  //   setSnackbarOpen(true);
+  //   navigate("/jobs");
+  // };
+
+
+{/* Snackbar }
+<Snackbar
+  open={snackbarOpen}
+  autoHideDuration={1000}
+   onClose={() => setSnackbarOpen(false)}
+  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+>
+  {resumeFile && (
+    <Alert
+      onClose={() => setSnackbarOpen(false)}
+      severity="success"
+      sx={{ width: "100%" }}
+    >
+      Successfully Applied!
+    </Alert>
+  ) }
+</Snackbar>
+*/}

@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import JobCard from "./Card";
 import Sidebar from "./Sidebar/Sidebar";
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -14,12 +15,14 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import RightDrawer from "./RightDrawer";
-import { useLocation, useParams } from "react-router-dom";
+import JobDrawer from "./JobDrawer";
+//import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserSelectedJobId } from "../store/appliedJobsSlice";
-
 import { fetchAllJobs } from "../store/allJobsSlice";
+
+
+// ----------------------------------------------------------------------
 
 
 // for textfield and buttons
@@ -39,29 +42,9 @@ const Home = () => {
   const itemsPerPage = 6;
   const [query, setQuery] = useState("");
   
+ 
   const dispatch = useDispatch();
  
-
-  // useEffect(() => {
-  //   const getJobs = async () => {
-  //     try {
-  //       const jobs = await axios.get("http://localhost:5000/api/job/getAll", {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       setJobs(jobs.data.jobs);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       console.log(err);
-  //       setIsLoading(false);
-  //     }
-  //   };
-    
-  //   getJobs();
-  // }, []);
-
 
 // fetching jobs from store
   const { jobs, isLoading, error } = useSelector((state) => state.allJobs);
@@ -70,21 +53,6 @@ const Home = () => {
     dispatch(fetchAllJobs());
   }, [dispatch]);
 
- 
-
-  // useEffect(() => {
-  //   fetch("jobs.json")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log("Sample Job:", data[0]); // Debugging
-  //       setJobs(data);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching jobs:", error);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
 
   // ----------- Input Filter -----------
   const handleInputChange = (event) => {
@@ -194,6 +162,7 @@ const Home = () => {
   // Drawer States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+ const [snackbarOpen, setSnackbarOpen] = useState(false);                 // sanckbar
   const selectedJobId = useSelector((state) => state.appliedJobs?.userSelectedJobId);
 
   const handleCardClick = (job) => {
@@ -226,43 +195,35 @@ const Home = () => {
     if (index === -1) return -1; // Job not found
     return Math.floor(index / itemsPerPage) + 1;
   };
-  // const [appliedJobs, setAppliedJobs] = useState({});
-  // const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // const [isButtonReset, setButtonReset] = useState(false);
-
-  //  const location = useLocation();
-
-  //  useEffect(() => {
-  //    const params = new URLSearchParams(location.search);
-  //    const jobId = params.get('jobId');
-  //    if (jobId) {
-  //      const job = jobs.find(j => j.id === jobId);
-  //      if (job) {
-  //        setSelectedJob(job);
-  //        setIsDrawerOpen(true);
-  //      }
-  //    }
-  //  }, [location, jobs]);
-
-
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
-    //setButtonReset(false);
+ 
+  };
+
+  const handleApplySuccess = () => {
+    setSnackbarOpen(true);
+    handleDrawerClose();
   };
 
   const handleSearch = () => {
-    console.log("Search initiated");
+    //console.log("Search initiated");
     setCurrentPage(1); // Reset to first page on search
   };
 
   const userAppliedJob = useSelector((state) => state.appliedJobs.userAppliedJobs || []);
 
   // Check if the current job has already been applied
-  const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);
+ // const isJobApplied = userAppliedJob.length > 0 && userAppliedJob.includes(selectedJob?._id);
 
-// sanckbar
-const [snackbarOpen, setSnackbarOpen] = useState(false);
+// Resume State
+// const [resumeFile, setResumeFile] = useState(null);
+
+// const handleResumeFileChange = (event) => {
+//   setResumeFile(event.target.files[0]);
+// };
+
+
 
   return (
     <Box
@@ -320,7 +281,10 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
                 backgroundColor: "white",
                 borderRadius: '40px',
                 fontSize: {xs:'1rem', md:'2rem'},
-                '&:hover':{border:'1px solid #aaa',borderRadius:'40px'}
+                '&:hover':{border:'1px solid #aaa',borderRadius:'40px'},
+                "&:focus": {
+                  outline: "blue", 
+                },
               }]}
             />
             <Button
@@ -328,7 +292,17 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
               color='inherit'
               size="medium"
               onClick={handleSearch}
-              sx={[ useNoOutlineStyles(),{ color:'#032B53',py:{xs:0, md:1},border:'none' }]}
+              sx={[ 
+              useNoOutlineStyles(),
+              { py:{xs:0, md:1},
+              border:'none',
+            '&:hover': {
+              transform: "scale(1.05) translateZ(30px)",
+                        
+                        fontWeight: 'bold',
+                      },
+            }
+              ]}
             >
               Search
             </Button>
@@ -388,21 +362,65 @@ const [snackbarOpen, setSnackbarOpen] = useState(false);
 
       {/* Drawer Component */}
       <Box>
-        <RightDrawer
+        <JobDrawer
           isDrawerOpen={isDrawerOpen}
-          //appliedJobs={appliedJobs}
+          handleApplySuccess={handleApplySuccess}
           selectedJob={selectedJob}
-          //  snackbarOpen={snackbarOpen}
-          //isButtonReset={isButtonReset}
           handleDrawerClose={handleDrawerClose}
           // handleApply ={handleApply }
         />
       </Box>
 
-     
+     {/* Snackbar */}
+     <Snackbar
+     open={snackbarOpen}
+     autoHideDuration={3000}
+     onClose={() => setSnackbarOpen(false)}
+     anchorOrigin={{ vertical: "top", horizontal: "center" }}
+   >
+     <Alert onClose={() => setSnackbarOpen(false)} severity="success">
+       Successfully Applied!
+     </Alert>
+   </Snackbar>
            
     </Box>
   );
 };
 
 export default Home;
+
+
+ // useEffect(() => {
+  //   fetch("jobs.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("Sample Job:", data[0]); // Debugging
+  //       setJobs(data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching jobs:", error);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+
+
+   // useEffect(() => {
+  //   const getJobs = async () => {
+  //     try {
+  //       const jobs = await axios.get("http://localhost:5000/api/job/getAll", {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       setJobs(jobs.data.jobs);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       console.log(err);
+  //       setIsLoading(false);
+  //     }
+  //   };
+    
+  //   getJobs();
+  // }, []);

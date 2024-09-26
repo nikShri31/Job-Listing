@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 //import Location from "./Location";
 import Salary from "./Salary";
 import JobPostingData from "./JobPostingData";

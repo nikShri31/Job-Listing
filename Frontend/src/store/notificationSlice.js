@@ -1,20 +1,39 @@
+import { faker } from '@faker-js/faker';
 import { createSlice } from '@reduxjs/toolkit';
+import { set, sub } from 'date-fns';
 
 const initialState={
     notifications:[
-        {
-            id: 1,
-            message: 'Your application for "Frontend Developer" has been received.',
-            read: false,
-          },
-          {
-            id: 2,
-            message: 'Your interview for "Backend Developer" is scheduled for tomorrow.',
-            read: false,
-          },
+      {
+        id: faker.string.uuid(),
+        title: 'New job application received',
+        description: 'John Doe applied for the Software Engineer position',
+        avatar: 'public/assets/images/avatars/avatar_1.jpg',
+        type: 'job_application',
+        createdAt: set(new Date(), { hours: 9, minutes: 15 }),
+        isUnRead: true,
+      },
+      {
+        id: faker.string.uuid(),
+        title: 'Interview scheduled',
+        description: 'Interview with Jane Smith is scheduled for tomorrow',
+        avatar: '/assets/images/avatars/avatar_2.jpg',
+        type: 'interview_scheduled',
+        createdAt: sub(new Date(), { hours: 5, minutes: 45 }),
+        isUnRead: true,
+      },
+      {
+        id: faker.string.uuid(),
+        title: 'New message from HR',
+        description: 'Regarding the Data Scientist role',
+        avatar: '/assets/icons/ic_notification_mail.svg',
+        type: 'message',
+        createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
+        isUnRead: false,
+      },
 
     ],
-    unreadCount:2,
+    unreadCount:3,
 }
 
 const notificationsSlice = createSlice({

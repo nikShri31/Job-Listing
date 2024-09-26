@@ -3,7 +3,7 @@ const expressError = require('../utils/expressError');
 
 module.exports.searchOrg = async(req,res,next) => {
     const {name} = req.body;
-    const org = await Organization.findOne({name});
+    const org = await Organisation.findOne({name});
     if(!org){
         return next(new expressError('Organisation not found', 400));
     }

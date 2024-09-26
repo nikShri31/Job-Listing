@@ -46,8 +46,8 @@ const getApiEndpoint = (role, type) => {
       ? `${base}/organisation/login`
       : `${base}/organisation/signup`;
   }
-  if (!endpoints[role]) throw new Error("Invalid role");
-  // return endpoints[role][type];
+  throw new Error("Invalid role");
+  
 };
 
 export const login = createAsyncThunk( "/login", async ({ loginData, role }, { rejectWithValue }) => {

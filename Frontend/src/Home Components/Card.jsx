@@ -3,6 +3,8 @@ import { Box, Card, CardActionArea, CardMedia, Stack, Typography, Chip, Button }
 import { FiMapPin, FiClock, FiDollarSign, FiCalendar } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
+// ----------------------------------------------------------------------
+
 const getDateFormat = (dateString) => {
   const date = new Date(dateString);
   const day = String(date.getDate()).padStart(2, '0');

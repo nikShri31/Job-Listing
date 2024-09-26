@@ -1,12 +1,17 @@
 
 import { Box, Button, Stack, Typography } from '@mui/material'
 import AppliedJobs from '../Components/Dashboard/AppliedJobs/AppliedJobs'
-import Header_2 from '../Header/Header_2'
-import {useState} from 'react'
+import { Helmet } from 'react-helmet-async'
+
+// ----------------------------------------------------------------------
 
 const Dashboard = () => {
   return (
-    <Box
+    <>  
+    <Helmet>
+    <title> My Jobs | Jobber </title>
+  </Helmet>
+   <Box
     sx={{
       color: "#032340",
       display: "flex",
@@ -18,9 +23,7 @@ const Dashboard = () => {
       bgcolor: "#E3F0FE",
     }}
     >
-    <Typography>
-    Dashboard
-    </Typography>
+    
 
     <Stack alignItems={'left'} spacing={2} px={4}>
       
@@ -29,7 +32,9 @@ const Dashboard = () => {
       </Stack>
    
     </Box>
+  </>
+   
   )
 }
 
-export default Dashboard
+export default Dashboard;

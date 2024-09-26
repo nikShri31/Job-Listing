@@ -1,19 +1,20 @@
-import { CssBaseline } from '@mui/material'
-import React from 'react'
-import Header from '../Header/Header'
-import Heading from '../Components/Heading'
-import Footer from '../Footer/Foooter'
-import EmployerHeading from '../Employer/EmployerHeading'
+// import { CssBaseline } from '@mui/material'
+// import React from 'react'
+// import Header from '../Header/Header'
+// import Heading from '../Components/Heading'
+// import Footer from '../Footer/Foooter'
+// import EmployerHeading from '../Employer/EmployerHeading'
 
-const EmployerPage = () => {
-  return (
-    <>
-    <CssBaseline/>
+// const EmployerPage = () => {
+//   return (
+//     <>
+    
+//     <CssBaseline/>
   
-    <EmployerHeading/>
-    <Footer/>
-    </>
-  )
-}
+//     <EmployerHeading/>
+//     <Footer/>
+//     </>
+//   )
+// }
 
-export default EmployerPage
+// export default EmployerPage

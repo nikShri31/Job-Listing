@@ -6,6 +6,9 @@ import LogoCollection from "../Components/Landing Page/LogoCollection";
 import Highlights from "../Components/Landing Page/Highlights";
 import { Grid } from "@mui/material";
 import { useResponsive } from "../hooks/use-responsive";
+import { Helmet } from "react-helmet-async";
+
+// ----------------------------------------------------------------------
 
 export default function LandingPage() {
 
@@ -15,7 +18,9 @@ export default function LandingPage() {
 
   return (
     <>
-      <CssBaseline />
+    <Helmet>
+    <title>  JOBBER </title>
+  </Helmet>
  
        {/* Heading section with responsive adjustments */}
        <Box

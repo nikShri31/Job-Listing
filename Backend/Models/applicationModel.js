@@ -27,6 +27,11 @@ const ApplicationSchema = new Schema({
     type: String,
     enum: ['pending', 'accepted', 'rejected'],
     default: 'pending'
+  },
+  organisation : {
+    type : Schema.Types.ObjectId,
+    ref : 'Organisation',
+    required : true
   }
 });
 

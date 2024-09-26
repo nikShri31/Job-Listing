@@ -13,6 +13,9 @@ module.exports.apply = async (req, res, next) => {
         if (!req.files) {
             return next(new expressError('Please upload resume', 400));
         }
+
+        const job = await JobListing.findById(jobId).populate('organisation');
+
         const resume = req.files.resume[0].key;
         const application = new Application(
             {
@@ -20,7 +23,8 @@ module.exports.apply = async (req, res, next) => {
                 applicant: userId,
                 resume: {
                     key: resume
-                }
+                },
+                organisation : job.organisation
             }
         );        
         const newApplication = await application.save();
@@ -43,6 +47,11 @@ module.exports.getApplicationById = async (req, res, next) => {
     res.status(200).json({ ...updatedApplication });
 }
 
+module.exports.getAllApplicationsOfUser = async(req, res, next) => {
+    const userId = req.user.id;
+    const applications = await Application.find({ applicant: userId }).populate('job');
+    res.status(200).json({ applications });
+}
 
 module.exports.updateStatus = async (req, res, next) => {
     const { applicationId } = req.params;
@@ -66,3 +75,4 @@ module.exports.getAllApplications = async (req, res, next) => {
     const applications = await Application.find().populate('job applicant');
     res.status(200).json({ applications });
 }
+

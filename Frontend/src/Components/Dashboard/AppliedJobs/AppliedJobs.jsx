@@ -1,3 +1,144 @@
+// {
+//   "applications": [
+//       {
+//           "resume": {
+//               "key": "e04f6b4cba80eb266ea8c007c265a3ba6bf31c71123d6781c60fb58b58ec815c-advJavaE1.png"
+//           },
+//           "_id": "66f5a98192a8cfc2ad7cdd4c",
+//           "job": {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a91892a8cfc2ad7cdd2d",
+//               "title": "tester",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f6773ae3586ff8b1930309",
+//                   "66f7d9588e80c93e69bbc6d5",
+//                   "66f7cfa5ca7049967ec4ea55",
+//                   "66f7d96fddd02eadeaf6e656",
+//                   "66f7d700703e4f36018536fe",
+//                   "66f8e8f1703e4f36018537bc",
+//                   "66fab5dde4bf6f612843d64b",
+//                   "66fab0d6e4bf6f612843d6a2",
+//                   "66fab691e4bf6f612843d6fa",
+//                   "66fbab34d7fd3280d3785818",
+//                   "66fc3488d960467408222ca2",
+//                   "66fd2f6f2bf417e578935437"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:00.073Z",
+//               "__v": 0
+//           },
+//           "applicant": "66f5a80f384a178ad24149c8",
+//           "status": "pending",
+//           "organisation": {
+//               "contactInfo": {
+//                   "phone": 1234567890,
+//                   "email": "testsupport@gmail.com"
+//               },
+//               "_id": "66f5a865384a178ad24149cc",
+//               "name": "Testing Company",
+//               "adminEmail": "testingcompany@gmail.com",
+//               "role": "Organisation",
+//               "website": "dontfindus.com",
+//               "industry": "none",
+//               "jobs": [
+//                   "66f5a91892a8cfc2ad7cdd2d",
+//                   "66f5a92a92a8cfc2ad7cdd31",
+//                   "66f5a93192a8cfc2ad7cdd35",
+//                   "66f5a93592a8cfc2ad7cdd39",
+//                   "66f5a93992a8cfc2ad7cdd3d",
+//                   "66f5a93d92a8cfc2ad7cdd41"
+//               ],
+//               "password": "$2a$10$Zw8iFUavDz1kBeQmba9M/u2Z8GHcy5a0ZwVmZ50MExKO06s0YW5HS",
+//               "createdAt": "2024-09-26T18:31:01.481Z",
+//               "__v": 6
+//           },
+//           "applicationDate": "2024-09-26T18:35:45.066Z",
+//           "__v": 0
+//       },
+//       {
+//           "resume": {
+//               "key": "b0330e14288f2729bb3a9a4f0b186d34026e2bd9d1037d337ea86b7b5805b22c-advJavaE1.png"
+//           },
+//           "_id": "66f5aa1099ee763e755f5686",
+//           "job": {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a92a92a8cfc2ad7cdd31",
+//               "title": "tester2",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f5aa1099ee763e755f5686",
+//                   "66f6774ee3586ff8b1930312",
+//                   "66f7d9de8e80c93e69bbc6f7",
+//                   "66f7d42bca7049967ec4eaa9",
+//                   "66f7d977ddd02eadeaf6e65f",
+//                   "66f7d974703e4f3601853745",
+//                   "66f8e90c703e4f36018537cd",
+//                   "66fab8ffe4bf6f612843d675",
+//                   "66fab69be4bf6f612843d703",
+//                   "66fba7e3d7fd3280d37857ff",
+//                   "66fbab99d7fd3280d378583b",
+//                   "66fc3496d960467408222cab"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:18.868Z",
+//               "__v": 0
+//           },
+//           "applicant": "66f5a80f384a178ad24149c8",
+//           "status": "pending",
+//           "organisation": {
+//               "contactInfo": {
+//                   "phone": 1234567890,
+//                   "email": "testsupport@gmail.com"
+//               },
+//               "_id": "66f5a865384a178ad24149cc",
+//               "name": "Testing Company",
+//               "adminEmail": "testingcompany@gmail.com",
+//               "role": "Organisation",
+//               "website": "dontfindus.com",
+//               "industry": "none",
+//               "jobs": [
+//                   "66f5a91892a8cfc2ad7cdd2d",
+//                   "66f5a92a92a8cfc2ad7cdd31",
+//                   "66f5a93192a8cfc2ad7cdd35",
+//                   "66f5a93592a8cfc2ad7cdd39",
+//                   "66f5a93992a8cfc2ad7cdd3d",
+//                   "66f5a93d92a8cfc2ad7cdd41"
+//               ],
+//               "password": "$2a$10$Zw8iFUavDz1kBeQmba9M/u2Z8GHcy5a0ZwVmZ50MExKO06s0YW5HS",
+//               "createdAt": "2024-09-26T18:31:01.481Z",
+//               "__v": 6
+//           },
+//           "applicationDate": "2024-09-26T18:38:08.336Z",
+//           "__v": 0
+//       }
+//   ]
+// }
+
 import {
   Box,
   Button,
@@ -16,6 +157,7 @@ import {
   Typography,
 } from '@mui/material';
 
+
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
 import JobStatus from './JobStatus';
@@ -26,7 +168,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { applyJob, fetchAppliedJobs, setUserSelectedJobId } from '../../../store/appliedJobsSlice';
 
+
 // -----------------------------------------------------------------------------------------------
+
 
 const chipStyle = {
   mt: 2,
@@ -41,22 +185,27 @@ const chipStyle = {
   },
 };
 
+
 // -------------------------------------------------------------------------------
+
 
 export default function AppliedJobs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const { isLoading, error, userAppliedJobs, userSelectedJobId } = useSelector(
     (state) => state.appliedJobs
   );
   const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+
   const { applications } = userAppliedJobs;
-  console.log('UserApplied Jobs :', { userAppliedJobs });
+
 
   const [selectedJob, setSelectedJob] = useState(null);
   const [alignment, setAlignment] = useState('Today'); // togglebutton
+
 
   // useEffect(() => {
   //   const apiCall = async () => {
@@ -71,6 +220,7 @@ export default function AppliedJobs() {
   //   };
   // }, []);
 
+
   useEffect(() => {
     if (isUserAuthenticated && !isLoading) {
       // Fetch applied jobs after page reload or login
@@ -78,26 +228,32 @@ export default function AppliedJobs() {
     }
   }, [isUserAuthenticated, dispatch, userAppliedJobs.length, isLoading]);
 
+
   const handleJobClick = (jobId) => {
     // Set the selected job ID when a job is clicked
     dispatch(setUserSelectedJobId(jobId));
   };
 
+
   //const userAppliedJobs = useSelector((state) => state.appliedJobs.userAppliedJobs);
+
 
   // const handleViewDetails = (jobId) => {
   //  // dispatch(setUserSelectedJob(jobId));
   //   navigate(`/job/${jobId}`);
   // };
 
+
   // const handleViewDetails = (jobId) => {
   //   dispatch(setUserSelectedJobId(jobId)); // Set the selected job view
   //   //setIsDrawerOpen(true);
   // };
 
+
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+
 
   return (
     <Grid
@@ -131,6 +287,7 @@ export default function AppliedJobs() {
             My Jobs
           </Typography>
 
+
           {/**Image */}
           <Box>
             <img
@@ -141,6 +298,7 @@ export default function AppliedJobs() {
             />
           </Box>
         </Stack>
+
 
         <Box ml={4} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Paper sx={{ p: 4, m: 2, maxHeight: 100 }}>
@@ -157,6 +315,7 @@ export default function AppliedJobs() {
           </Paper>
         </Box>
       </Grid>
+
 
       {/* applied job lists */}
       <Container sx={{ p: 2, backgroundColor: '#F9FAFB' }}>
@@ -180,7 +339,9 @@ export default function AppliedJobs() {
           <ToggleButton value=" Year">This Year</ToggleButton>
         </ToggleButtonGroup>
 
+
         {/**Job LIst */}
+
 
         <Grid
           sx={{ display: 'flex', justifyContent: 'space-between', my: 5, border: '3px solid red' }}
@@ -198,8 +359,8 @@ export default function AppliedJobs() {
                   : JSON.stringify(error)}
               </Typography>
             ) : /* Job Listing Here */
-            applications?.length > 0 ? (
-              applications.map((application) => (
+            userAppliedJobs?.length > 0 ? (
+              userAppliedJobs.map((application) => (
                 <Container
                   key={application._id}
                   onClick={() => handleJobClick(application._id)}
@@ -213,6 +374,7 @@ export default function AppliedJobs() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
+
 
                     transition: 'box-shadow 0.3s ease-in-out',
                     '&:hover': {
@@ -232,6 +394,7 @@ export default function AppliedJobs() {
                           cursor: 'pointer',
                           color: 'grey',
 
+
                           textDecoration: 'none',
                           '&:hover': {
                             color: '#032340',
@@ -242,6 +405,7 @@ export default function AppliedJobs() {
                         {application?.job?.title || 'No Job title'}
                       </Link>
 
+
                       {/** company */}
                       <Stack direction={'row'} spacing={1} py={1}>
                         <BusinessIcon />
@@ -250,15 +414,18 @@ export default function AppliedJobs() {
                         </Typography>
                       </Stack>
 
+
                       {/** Location */}
                       <Stack direction={'row'} spacing={1}>
                         <PlaceIcon />
                         <Typography>{application.job?.location}</Typography>
 
+
                         <Typography color={'text.secondary'} sx={{ px: 3 }}>
                           Applied on: {new Date(application.applicationDate).toLocaleDateString()}
                         </Typography>
                       </Stack>
+
 
                       {/** applied */}
                     </Box>
@@ -275,14 +442,14 @@ export default function AppliedJobs() {
             md={6}
             sx={{ display: 'flex', justifyContent: 'space-between', border: '1px solid blue' }}
           >
-            {applications.map((job) => {
-              if (job._id === userSelectedJobId) {
+            {userAppliedJobs.map((outer) => {
+              if (outer?.application.job._id === userSelectedJobId) {
                 return (
-                  <Box key={job._id}>
-                    <Typography variant="h3" sx={{pt:3, px:3}}> {job.job?.title || 'No Job title'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {job?.organisation?.name || 'No Org..!!!'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {job?.jobType || 'No Job Type..!!!'}</Typography>
-                    <Typography variant="h6" sx={{p:2}}> {job.description || 'No description !!'}</Typography>
+                  <Box key={outer?.application.job._id}>
+                    <Typography variant="h3" sx={{pt:3, px:3}}> {outer?.application.job?.title || 'No Job title'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {outer?.application.organisation?.name || 'No Org..!!!'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {outer?.application.job?.jobType || 'No Job Type..!!!'}</Typography>
+                    <Typography variant="h6" sx={{p:2}}> {outer?.application.job?.description || 'No description !!'}</Typography>
                     <Divider />
                     {/** Status */}
                     <Box m={2}>
@@ -291,7 +458,7 @@ export default function AppliedJobs() {
                     </Box>
                     <Divider />
                     <Container>
-                      {job.requirements?.skills.map((skill, index) => (
+                      {outer?.application.job.requirements?.skills.map((skill, index) => (
                         <Chip key={index} label={skill} sx={chipStyle} />
                       )) || 'No Skills!!!'}
                     </Container>
@@ -301,6 +468,7 @@ export default function AppliedJobs() {
               return null;
             })}
 
+
             {/** 3 dot Menu */}
           </Grid>
         </Grid>
@@ -308,92 +476,3 @@ export default function AppliedJobs() {
     </Grid>
   );
 }
-
-/*
-
-State.appliedJobs.userAppliedJobs.map( (ele) => {
-  // ele.application.job.[field]
-  // you can get field from
-
-//   {
-//     "job": {
-//         "requirements": {
-//             "experience": 1,
-//             "education": "Undergraduate",
-//             "skills": [
-//                 "mern",
-//                 "firebase",
-//                 "sql"
-//             ]
-//         },
-//         "_id": "66ec60085a527cae4274aa29",
-//         "title": "test job 3",
-//         "description": "Bhad m ja 3",
-//         "location": "delhi",
-//         "salary": 21,
-//         "organisation": {
-//             "contactInfo": {
-//                 "phone": 8765432190,
-//                 "email": "test@gmail.com"
-//             },
-//             "_id": "66dd71788657485e32d2a1f5",
-//             "name": "Testing Company",
-//             "adminEmail": "test123@gmail.com",
-//             "role": "Organisation",
-//             "website": "www.testing.com",
-//             "industry": "Testing",
-//             "jobs": [
-//                 "66dd73518657485e32d2a200",
-//                 "66ec5fec5a527cae4274aa21",
-//                 "66ec5ffe5a527cae4274aa25",
-//                 "66ec60085a527cae4274aa29",
-//                 "66ec60155a527cae4274aa2d"
-//             ],
-//             "password": "$2a$10$miK5LsFTNaMI6J9AvpMsm.QuFWSRU7hfzDfVFB/VzzA8VXhKFrP9i",
-//             "createdAt": "2024-09-08T09:42:16.838Z",
-//             "__v": 5
-//         },
-//         "applications": [
-//             {
-//                 "resume": {
-//                     "key": "7196ab6cb911fad3d3cc725b93748346f20d8955089e0c3632894084d605d7c4-kota-jpr- 13.pdf"
-//                 },
-//                 "_id": "66ebbc5ba7de8a4dcc9e6677",
-//                 "job": "66ec60085a527cae4274aa29",
-//                 "applicant": "66ebb2f3a7de8a4dcc9e664c",
-//                 "status": "pending",
-//                 "applicationDate": "2024-09-19T05:53:31.197Z",
-//                 "__v": 0
-//             },
-//             {
-//                 "resume": {
-//                     "key": "7faa4b7931fb19dab71a16934953da2fa71b1b9824675f2ea491dc0ee0512f8c-Dhruv's Resume.pdf"
-//                 },
-//                 "_id": "66eea8055a527cae4274ab0c",
-//                 "job": "66ec60085a527cae4274aa29",
-//                 "applicant": "66d7524ac6fcd2b40714776f",
-//                 "status": "pending",
-//                 "applicationDate": "2024-09-21T11:03:33.892Z",
-//                 "__v": 0
-//             },
-//             {
-//                 "resume": {
-//                     "key": "1c9ff0e8ff25e19d90a9220790b8c4a7cf837f06aca45be44f3deae4deb023c8-Dhruv's Resume.pdf"
-//                 },
-//                 "_id": "66eeaa025a527cae4274ab5a",
-//                 "job": "66ec60085a527cae4274aa29",
-//                 "applicant": "66e6c2f84e978403da7d35de",
-//                 "status": "pending",
-//                 "applicationDate": "2024-09-21T11:12:02.647Z",
-//                 "__v": 0
-//             }
-//         ],
-//         "employmentType": "Part-time",
-//         "jobType": "Hybrid",
-//         "postedDate": "2024-09-19T17:31:52.470Z",
-//         "__v": 0
-//     }
-// }
-// })
-
-*/

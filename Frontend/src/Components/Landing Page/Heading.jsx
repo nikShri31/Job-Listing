@@ -59,7 +59,8 @@ export default function Heading() {
           pt: isSmallScreen ? 14 : isMediumScreen ? 18 : 25,
           pb: isSmallScreen ? 8 : 12,
           px: width === 'xs' || width === 'sm' ? 2 : 4, // Padding control to prevent x-overflow
-          overflowX: 'hidden', // Ensure no x-overflow inside the container
+          // overflowX: 'hidden', 
+          // Ensure no x-overflow inside the container
           overflowX: isSmallScreen && 'hidden', // Ensure no x-overflow inside the container
         }}
       >

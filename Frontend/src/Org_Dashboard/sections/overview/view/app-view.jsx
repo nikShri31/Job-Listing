@@ -1,3 +1,215 @@
+// {
+//   "status": "success",
+//   "organisationData": {
+//       "contactInfo": {
+//           "phone": 1234567890,
+//           "email": "testsupport@gmail.com"
+//       },
+//       "_id": "66f5a865384a178ad24149cc",
+//       "name": "Testing Company",
+//       "adminEmail": "testingcompany@gmail.com",
+//       "role": "Organisation",
+//       "website": "dontfindus.com",
+//       "industry": "none",
+//       "jobs": [
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a91892a8cfc2ad7cdd2d",
+//               "title": "tester",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f6773ae3586ff8b1930309",
+//                   "66f7d9588e80c93e69bbc6d5",
+//                   "66f7cfa5ca7049967ec4ea55",
+//                   "66f7d96fddd02eadeaf6e656",
+//                   "66f7d700703e4f36018536fe",
+//                   "66f8e8f1703e4f36018537bc",
+//                   "66fab5dde4bf6f612843d64b",
+//                   "66fab0d6e4bf6f612843d6a2",
+//                   "66fab691e4bf6f612843d6fa",
+//                   "66fbab34d7fd3280d3785818",
+//                   "66fc3488d960467408222ca2",
+//                   "66fd2f6f2bf417e578935437"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:00.073Z",
+//               "__v": 0
+//           },
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a92a92a8cfc2ad7cdd31",
+//               "title": "tester2",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f5aa1099ee763e755f5686",
+//                   "66f6774ee3586ff8b1930312",
+//                   "66f7d9de8e80c93e69bbc6f7",
+//                   "66f7d42bca7049967ec4eaa9",
+//                   "66f7d977ddd02eadeaf6e65f",
+//                   "66f7d974703e4f3601853745",
+//                   "66f8e90c703e4f36018537cd",
+//                   "66fab8ffe4bf6f612843d675",
+//                   "66fab69be4bf6f612843d703",
+//                   "66fba7e3d7fd3280d37857ff",
+//                   "66fbab99d7fd3280d378583b",
+//                   "66fc3496d960467408222cab"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:18.868Z",
+//               "__v": 0
+//           },
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a93192a8cfc2ad7cdd35",
+//               "title": "tester3",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f7cfb8ca7049967ec4ea5e",
+//                   "66f7d9f5ddd02eadeaf6e670",
+//                   "66f7d70a703e4f3601853707",
+//                   "66f8dfde703e4f3601853814",
+//                   "66fab5ebe4bf6f612843d654",
+//                   "66fab0dbe4bf6f612843d6ab",
+//                   "66fbab3ed7fd3280d3785821",
+//                   "66fc36b1d960467408222cbc",
+//                   "66fd2f762bf417e578935440"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:25.010Z",
+//               "__v": 0
+//           },
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a93592a8cfc2ad7cdd39",
+//               "title": "tester4",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f7d9668e80c93e69bbc6de",
+//                   "66f7d4a6ca7049967ec4eae5",
+//                   "66f7ce3c703e4f36018536b9",
+//                   "66f8e42c703e4f3601853795",
+//                   "66f8e1f7703e4f360185382d",
+//                   "66fba3ffd7fd3280d3785881",
+//                   "66fcb661c6c0be70c4ff684f"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:29.432Z",
+//               "__v": 0
+//           },
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a93992a8cfc2ad7cdd3d",
+//               "title": "tester5",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f7d477ca7049967ec4eaba",
+//                   "66f7cf6c703e4f36018536df",
+//                   "66f7d92b703e4f3601853724",
+//                   "66f8e91c703e4f36018537de",
+//                   "66fab14ee4bf6f612843d6ce",
+//                   "66fbab48d7fd3280d378582a",
+//                   "66fcbae2c6c0be70c4ff687c"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:33.316Z",
+//               "__v": 0
+//           },
+//           {
+//               "requirements": {
+//                   "experience": 2,
+//                   "education": "Undergraduate",
+//                   "skills": [
+//                       "mern",
+//                       "firebase",
+//                       "sql"
+//                   ]
+//               },
+//               "_id": "66f5a93d92a8cfc2ad7cdd41",
+//               "title": "tester6",
+//               "description": "Faltu ka description",
+//               "location": "delhi",
+//               "salary": 12,
+//               "organisation": "66f5a865384a178ad24149cc",
+//               "applications": [
+//                   "66f8e388703e4f360185376f",
+//                   "66f8e252703e4f360185384b",
+//                   "66fab908e4bf6f612843d67e",
+//                   "66fba709d7fd3280d37858d2",
+//                   "66fcb672c6c0be70c4ff6860",
+//                   "66fd30dd2bf417e578935451"
+//               ],
+//               "employmentType": "Full-Time",
+//               "jobType": "Hybrid",
+//               "postedDate": "2024-09-26T18:34:37.889Z",
+//               "__v": 0
+//           }
+//       ],
+//       "password": "$2a$10$Zw8iFUavDz1kBeQmba9M/u2Z8GHcy5a0ZwVmZ50MExKO06s0YW5HS",
+//       "createdAt": "2024-09-26T18:31:01.481Z",
+//       "__v": 6
+//   }
+// }
+
 import { faker } from '@faker-js/faker';
 
 import Container from '@mui/material/Container';
@@ -23,7 +235,7 @@ export default function AppView() {
       <Typography variant="h4" sx={{ mb: 5 }}>
         Hi, Welcome back 👋
       </Typography>
-
+      {/* Make it equal to total jobs under organisation */}
       <Grid container spacing={3}>
         {/* Widget Summaries */}
         <Grid xs={12} sm={6} md={3}>
@@ -34,7 +246,10 @@ export default function AppView() {
             
           />
         </Grid>
-
+        {/* Traverse through the organisation and get the total sum of applications from all the jobs */}
+        {/* organisationData.jobs.forEach( (ele) => {
+          sum+= ele.applications.length
+        }) */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Applications Pending"
@@ -43,7 +258,10 @@ export default function AppView() {
             
           />
         </Grid>
-
+        
+        {/* organisationData.jobs.forEach( (ele) => {
+          sum+= ele.acceptedCandidates.length
+        }) */}
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Accept Offer"
@@ -72,7 +290,7 @@ export default function AppView() {
             }}
           />
         </Grid>
-
+        {/* travserse through organistionData, get the length of the applied job and use it as input or whatever in the graph */}
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentVisits
             title="Most Applied Jobs"

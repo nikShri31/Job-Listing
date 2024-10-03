@@ -55,7 +55,7 @@ export const fetchAppliedJobs = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(response.data);
       return response.data.applications; // Return the fetched applied jobs
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message || 'Failed to fetch applied jobs');

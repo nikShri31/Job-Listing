@@ -12,15 +12,16 @@ import IconButton from '@mui/material/IconButton';
 import { account } from '../../../../_mock/account';
 import { logout } from '../../../../store/authSlice';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { persistor } from '../../../../store/store';
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
+const EMP_MENU_OPTIONS = [
   {
-    label: 'Home',
-    path:'jobs',
+    label: 'My Jobs',
+    path:'dashboard',
     icon: 'eva:home-fill',
   },
   {
@@ -28,10 +29,18 @@ const MENU_OPTIONS = [
     path:'profile',
     icon: 'eva:person-fill',
   },
+];
+
+const ORG_MENU_OPTIONS = [
+  {
+    label: 'Applications',
+    path:'org/applications',
+    icon: 'eva:home-fill',
+  },
   {
     label: 'Users',
     path:'org/user',
-    icon: 'eva:settings-2-fill',
+    icon: 'eva:person-fill',
   },
 ];
 
@@ -48,29 +57,29 @@ const useNoOutlineStyles = () => ({
 
 export default function AccountPopover() {
 
-
+  const { isAuthenticated, role, user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleNavigate = (path) => {
-    navigate(`/${path}`);
-    setOpen(null);
-  };
-  const handleClose = (path) => {
+  const handleClose = () => {
     setOpen(null);
   };
   
+  const handleNavigate = (path) => {
+    handleClose();  // Close the menu first
+    navigate(`/${path}`);
+  };
 
   const handleLogout =()=>{
     setOpen(null);
-    dispatch(logout()); // Dispatch the logout action to clear the auth state
-    navigate('/'); // Redirect to home page after logout
+    dispatch(logout()); // Dispatch the logout action 
+    persistor.purge(); // Clears all persisted states
+    navigate('/'); 
   }
 
   return (
@@ -126,11 +135,18 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        {MENU_OPTIONS.map((option) => (
-          <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
-          {option.label}
-        </MenuItem>
-        ))}
+        { isAuthenticated && role && role === 'employee'
+          ? EMP_MENU_OPTIONS.map((option)=>(
+            <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
+            {option.label}
+          </MenuItem>
+          )) 
+          : ORG_MENU_OPTIONS.map((option)=>(
+            <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
+            {option.label}
+          </MenuItem>
+          ))
+        }
 
         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
@@ -146,3 +162,9 @@ export default function AccountPopover() {
     </>
   );
 }
+
+// {MENU_OPTIONS.map((option) => (
+//   <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
+//   {option.label}
+// </MenuItem>
+// ))}

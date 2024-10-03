@@ -25,7 +25,8 @@ import {
 // import JD from "./Pages/Jd_Page";
 
 import { PersistGate } from 'redux-persist/integration/react';
-import { store,persistor } from './store/store';
+import { persistor } from './store/store';
+import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { Box } from '@mui/system';
 import { CircularProgress } from '@mui/material';
@@ -55,7 +56,7 @@ const router = createBrowserRouter(
       <Route path="org" element={<DashboardLayout />}>
         <Route index element={<AppPage />} />
         <Route path='user' element={<UserPage />} />
-        <Route path='products' element={<ProductsPage />} />
+        <Route path='applications' element={<ProductsPage />} />
       </Route>
      <Route path='404' element={<NotFoundPage/>}  />
      <Route path="*" element={<NotFoundPage />} /> 
@@ -68,8 +69,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HelmetProvider>
       <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-    <RouterProvider router={router} />
-    </PersistGate>
+      <RouterProvider router={router} />
+      </PersistGate>
       </Provider>
     </HelmetProvider>
   </React.StrictMode>

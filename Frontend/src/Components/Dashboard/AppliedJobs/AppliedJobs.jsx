@@ -24,35 +24,64 @@ import ThreeDotMenu from './3DotMenu';
 import { useSelector, useDispatch } from 'react-redux';
 //import { setUserSelectedJobId, clearUserSelectedJobView } from '../../../store/appliedJobsSlice';
 import { useNavigate } from 'react-router-dom';
-import { applyJob } from '../../../store/appliedJobsSlice';
+import { applyJob, fetchAppliedJobs, setUserSelectedJobId } from '../../../store/appliedJobsSlice';
+
+// -----------------------------------------------------------------------------------------------
+
+const chipStyle = {
+  mt: 2,
+  mx: 1,
+  py: 0.5,
+  bgcolor: 'lightgrey',
+  fontSize: '1rem',
+  height: 'auto',
+  color: '#032B53',
+  '& .MuiChip-label': {
+    fontSize: '1.1rem',
+  },
+};
+
+// -------------------------------------------------------------------------------
 
 export default function AppliedJobs() {
   const navigate = useNavigate();
-  const { isLoading, error, userAppliedJobs } = useSelector((state) => {
-    return state.appliedJobs;
-  });
-
-  console.log('UserApplied Jobs :', userAppliedJobs);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const apiCall = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/application/all/me', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-        apiCall();
-      } catch (err) {}
-    };
-  }, []);
+  const { isLoading, error, userAppliedJobs, userSelectedJobId } = useSelector(
+    (state) => state.appliedJobs
+  );
+  const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const { applications } = userAppliedJobs;
+  console.log('UserApplied Jobs :', { userAppliedJobs });
+
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [alignment, setAlignment] = useState('Today'); // togglebutton
+
+  // useEffect(() => {
+  //   const apiCall = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:5000/api/application/all/me', {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //         },
+  //       });
+  //       apiCall();
+  //     } catch (err) {}
+  //   };
+  // }, []);
 
   useEffect(() => {
-    if (userAppliedJobs.length === 0) {
-      dispatch(applyJob());
+    if (isUserAuthenticated && !isLoading) {
+      // Fetch applied jobs after page reload or login
+      dispatch(fetchAppliedJobs());
     }
-  }, [dispatch, userAppliedJobs.length]);
+  }, [isUserAuthenticated, dispatch, userAppliedJobs.length, isLoading]);
+
+  const handleJobClick = (jobId) => {
+    // Set the selected job ID when a job is clicked
+    dispatch(setUserSelectedJobId(jobId));
+  };
 
   //const userAppliedJobs = useSelector((state) => state.appliedJobs.userAppliedJobs);
 
@@ -65,8 +94,6 @@ export default function AppliedJobs() {
   //   dispatch(setUserSelectedJobId(jobId)); // Set the selected job view
   //   //setIsDrawerOpen(true);
   // };
-
-  const [alignment, setAlignment] = useState('Today');
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -132,7 +159,7 @@ export default function AppliedJobs() {
       </Grid>
 
       {/* applied job lists */}
-      <Container sx={{ p: 2 }}>
+      <Container sx={{ p: 2, backgroundColor: '#F9FAFB' }}>
         {/**Toggle list */}
         <ToggleButtonGroup
           color="info"
@@ -152,29 +179,37 @@ export default function AppliedJobs() {
           </ToggleButton>
           <ToggleButton value=" Year">This Year</ToggleButton>
         </ToggleButtonGroup>
+
         {/**Job LIst */}
-        <Grid sx={{ display: 'flex', justifyContent: 'space-between', my: 5 }}>
-          <Grid item xs={12} md={6}>
+
+        <Grid
+          sx={{ display: 'flex', justifyContent: 'space-between', my: 5, border: '3px solid red' }}
+        >
+          <Grid item xs={12} md={6} sx={{ px: 2, border: '1px solid black' }}>
             {isLoading ? (
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress />
               </Box>
-            ) : error ? (
+            ) : /* ERROR Handling */
+            error ? (
               <Typography color="error">
                 {typeof error === 'object' && error.error && error.error.message
                   ? error.error.message
                   : JSON.stringify(error)}
               </Typography>
-            ) : userAppliedJobs && userAppliedJobs.length > 0 ? (
-              userAppliedJobs.map(({ application }) => (
+            ) : /* Job Listing Here */
+            applications?.length > 0 ? (
+              applications.map((application) => (
                 <Container
                   key={application._id}
+                  onClick={() => handleJobClick(application._id)}
                   sx={{
                     backgroundImage: 'linear-gradient(130deg,#CEE5FD, #FFF)',
                     backgroundSize: '100% 100%',
                     backgroundRepeat: 'no-repeat',
                     color: '#032340',
                     p: 1,
+                    my: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
@@ -204,13 +239,15 @@ export default function AppliedJobs() {
                           },
                         }}
                       >
-                        {application.job?.title}
+                        {application?.job?.title || 'No Job title'}
                       </Link>
 
                       {/** company */}
                       <Stack direction={'row'} spacing={1} py={1}>
                         <BusinessIcon />
-                        <Typography variant="h6">{application.organisation?.name}</Typography>
+                        <Typography variant="h6">
+                          {application?.organisation?.name || 'No Org !!!'}
+                        </Typography>
                       </Stack>
 
                       {/** Location */}
@@ -232,11 +269,38 @@ export default function AppliedJobs() {
               <Typography variant="h3"> No Jobs Applied ....</Typography>
             )}
           </Grid>
-          <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            {/** Status */}
-            <Box m={4}>
-              <JobStatus />
-            </Box>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ display: 'flex', justifyContent: 'space-between', border: '1px solid blue' }}
+          >
+            {applications.map((job) => {
+              if (job._id === userSelectedJobId) {
+                return (
+                  <Box key={job._id}>
+                    <Typography variant="h3" sx={{pt:3, px:3}}> {job.job?.title || 'No Job title'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {job?.organisation?.name || 'No Org..!!!'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {job?.jobType || 'No Job Type..!!!'}</Typography>
+                    <Typography variant="h6" sx={{p:2}}> {job.description || 'No description !!'}</Typography>
+                    <Divider />
+                    {/** Status */}
+                    <Box m={2}>
+                    <Typography variant="h5" sx={{pb:2}}> Status</Typography>
+                      <JobStatus />
+                    </Box>
+                    <Divider />
+                    <Container>
+                      {job.requirements?.skills.map((skill, index) => (
+                        <Chip key={index} label={skill} sx={chipStyle} />
+                      )) || 'No Skills!!!'}
+                    </Container>
+                  </Box>
+                );
+              }
+              return null;
+            })}
+
             {/** 3 dot Menu */}
           </Grid>
         </Grid>
@@ -244,8 +308,10 @@ export default function AppliedJobs() {
     </Grid>
   );
 }
+
 /*
-//State.appliedJobs.userAppliedJobs.map( (ele) => {
+
+State.appliedJobs.userAppliedJobs.map( (ele) => {
   // ele.application.job.[field]
   // you can get field from
 

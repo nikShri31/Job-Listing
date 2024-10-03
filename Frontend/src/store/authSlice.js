@@ -10,17 +10,14 @@
 //   "token": "your_jwt_token_here"
 // }
 
-
-
-
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
-  user: null,
-  token: localStorage.getItem("token") || null,
-  role: null,
-  isAuthenticated: !!localStorage.getItem("token"),
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  token: localStorage.getItem('token') || null,
+  role: localStorage.getItem('role') || null,
+  isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   error: null,
 };
@@ -36,68 +33,76 @@ This ensures that isAuthenticated is always a boolean (true or false), which is 
 
 // Helper function to choose API route based on role
 const getApiEndpoint = (role, type) => {
-  const base = "http://localhost:5000/api";
-  if (role === "employee") {
-    return type === "login" 
-    ? `${base}/login` 
-    : `${base}/signup`;
-  } else if (role === "employer") {
-    return type === "login"
-      ? `${base}/organisation/login`
-      : `${base}/organisation/signup`;
+  const base = 'http://localhost:5000/api';
+  if (role === 'employee') {
+    return type === 'login' ? `${base}/login` : `${base}/signup`;
+  } else if (role === 'employer') {
+    return type === 'login' ? `${base}/organisation/login` : `${base}/organisation/signup`;
   }
-  throw new Error("Invalid role");
-  
+  throw new Error('Invalid role');
 };
 
-export const login = createAsyncThunk( "/login", async ({ loginData, role }, { rejectWithValue }) => {
+export const login = createAsyncThunk(
+  '/login',
+  async ({ loginData, role }, {dispatch, rejectWithValue }) => {
     try {
-      const apiEndpoint = getApiEndpoint(role, "login");
-      if(role === 'employer') loginData.adminEmail = loginData.email;
+      const apiEndpoint = getApiEndpoint(role, 'login');
+      if (role === 'employer') loginData.adminEmail = loginData.email;
 
       const response = await axios.post(apiEndpoint, loginData);
       const apiData = response.data;
-      const data = apiData.userData ? apiData.userData : apiData.organisationData;
+      const user = apiData.userData ? apiData.userData : apiData.organisationData;
       const { token } = apiData;
       // console.log(data)
 
+      localStorage.setItem('token', token);
+      dispatch(fetchAppliedJobs);
+
       return {
-        data,
+        user,
         token,
       };
     } catch (error) {
-      return rejectWithValue(
-        error?.response?.data || error.message || "Login failed"
-      );
+      return rejectWithValue(error?.response?.data || error.message || 'Login failed');
     }
   }
 );
 
-export const signup = createAsyncThunk( "/signup", async ({ signupData, role }, { rejectWithValue }) => {
+export const fetchAppliedJobs = createAsyncThunk(
+  'appliedJobs/fetchAppliedJobs',
+  async (_, { getState }) => {
+    // const token = getState().auth.token;
+    const response = await axios.get('http://localhost:5000/api/application/all/me', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data; // Return the fetched applied jobs
+  }
+);
+
+export const signup = createAsyncThunk(
+  '/signup',
+  async ({ signupData, role }, { rejectWithValue }) => {
     try {
-      const apiEndpoint = getApiEndpoint(role, "signup");
+      const apiEndpoint = getApiEndpoint(role, 'signup');
       const response = await axios.post(apiEndpoint, signupData);
       const apiData = response.data;
       const data = apiData.userData ? apiData.userData : apiData.organisationData;
       const { token } = apiData;
-     
 
       return {
         data,
         token,
       };
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || error.message || "Signup failed"
-      );
+      return rejectWithValue(error.response?.data || error.message || 'Signup failed');
     }
   }
 );
 
-
-
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logout: (state) => {
@@ -105,7 +110,10 @@ const authSlice = createSlice({
       state.token = null;
       state.role = null;
       state.isAuthenticated = false;
-      localStorage.removeItem("token");
+      // Remove from localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('role');
     },
   },
   extraReducers: (builder) => {
@@ -116,17 +124,22 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.data;
+        state.user = action.payload.user;
         state.token = action.payload.token;
-        state.role = action.payload.data.role;
+
+        console.log('Login Data:', state.user);
+
+        state.role = action.payload.user?.role;
         state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token);
+  
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('user', JSON.stringify(action.payload.user));
+        localStorage.setItem('role', action.payload.user.role);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Login failed.";
+        state.error = action.payload || 'Login failed.';
         state.isAuthenticated = false;
-     
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -135,38 +148,32 @@ const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.data;
-      
         state.token = action.payload.token;
-        state.role = action.payload.data.role;
+        state.role = action.payload.data?.role;
         state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token);
+
+        // Store data in localStorage
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('user', JSON.stringify(action.payload.data));
+        localStorage.setItem('role', action.payload.data.role);
       })
       .addCase(signup.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Signup failed.";
+        state.error = action.payload || 'Signup failed.';
         state.isAuthenticated = false;
-      })
-     
+      });
   },
 });
 
-export const authLoading = (state)=> state.auth.loading;
+export const authLoading = (state) => state.auth.loading;
 
-export const authError =(state)=> state.auth.error;
-
-
+export const authError = (state) => state.auth.error;
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 
-
-
-
-
-
 // import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
-
 
 // const initialState = {
 //   user: null,
@@ -188,23 +195,21 @@ export default authSlice.reducer;
 //   throw new Error("Invalid role");
 // };
 
-
 // export const login = createAsyncThunk("/login", async ({ loginData, role }, { rejectWithValue }) => {
 //   try {
 //     const apiEndpoint = getApiEndpoint(role, "login");
 //     const response = await axios.post(apiEndpoint, loginData);
-//     return response.data; // user data + token 
+//     return response.data; // user data + token
 //   } catch (error) {
 //     return rejectWithValue(error.response.data);
 //   }
 // });
 
-
 // export const signup = createAsyncThunk("/signup", async ({signupData,role}, { rejectWithValue }) => {
 //   try {
 //     const apiEndpoint = getApiEndpoint(role, "signup");
 //     const response = await axios.post(apiEndpoint, signupData);
-//     return response.data; // user data + token 
+//     return response.data; // user data + token
 //   } catch (error) {
 //     return rejectWithValue(error.response.data);
 //   }
@@ -225,8 +230,6 @@ export default authSlice.reducer;
 //     }
 //   }
 // );
-
-
 
 // const authSlice = createSlice({
 //   name: "auth",
@@ -291,7 +294,7 @@ export default authSlice.reducer;
 //         state.isAuthenticated = true;
 //         localStorage.setItem("token", action.payload.token); // Store token
 //       })
-      
+
 //       .addCase(loginWithToken.rejected, (state, action) => {
 //         state.loading = false;
 //         state.error = action.payload;

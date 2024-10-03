@@ -170,25 +170,36 @@ const Home = () => {
     setIsDrawerOpen(true);
     dispatch(setUserSelectedJobId(job._id));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(setUserSelectedJobId(null)); // Clear the selected job ID when leaving the page
+    };
+  }, [dispatch]);
+  
  
 
   useEffect(() => {
-    if (selectedJobId) {
+    if (selectedJobId && jobs.length > 0) { // Ensure there are jobs and a valid selectedJobId
       const pageNumber = findPageForJob(selectedJobId, jobs);
+      
       if (pageNumber !== -1 && pageNumber !== currentPage) {
-        setCurrentPage(pageNumber);
+        setCurrentPage(pageNumber); // Set the current page if it's not correct
       } else {
         const job = jobs.find((job) => job._id === selectedJobId);
         if (job) {
           setSelectedJob(job);
-          setIsDrawerOpen(true);
-        
-        }else {
+          setIsDrawerOpen(true);  // Open the drawer only if the job is found
+        } else {
+          setIsDrawerOpen(false); // Close the drawer if no job is found
           console.error(`Job with id ${selectedJobId} not found`);
         }
       }
+    } else {
+      setIsDrawerOpen(false); // Close the drawer if there's no selectedJobId or jobs
     }
   }, [selectedJobId, jobs, currentPage]);
+  
 
   const findPageForJob = (jobId, jobs) => {
     const index = jobs.findIndex((job) => job._id === jobId);

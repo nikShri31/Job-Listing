@@ -35,12 +35,29 @@ const headingStyles = {
     outline: 'none',
   },
   '&:hover': {
+    transform: 'translateZ(10px) scale(1.1)',
     boxShadow: ` 10px 10px 10px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
     fontWeight: 'bold',
   },
 };
 
 export default function Header({ onOpenNav }) {
+  const Emp_Buttons = [
+    { title: 'Jobs', path: 'jobs' },
+    { title: 'My Jobs', path: 'dashboard' },
+    { title: 'Profile', path: 'profile' },
+  ];
+
+  const Org_Buttons = [
+    { title: 'Home', path: 'org' },
+    { title: 'Users', path: 'org/users' },
+    { title: 'Applications', path: 'org/products' },
+  ];
+
+  const LandingBtn = [
+    { title: 'Highlight', path: '' },
+    { title: 'About', path: '' },
+  ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -70,7 +87,6 @@ export default function Header({ onOpenNav }) {
         <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
-        
       )}
       <AdbIcon sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, mr: 1 }} />
       <Typography
@@ -91,19 +107,24 @@ export default function Header({ onOpenNav }) {
         JOBBER
       </Typography>
 
-      <Box sx={{ flexGrow: 1, display:{xs:'none', md:'flex'}, px: 1 }}>
-        <Button sx={headingStyles} onClick={() => navigate('/jobs')}>
-          Home
-        </Button>
-        <Button sx={headingStyles} onClick={() => navigate('/dashboard')}>
-          My Jobs
-        </Button>
-        <Button sx={headingStyles} onClick={() => navigate('/org')}>
-          OrgHome
-        </Button>
-        <Button sx={headingStyles} onClick={() => navigate('/org/user')}>
-          User
-        </Button>
+      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 1 }}>
+        {isAuthenticated && role === 'employee'
+          ? Emp_Buttons.map((ele, index) => (
+              <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                {ele.title}
+              </Button>
+            ))
+          : role === 'Organisation'
+            ? Org_Buttons.map((ele, index) => (
+                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                  {ele.title}
+                </Button>
+              ))
+            : LandingBtn.map((ele, index) => (
+                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                  {ele.title}
+                </Button>
+              ))}
       </Box>
 
       <Box sx={{ flexGrow: 1 }} />
@@ -117,8 +138,7 @@ export default function Header({ onOpenNav }) {
         ) : (
           <>
             <Searchbar />
-            <NotificationsPopover/>
-          
+            <NotificationsPopover />
             <AccountPopover />
           </>
         )}
@@ -129,13 +149,12 @@ export default function Header({ onOpenNav }) {
   return (
     <AppBar
       sx={{
-      mb:5,
+        mb: 5,
         boxShadow: 'none',
         height: HEADER.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
         ...bgBlur({
           color: theme.palette.background.paper,
-         
         }),
         transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,
@@ -153,10 +172,8 @@ export default function Header({ onOpenNav }) {
         }}
       >
         {renderContent}
-       
       </Toolbar>
     </AppBar>
-    
   );
 }
 

@@ -10,18 +10,18 @@ const icon = (name) => (
 
 const navConfig = [
   {
-    title: 'dashboard',
+    title: 'Dashboard',
     path: '/',
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Profile',
+    title: 'Users',
     path: '/org/user',
     icon: icon('ic_user'),
   },
   {
-    title: 'Job applications',
-    path: '/org/products',
+    title: 'Applications',
+    path: '/org/applications',
     icon: icon('ic_cart'),
   },
 ];

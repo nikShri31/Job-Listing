@@ -6,6 +6,7 @@ import appliedJobsReducer from './appliedJobsSlice';
 import authReducer from './authSlice';
 import notificationsReducer from './notificationSlice'
 import allJobsReducer from './allJobsSlice';
+import newJobsReducer from './createJobSlice'
 
 // export const store = configureStore({
 //   reducer: {
@@ -39,6 +40,9 @@ export const store = configureStore({
     auth: authReducer,
     allJobs:allJobsReducer,
     appliedJobs: persistedAppliedJobsReducer,
+
+    //organisation
+    applications:newJobsReducer,
     notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({

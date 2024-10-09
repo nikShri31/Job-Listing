@@ -45,7 +45,7 @@ export const applyJob = createAsyncThunk(
 // Thunk to fetch applied jobs
 export const fetchAppliedJobs = createAsyncThunk(
   'appliedJobs/fetchAppliedJobs',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token'); 
       if (!token) throw new Error('Token not found');
@@ -55,8 +55,8 @@ export const fetchAppliedJobs = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
-      return response.data.applications; // Return the fetched applied jobs
+      console.log( "Fetch Response:",  response.data);
+      return response.data; // Return the fetched applied jobs
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message || 'Failed to fetch applied jobs');
     }
@@ -91,8 +91,8 @@ const appliedJobsSlice = createSlice({
       // Fetching applied jobs after login
       .addCase(fetchAppliedJobs.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userAppliedJobs.applications = action.payload; // Set the applications array
-        console.log('Fetched applied jobs:', state.userAppliedJobs.applications);
+        state.userAppliedJobs = action.payload; // Set the applications array
+        console.log('Fetched applied jobs:', state.userAppliedJobs);
       })
       .addCase(fetchAppliedJobs.rejected, (state, action) => {
         state.isLoading = false;
@@ -100,7 +100,7 @@ const appliedJobsSlice = createSlice({
       })
         // Clear state on logout
         .addCase(logout, (state) => {
-          state.userAppliedJobs.applications = [];
+          state.userAppliedJobs = [];
           state.userSelectedJobId = null;
           state.isLoading = false;
           state.error = null;

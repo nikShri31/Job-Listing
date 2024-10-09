@@ -200,25 +200,12 @@ export default function AppliedJobs() {
   const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
 
+  console.log(userAppliedJobs);
   const { applications } = userAppliedJobs;
 
 
   const [selectedJob, setSelectedJob] = useState(null);
   const [alignment, setAlignment] = useState('Today'); // togglebutton
-
-
-  // useEffect(() => {
-  //   const apiCall = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:5000/api/application/all/me', {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //         },
-  //       });
-  //       apiCall();
-  //     } catch (err) {}
-  //   };
-  // }, []);
 
 
   useEffect(() => {
@@ -233,21 +220,6 @@ export default function AppliedJobs() {
     // Set the selected job ID when a job is clicked
     dispatch(setUserSelectedJobId(jobId));
   };
-
-
-  //const userAppliedJobs = useSelector((state) => state.appliedJobs.userAppliedJobs);
-
-
-  // const handleViewDetails = (jobId) => {
-  //  // dispatch(setUserSelectedJob(jobId));
-  //   navigate(`/job/${jobId}`);
-  // };
-
-
-  // const handleViewDetails = (jobId) => {
-  //   dispatch(setUserSelectedJobId(jobId)); // Set the selected job view
-  //   //setIsDrawerOpen(true);
-  // };
 
 
   const handleChange = (event, newAlignment) => {
@@ -359,8 +331,8 @@ export default function AppliedJobs() {
                   : JSON.stringify(error)}
               </Typography>
             ) : /* Job Listing Here */
-            userAppliedJobs?.length > 0 ? (
-              userAppliedJobs.map((application) => (
+            applications?.length > 0 ? (
+              applications.map((application) => (
                 <Container
                   key={application._id}
                   onClick={() => handleJobClick(application._id)}
@@ -374,8 +346,6 @@ export default function AppliedJobs() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-
-
                     transition: 'box-shadow 0.3s ease-in-out',
                     '&:hover': {
                       boxShadow: ` 10px 10px 10px #00000041,
@@ -442,15 +412,16 @@ export default function AppliedJobs() {
             md={6}
             sx={{ display: 'flex', justifyContent: 'space-between', border: '1px solid blue' }}
           >
-            {userAppliedJobs.map((outer) => {
-              if (outer?.application.job._id === userSelectedJobId) {
+            {applications?.map((application) => {
+              if (application._id === userSelectedJobId) {
                 return (
-                  <Box key={outer?.application.job._id}>
-                    <Typography variant="h3" sx={{pt:3, px:3}}> {outer?.application.job?.title || 'No Job title'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {outer?.application.organisation?.name || 'No Org..!!!'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {outer?.application.job?.jobType || 'No Job Type..!!!'}</Typography>
-                    <Typography variant="h6" sx={{p:2}}> {outer?.application.job?.description || 'No description !!'}</Typography>
+                  <Box key={application._id}>
+                    <Typography variant="h3" sx={{pt:3, px:3}}> {application.job?.title || 'No Job title'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {application.organisation?.name || 'No Org..!!!'}</Typography>
+                    <Typography variant="h5" sx={{p:2}}> {application.job?.jobType || 'No Job Type..!!!'}</Typography>
+                    <Typography variant="body1" sx={{p:2}}> {application.job?.description || 'No description !!'}</Typography>
                     <Divider />
+                    
                     {/** Status */}
                     <Box m={2}>
                     <Typography variant="h5" sx={{pb:2}}> Status</Typography>
@@ -458,7 +429,7 @@ export default function AppliedJobs() {
                     </Box>
                     <Divider />
                     <Container>
-                      {outer?.application.job.requirements?.skills.map((skill, index) => (
+                      {application.job.requirements?.skills.map((skill, index) => (
                         <Chip key={index} label={skill} sx={chipStyle} />
                       )) || 'No Skills!!!'}
                     </Container>

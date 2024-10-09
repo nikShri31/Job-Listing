@@ -65,6 +65,10 @@ export function overrides(theme) {
           '&:hover': {
             color: theme.palette.common.white,
             backgroundColor: theme.palette.grey[800],
+           
+          },
+          '&:focus': {
+            outline: 'none',  // Removes focus outline from all buttons globally
           },
         },
         sizeLarge: {
@@ -99,6 +103,7 @@ export function overrides(theme) {
           [`& .${outlinedInputClasses.notchedOutline}`]: {
             borderColor: alpha(theme.palette.grey[500], 0.24),
           },
+         
         },
       },
     },
@@ -141,6 +146,8 @@ export function overrides(theme) {
           ...theme.typography.body2,
         },
       },
-    },
-  };
-}
+    }
+    
+  
+  }
+};

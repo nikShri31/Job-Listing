@@ -29,9 +29,43 @@ const PRODUCT_NAME = [
   'Embedded Systems Engineer',
   'IT Project Manager',
 ];
-const PRODUCT_COLOR = [
-  
-];
+
+const PRODUCT_COLOR=[];
+
+// Create Job Form Example
+// const jobData = {
+//     "title" : "Tester6",
+//     "description" : "Faltu ka description",
+//     "company" : "Testing Company",
+//     "location" : "Delhi",
+//     "salary" : "12",
+//     "requirements" : {
+//         "experience" : 2,
+//         "education" : "Undergraduate",
+//         "skills" : ["MERN", "Firebase", "SQL"]
+//     },
+//     "employmentType" : "Full-Time",
+//     "jobType" : "Hybrid"
+// }
+
+// employmentType : {
+//     type : String,
+//     enum : ['Full-Time', 'Part-time'],
+//     required : true
+// },
+// jobType : {
+//     type : String,
+//     enum : ["On-site", "Remote", "Hybrid"],
+//     required : true
+// },
+
+// Its API is:
+
+// await axios.post('http://localhost:5000/api/job', jobData, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// })
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +86,6 @@ export const products = [...Array(24)].map((_, index) => {
       (setIndex === 23 && PRODUCT_COLOR.slice(4, 6)) ||
       (setIndex === 24 && PRODUCT_COLOR.slice(5, 6)) ||
       PRODUCT_COLOR,
-    status: sample(['Remove', 'remove', '', '']),
+    status: sample(['Remove'])
   };
 });

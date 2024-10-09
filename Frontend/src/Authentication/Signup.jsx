@@ -32,16 +32,16 @@ const Signup = ({ formData, setFormData }) => {
   };
 
   // Handle changes for profile-related fields
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      profile: {
-        ...prevData.profile,
-        [name]: value,
-      },
-    }));
-  };
+  // const handleProfileChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     profile: {
+  //       ...prevData.profile,
+  //       [name]: value,
+  //     },
+  //   }));
+  // };
 
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

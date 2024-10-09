@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -15,6 +15,7 @@ import { logout } from '../../../../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { persistor } from '../../../../store/store';
+import { LazyLoader } from '../../../../main';
 
 // ----------------------------------------------------------------------
 
@@ -71,16 +72,19 @@ export default function AccountPopover() {
   };
   
   const handleNavigate = (path) => {
-    handleClose();  // Close the menu first
-    navigate(`/${path}`);
+    handleClose();  
+    navigate(`/${path}`);  
   };
-
-  const handleLogout =()=>{
-    setOpen(null);
-    dispatch(logout()); // Dispatch the logout action 
-    persistor.purge(); // Clears all persisted states
-    navigate('/'); 
-  }
+  
+  const handleLogout = () => {
+    handleClose();  
+    dispatch(logout());  
+    persistor.purge(); 
+    navigate('/');  
+  };
+  
+  
+  
 
   return (
     <>
@@ -110,17 +114,19 @@ export default function AccountPopover() {
       </IconButton>
 
       <Popover
-        open={!!open}
+      open={Boolean(open)}
         anchorEl={open}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 0,
-            mt: 1,
-            ml: 0.75,
-            width: 200,
+        slotProps={{
+          paper: {
+            sx: {
+              p: 0,
+              mt: 1,
+              ml: 0.75,
+              width: 200,
+            },
           },
         }}
       >
@@ -135,6 +141,8 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
+        <Suspense fallback={LazyLoader}>
+        
         { isAuthenticated && role && role === 'employee'
           ? EMP_MENU_OPTIONS.map((option)=>(
             <MenuItem key={option.label} onClick={() => handleNavigate(option.path)}>
@@ -147,6 +155,8 @@ export default function AccountPopover() {
           </MenuItem>
           ))
         }
+        </Suspense>
+
 
         <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 

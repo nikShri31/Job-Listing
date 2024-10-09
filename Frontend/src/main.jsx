@@ -11,6 +11,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
+
 import {
   LandingPage,
   HomePage,
@@ -32,8 +33,9 @@ import { Box } from '@mui/system';
 import { CircularProgress } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
 import NotFoundPage from './Pages/page-not-found';
+import CreateNewJob from './Org_Dashboard/sections/products/Create_Job_Form';
 
-const LazyLoader = (
+export const LazyLoader = (
   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
     <CircularProgress />
   </Box>
@@ -57,6 +59,7 @@ const router = createBrowserRouter(
         <Route index element={<AppPage />} />
         <Route path='user' element={<UserPage />} />
         <Route path='applications' element={<ProductsPage />} />
+        <Route path='create-job-form' element={<CreateNewJob />} />
       </Route>
      <Route path='404' element={<NotFoundPage/>}  />
      <Route path="*" element={<NotFoundPage />} /> 

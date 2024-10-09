@@ -50,8 +50,8 @@ export default function Header({ onOpenNav }) {
 
   const Org_Buttons = [
     { title: 'Home', path: 'org' },
-    { title: 'Users', path: 'org/users' },
-    { title: 'Applications', path: 'org/products' },
+    { title: 'Users', path: 'org/user' },
+    { title: 'Applications', path: 'org/applications' },
   ];
 
   const LandingBtn = [
@@ -71,15 +71,37 @@ export default function Header({ onOpenNav }) {
 
   const mdUp = useResponsive('up', 'md');
 
-  const handleLogout = () => {
-    // handleCloseUserMenu();
-    dispatch(logout()); // Dispatch the logout action to clear the auth state
-    navigate('/'); // Redirect to home page after logout
-  };
+  // const handleLogout = () => {
+  //   // handleCloseUserMenu();
+  //   dispatch(logout()); // Dispatch the logout action to clear the auth state
+  //   navigate('/'); // Redirect to home page after logout
+  // };
 
   if (isLoading) {
     return <div>Loading...</div>; // Or a loading spinner
   }
+
+  const renderButtons = () => {
+    if (isAuthenticated && role === 'employee') {
+      return Emp_Buttons.map((ele, index) => (
+        <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+          {ele.title}
+        </Button>
+      ));
+    } else if (isAuthenticated && role === 'Organisation') {
+      return Org_Buttons.map((ele, index) => (
+        <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+          {ele.title}
+        </Button>
+      ));
+    } else {
+      return LandingBtn.map((ele, index) => (
+        <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+          {ele.title}
+        </Button>
+      ));
+    }
+  };
 
   const renderContent = (
     <>
@@ -90,7 +112,7 @@ export default function Header({ onOpenNav }) {
       )}
       <AdbIcon sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, mr: 1 }} />
       <Typography
-        variant="h6"
+        variant="h4"
         noWrap
         component="a"
         href="/"
@@ -98,6 +120,7 @@ export default function Header({ onOpenNav }) {
           mr: 2,
           display: { xs: 'none', md: 'flex', lg: 'flex' },
           fontFamily: 'monospace',
+
           fontWeight: 'bold',
           letterSpacing: '.3rem',
           color: 'black',
@@ -107,25 +130,7 @@ export default function Header({ onOpenNav }) {
         JOBBER
       </Typography>
 
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 1 }}>
-        {isAuthenticated && role === 'employee'
-          ? Emp_Buttons.map((ele, index) => (
-              <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
-                {ele.title}
-              </Button>
-            ))
-          : role === 'Organisation'
-            ? Org_Buttons.map((ele, index) => (
-                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
-                  {ele.title}
-                </Button>
-              ))
-            : LandingBtn.map((ele, index) => (
-                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
-                  {ele.title}
-                </Button>
-              ))}
-      </Box>
+      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 1 }}>{renderButtons()}</Box>
 
       <Box sx={{ flexGrow: 1 }} />
 
@@ -182,3 +187,25 @@ Header.propTypes = {
 };
 
 //  width: `calc(100% - ${NAV.WIDTH + 1}px)`,
+
+/**
+ <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 1 }}>
+        {isAuthenticated && role === 'employee'
+          ? Emp_Buttons.map((ele, index) => (
+              <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                {ele.title}
+              </Button>
+            ))
+          : role === 'Organisation'
+            ? Org_Buttons.map((ele, index) => (
+                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                  {ele.title}
+                </Button>
+              ))
+            : LandingBtn.map((ele, index) => (
+                <Button key={index} sx={headingStyles} onClick={() => navigate(`/${ele.path}`)}>
+                  {ele.title}
+                </Button>
+              ))}
+      </Box>
+ */

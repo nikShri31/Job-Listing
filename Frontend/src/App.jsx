@@ -19,7 +19,7 @@ import Header from './Org_Dashboard/layouts/dashboard/Header';
 function App() {
   useScrollToTop();
 
-  const role = useSelector((state) => state.auth.role);
+  //const role = useSelector((state) => state.auth.role);
 
   return (
     <ThemeProvider>

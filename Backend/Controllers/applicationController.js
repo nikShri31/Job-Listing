@@ -16,6 +16,7 @@ module.exports.apply = async (req, res, next) => {
 
         const jobInfo = await JobListing.findById(jobId).populate('organisation');
         const resume = req.files.resume[0].key;
+        console.log(req.files.resume)
         const application = new Application(
             {
                 job: jobId,
@@ -23,14 +24,14 @@ module.exports.apply = async (req, res, next) => {
                 resume: {
                     key: resume
                 },
-                organisation : jobInfo.organisation
+                organisation: jobInfo.organisation
             }
-        );        
+        );
         const newApplication = await application.save();
         const populatedApplication = await Application.findById(newApplication._id).populate('job organisation');
         await JobListing.findByIdAndUpdate(jobId, { $push: { applications: newApplication._id } });
         await User.findByIdAndUpdate(userId, { $push: { applications: newApplication._id } });
-        res.status(201).json({ message: 'Application submitted successfully', application : populatedApplication });
+        res.status(201).json({ message: 'Application submitted successfully', application: populatedApplication });
     } catch (error) {
         return next(new expressError(error.message, 400))
     }
@@ -46,9 +47,9 @@ module.exports.getApplicationById = async (req, res, next) => {
     res.status(200).json({ ...updatedApplication });
 }
 
-module.exports.getAllApplicationsOfUser = async(req, res, next) => {
+module.exports.getAllApplicationsOfUser = async (req, res, next) => {
     const userId = req.user.id;
-    const applications = await Application.find({ applicant: userId }).populate('job');
+    const applications = await Application.find({ applicant: userId }).populate('job organisation');
     res.status(200).json({ applications });
 }
 
@@ -60,6 +61,11 @@ module.exports.updateStatus = async (req, res, next) => {
     const user = await User.findById(userId);
     user.notifications.push({ text: `Your application for ${application.job.title} has been ${status}`, type: "Application", applicationId });
     await user.save();
+    if (status === "accepted") {
+        await JobListing.findByIdAndUpdate(application.job, { $push: { acceptedCandidates: userId }, $pull: { applications: applicationId } });
+    } else {
+        await JobListing.findByIdAndUpdate(application.job, { $pull: { applications: applicationId } });
+    }
     res.status(200).json({ application });
 }
 

@@ -29,7 +29,7 @@ module.exports.updateOrganisation = async(req, res, next) => {
 module.exports.getOrganisation = async(req, res, next) => {
     const name = req.user.name;
     const organisation = await Organisation.findOne({ name }).populate('jobs');
-    if(!org) {
+    if(!organisation) {
         return next(new expressError('Organisation not found', 400));
     }
     res.status(200).json({status: 'success', organisationData : organisation});

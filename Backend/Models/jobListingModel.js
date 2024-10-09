@@ -55,7 +55,11 @@ const jobListingSchema = new Schema({
         type : String,
         enum : ["On-site", "Remote", "Hybrid"],
         required : true
-    }
+    },
+    acceptedCandidates : [{
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    }]
 })
 
 const JobListing = mongoose.model('JobListing', jobListingSchema)

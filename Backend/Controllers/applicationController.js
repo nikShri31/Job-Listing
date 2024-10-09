@@ -56,11 +56,14 @@ module.exports.getAllApplicationsOfUser = async (req, res, next) => {
 module.exports.updateStatus = async (req, res, next) => {
     const { applicationId } = req.params;
     const { status } = req.body;
+
     const application = await Application.findByIdAndUpdate(applicationId, { status }, { new: true });
     const userId = application.applicant;
     const user = await User.findById(userId);
+
     user.notifications.push({ text: `Your application for ${application.job.title} has been ${status}`, type: "Application", applicationId });
     await user.save();
+    
     if (status === "accepted") {
         await JobListing.findByIdAndUpdate(application.job, { $push: { acceptedCandidates: userId }, $pull: { applications: applicationId } });
     } else {

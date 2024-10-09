@@ -20,6 +20,7 @@ export const createApplication = createAsyncThunk(
     //   return rejectWithValue(' first logged in as an employer to create an application.');
     // }
     try {
+      console.log(formData);
         const response = await axios.post('http://localhost:5000/api/job', formData, {
             headers: {
           'Content-Type': 'application/json',

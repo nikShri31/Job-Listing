@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -64,7 +63,6 @@ export default function CreateNewJob() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    organisation: '',
     location: '',
     salary: '',
     experience: '',
@@ -75,7 +73,8 @@ export default function CreateNewJob() {
   const [isEditable, setIsEditable] = useState(false);
   const [fieldError, setFieldError] = useState({});
 
-  
+  //organisation :not from selectedJob but from userData - id
+
   useEffect(() => {
     if (selectedJob) {
       setFormData({
@@ -94,20 +93,17 @@ export default function CreateNewJob() {
       setIsEditable(true); // Enable fields for new job creation
     }
   }, [selectedJob]);
-  
-
 
   // Handle input change dynamically
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
 
-       // Clear errors as user types
-       if (fieldError[name]) {
-        setFieldError((prevErrors) => ({ ...prevErrors, [name]: '' }));
-      }
+    // Clear errors as user types
+    if (fieldError[name]) {
+      setFieldError((prevErrors) => ({ ...prevErrors, [name]: '' }));
+    }
   };
-
 
   // Validation function
   const validateInputs = () => {
@@ -125,17 +121,21 @@ export default function CreateNewJob() {
 
   // Handle form submit
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
+    console.log("Inside handle Submit")
+    // event.preventDefault();
+    console.log("kuch hua kya?")
     if (!validateInputs()) {
+      console.log("error h bkl")
       return;
     }
+    console.log("kuch hua kya k bd")
     if (validateInputs()) {
       try {
+        console.log("Validated Inputs")
         const result = await dispatch(createApplication(formData));
-  
+
         if (createApplication.fulfilled.match(result)) {
-          console.log("Application created successfully:", result.payload);
+          console.log('Application created successfully:', result.payload);
           // Redirect to applications page and fetch applications
           navigate('/org/applications');
         } else if (createApplication.rejected.match(result)) {
@@ -153,10 +153,18 @@ export default function CreateNewJob() {
       <FormContainer>
         <Container sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', px: 3, pt: 3,   border:'2px solid red' }}>
-          <Button onClick={() => setIsEditable((prev) => !prev)}>
-          {isEditable ? '' : 'Edit'}
-        </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              px: 3,
+              pt: 3,
+              border: '2px solid red',
+            }}
+          >
+            <Button onClick={() => setIsEditable((prev) => !prev)}>
+              {isEditable ? '' : 'Edit'}
+            </Button>
           </Box>
           <Typography
             component="h1"
@@ -168,7 +176,7 @@ export default function CreateNewJob() {
               textDecoration: 'underline',
             }}
           >
-          {selectedJob ? 'Edit Job' : 'Create Job'}
+            {selectedJob ? 'Edit Job' : 'Create Job'}
           </Typography>
           <Box
             component="form"
@@ -181,7 +189,7 @@ export default function CreateNewJob() {
               flexDirection: 'column',
               minWidth: '100%',
               gap: 2,
-              border:'2px solid black'
+              border: '2px solid black',
             }}
           >
             {/* Job title */}
@@ -199,7 +207,7 @@ export default function CreateNewJob() {
                   required
                   placeholder="job title"
                   autoFocus
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   sx={{ ml: 1 }}
                 />
               </Box>
@@ -221,13 +229,14 @@ export default function CreateNewJob() {
                   required
                   placeholder="description"
                   autoFocus
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   sx={{ ml: 1 }}
                 />
               </Box>
             </FormControl>
 
-            {/* Company */}
+            {/* Company 
+
             <FormControl>
               <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
                 <FormLabel htmlFor="organisation"> Organisation :</FormLabel>
@@ -255,6 +264,7 @@ export default function CreateNewJob() {
                 />
               </Box>
             </FormControl>
+            */}
 
             {/* location */}
             <FormControl>
@@ -272,7 +282,7 @@ export default function CreateNewJob() {
                   type="text"
                   placeholder="location"
                   autoFocus
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   variant="outlined"
                   sx={{ ml: 1 }}
                 />
@@ -280,7 +290,7 @@ export default function CreateNewJob() {
             </FormControl>
 
             {/**Salary */}
-            <FormControl sx={{ m: 1 }}  error={!!fieldError.experience}>
+            <FormControl sx={{ m: 1 }} error={!!fieldError.experience}>
               <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
                 <FormLabel htmlFor="salary"> Salary :</FormLabel>
                 <OutlinedInput
@@ -293,7 +303,7 @@ export default function CreateNewJob() {
                   required
                   placeholder="salary"
                   autoFocus
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   sx={{ ml: 1 }}
                 />
               </Box>
@@ -316,8 +326,8 @@ export default function CreateNewJob() {
                   value={formData?.experience}
                   onChange={handleChange}
                   required
-                  disabled={!isEditable} 
-                  sx={{ml: 1, }}
+                  disabled={!isEditable}
+                  sx={{ ml: 1 }}
                 >
                   <MenuItem minWidth="100%" value="">
                     {' '}
@@ -343,7 +353,7 @@ export default function CreateNewJob() {
                   value={formData?.education}
                   onChange={handleChange}
                   required
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   sx={{ ml: 1 }}
                 >
                   <MenuItem minWidth="100%" value="">
@@ -365,7 +375,7 @@ export default function CreateNewJob() {
                   row
                   aria-labelledby="employmentType"
                   name="employmentType"
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   onChange={handleChange}
                   sx={{ ml: 1 }}
                 >
@@ -384,7 +394,7 @@ export default function CreateNewJob() {
                   row
                   aria-labelledby="jobType"
                   name="jobType"
-                  disabled={!isEditable} 
+                  disabled={!isEditable}
                   onChange={handleChange}
                   sx={{ ml: 1 }}
                 >
@@ -399,11 +409,14 @@ export default function CreateNewJob() {
 
           {/* Submit Button */}
           <Stack direction={'row'} spacing={3} justifyContent={'flex-end'} my={3} mx={2}>
-            <Button variant="outlined"  onClick={() => navigate('/org/applications')}>
+            <Button variant="outlined" onClick={() => navigate('/org/applications')}>
               cancel
             </Button>
-            <Button type="submit" variant="contained" onClick={()=>navigate('/org/applications')} >
-            {selectedJob ? 'Update Job' : 'Create Job'}
+            <Button type="submit" variant="contained" onClick={() => {
+                handleSubmit()
+                navigate('/org/applications')
+              }}>
+              {selectedJob ? 'Update Job' : 'Create Job'}
             </Button>
           </Stack>
         </Card>

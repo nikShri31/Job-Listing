@@ -21,7 +21,7 @@
 // const jobData = {
 //     "title" : "Tester6",
 //     "description" : "Faltu ka description",
-//     "company" : "Testing Company",
+//     "organisation" : OrganisationID   You dont need to write this one i'm handling this at the backend
 //     "location" : "Delhi",
 //     "salary" : "12",
 //     "requirements" : {
@@ -64,3 +64,15 @@
 // })
 
 // Make sure it is an organisation that is logged in
+
+//Update Status
+// Make Sure Organisation Logged In 
+
+//get applicationId from the application which is clicked on
+//status  is either "Rejected" or "Accepted"
+
+// const data = await axios.patch("http://localhost:5000/api/application/status/:applicationId", status, {
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`
+//     }
+// })

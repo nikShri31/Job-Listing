@@ -8,13 +8,13 @@ const organisationSchema = new Schema({
         required: true,
         unique: true,
     },
-    adminEmail : {
-        type : String,
-        required : true
+    adminEmail: {
+        type: String,
+        required: true
     },
-    role : {
-        type : String,
-        default : "Organisation"
+    role: {
+        type: String,
+        default: "Organisation"
     },
     address: {
         street: String,
@@ -23,23 +23,23 @@ const organisationSchema = new Schema({
         country: String,
         zipCode: String,
     },
-    contactInfo : {
-        phone : {
-            type : Number,
-            required : true
+    contactInfo: {
+        phone: {
+            type: Number,
+            required: true
         },
-        email : {
-            type : String,
-            required : true
+        email: {
+            type: String,
+            required: true
         }
     },
     website: {
         type: String,
-        required : true
+        required: true
     },
     industry: {
         type: String,
-        required : true
+        required: true
     },
     description: String,
     jobs: [{
@@ -50,10 +50,14 @@ const organisationSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    password : {
-        type : String,
-        required : true
+    password: {
+        type: String,
+        required: true
     },
+    profilePic: {
+        type: String,
+        default: "https://res.cloudinary.com/diciztr9v/image/upload/v1728748108/profilePic/uha7cvecojok0njvucfu.webp"
+    }
 });
 
 organisationSchema.pre('save', async function (next) {

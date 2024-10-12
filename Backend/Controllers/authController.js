@@ -101,7 +101,7 @@ module.exports.signup = (async (req, res, next) => {
     user.role = 'employee';
     const createdUser = await user.save();
     const token = generateToken(createdUser);
-    res.status(201).json({ status: 'success', message: 'User Created Successfully', token, userData : createdUser })
+    res.status(201).json({ status: 'success', message: 'User Created Successfully', token, userData: createdUser })
 })
 
 module.exports.orgLogin = async (req, res, next) => {
@@ -112,7 +112,7 @@ module.exports.orgLogin = async (req, res, next) => {
     }
     const token = generateToken(org);
     const orgData = await Organisation.findById(org._id).populate('jobs');
-    res.status(200).json({ status: 'success', token, organisationData : orgData })
+    res.status(200).json({ status: 'success', token, organisationData: orgData })
 }
 
 module.exports.createOrganisation = async (req, res, next) => {
@@ -133,7 +133,7 @@ module.exports.createOrganisation = async (req, res, next) => {
     })
     const org = await newOrganisation.save();
     const token = generateToken(org);
-    res.status(201).json({ status: 'success', message: 'Organisation Created Successfully', token, organisationData : org })
+    res.status(201).json({ status: 'success', message: 'Organisation Created Successfully', token, organisationData: org })
 }
 
 module.exports.changePassword = async (req, res, next) => {
@@ -159,3 +159,9 @@ module.exports.orgChangePassword = async (req, res, next) => {
     await org.save();
     res.status(200).json({ status: 'success', message: 'Password Changed Successfully' })
 }
+
+// module.exports.testUpload = async (req, res, next) => {
+//     if (!req.file) return next(new expressError('Please upload a valid file', 400));
+//     console.log(req.file)
+//     res.send(req.file);
+// }

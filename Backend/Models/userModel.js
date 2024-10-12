@@ -53,7 +53,11 @@ const userSchema = new Schema({
             type: Date,
             default: Date.now
         }
-    }]
+    }],
+    profilePic : {
+        type : String,
+        default : "https://res.cloudinary.com/diciztr9v/image/upload/v1728748108/profilePic/uha7cvecojok0njvucfu.webp"
+    }
 })
 
 userSchema.pre('save', async function (next) {

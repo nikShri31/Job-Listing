@@ -21,7 +21,15 @@ const upload = multer({
     })
 })
 
-module.exports.applicationUpload = () => upload.fields([{ name: 'resume', maxCount: 1 }])
+const bufferUpload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 20 * 1024 * 1024 }, // Limit to 5MB
+});
+
+
+module.exports.applicationUpload = () => upload.fields([{ name: 'resume', maxCount: 1 }]);
+
+module.exports.imageUpload = () => bufferUpload.single('profilePic');
 
 
 module.exports.isLogin = () => {

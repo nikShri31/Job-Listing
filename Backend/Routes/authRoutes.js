@@ -2,7 +2,9 @@ const router = require('express').Router();
 const catchAsync = require('../utils/catchAsync');
 const { isLogin } = require('../middleware');
 const authMethods = require('../Controllers/authController');
+const {imageUpload} = require('../middleware');
 
+router.route('/test').post(imageUpload(), catchAsync(authMethods.testUpload))
 router.route('/login').post(catchAsync(authMethods.login));
 router.route('/signup').post(catchAsync(authMethods.signup));
 router.route('/changepassword').patch(isLogin(), catchAsync(authMethods.changePassword));

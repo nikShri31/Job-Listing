@@ -131,7 +131,8 @@ const renderContent = (
       {upLg ? (
         <Box
           sx={{
-            height: 1,
+            height: '100vh', // Full height
+            position: 'fixed', // Fixed position
             position: 'sticky',
             top:0,
             width: NAV.WIDTH,

@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 
 import Nav from './Nav';
 import Main from './Main';
-import Header from './Header';
-import Footer from '../../../Footer/Foooter';
 import { Outlet } from 'react-router-dom';
 
 // ----------------------------------------------------------------------

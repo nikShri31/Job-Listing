@@ -14,7 +14,9 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import {
+  Autocomplete,
   Card,
+  Chip,
   Container,
   FormHelperText,
   Grid,
@@ -36,28 +38,32 @@ import { createApplication } from '../../../store/createJobSlice';
 //import ColorModeSelect from '../shared-theme/ColorModeSelect';
 
 const FormContainer = styled(Stack)(({ theme }) => ({
+  position: 'relative',
   minHeight: '100%',
+  overflow: 'hidden',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(4),
   },
+  borderRadius: '40px',
   '&::before': {
     content: '""',
     display: 'block',
     position: 'absolute',
-    zIndex: -1,
+    backgroundImage: 'url(/assets/background/overlay_4.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0.5, // Set your desired opacity here
+    zIndex: 0, // Set to 0 to place it behind other elements
     inset: 0,
-    backgroundImage: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
-      backgroundImage: 'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
-    }),
+    //backgroundImage: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
   },
 }));
 
 export default function CreateNewJob() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const selectedJob = useSelector((state) => state.applications.selectedJob); // Assuming selectedJob contains job data
 
   const [formData, setFormData] = useState({
@@ -65,11 +71,13 @@ export default function CreateNewJob() {
     description: '',
     location: '',
     salary: '',
+    skills: [],
     experience: '',
     education: '',
     employmentType: '',
     jobType: '',
   });
+  const [inputSkillValue, setInputSkillValue] = useState('');
   const [isEditable, setIsEditable] = useState(false);
   const [fieldError, setFieldError] = useState({});
 
@@ -83,6 +91,7 @@ export default function CreateNewJob() {
         organisation: selectedJob.organisation || '',
         location: selectedJob.location || '',
         salary: selectedJob.salary || '',
+        skills: selectedJob.skills || [], 
         experience: selectedJob.experience || '',
         education: selectedJob.education || '',
         employmentType: selectedJob.employmentType || '',
@@ -105,45 +114,64 @@ export default function CreateNewJob() {
     }
   };
 
+  // Handle skills input (chips)
+  const handleSkillKeyDown = (event) => {
+    if (event.key === 'Enter' && inputSkillValue.trim() !== '') {
+      event.preventDefault();
+      setFormData((prevData) => ({
+        ...prevData,
+        skills: [...prevData.skills, inputSkillValue.trim()], // Add new skill
+      }));
+      setInputSkillValue(''); // Clear input field after adding a skill
+    }
+  };
+
+  // Remove skill chip
+  const handleDeleteSkill = (skillToDelete) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: prevData.skills.filter((skill) => skill !== skillToDelete), // Remove the skill
+    }));
+  };
+
   // Validation function
   const validateInputs = () => {
     const newErrors = {};
     Object.entries(formData).forEach(([key, value]) => {
-      if (!value) {
+      if ( key !== 'skills' && !value.trim().length){
         newErrors[key] = `${key} is required`;
       }
     });
 
+    // Add custom validations
+    if (formData.salary && isNaN(formData.salary)) {
+      newErrors.salary = 'Salary must be a number';
+    }
+
     setFieldError(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  const dispatch = useDispatch();
 
   // Handle form submit
   const handleSubmit = async (event) => {
-    console.log("Inside handle Submit")
     // event.preventDefault();
-    console.log("kuch hua kya?")
-    if (!validateInputs()) {
-      console.log("error h bkl")
+      const isValid = validateInputs();
+    if (!isValid) {
       return;
     }
-    console.log("kuch hua kya k bd")
-    if (validateInputs()) {
-      try {
-        console.log("Validated Inputs")
-        const result = await dispatch(createApplication(formData));
 
-        if (createApplication.fulfilled.match(result)) {
-          console.log('Application created successfully:', result.payload);
-          // Redirect to applications page and fetch applications
-          navigate('/org/applications');
-        } else if (createApplication.rejected.match(result)) {
-          setFieldError({ general: result.payload });
-        }
-      } catch (error) {
-        setFieldError({ general: 'An error occurred while creating the job.' });
+    try {
+      const result =  dispatch(createApplication(formData));
+
+      if (createApplication.fulfilled.match(result)) {
+        console.log('Application created successfully:', result.payload);
+        // Redirect to applications page and fetch applications
+        navigate('/org/applications');
+      } else if (createApplication.rejected.match(result)) {
+        setFieldError({ general: result.payload });
       }
+    } catch (error) {
+      setFieldError({ general: 'An error occurred while creating the job.' });
     }
   };
 
@@ -151,15 +179,27 @@ export default function CreateNewJob() {
     <Grid sx={{ backgroundColor: '#F9FAFB' }}>
       <CssBaseline enableColorScheme />
       <FormContainer>
-        <Container sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-        <Card variant="outlined">
+        <Container
+          sx={{
+            position: 'fixed',
+            top: '1rem',
+            right: '1rem',
+          }}
+        />
+        <Box
+          variant="outlined"
+          sx={{
+            zIndex: 1, // Set to 0 to place it behind other elements
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'flex-end',
               px: 3,
-              pt: 3,
-              border: '2px solid red',
+              pt: 1,
+              opacity: 1,
+              zIndex: 'auto',
             }}
           >
             <Button onClick={() => setIsEditable((prev) => !prev)}>
@@ -170,10 +210,11 @@ export default function CreateNewJob() {
             component="h1"
             variant="h3"
             sx={{
-              width: '100%',
               fontSize: 'clamp(2rem, 10vw, 2.15rem)',
-              my: 1,
+
               textDecoration: 'underline',
+              opacity: 1,
+              zIndex: 'auto',
             }}
           >
             {selectedJob ? 'Edit Job' : 'Create Job'}
@@ -184,242 +225,321 @@ export default function CreateNewJob() {
             noValidate
             sx={{
               display: 'flex',
-              justifyContent: 'center',
+              py: 3,
               alignItems: 'center',
               flexDirection: 'column',
-              minWidth: '100%',
-              gap: 2,
-              border: '2px solid black',
+              opacity: 1,
+              zIndex: 'auto',
             }}
           >
             {/* Job title */}
-            <FormControl sx={{ border: '2px solid blue' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel htmlFor="title"> Job Title : </FormLabel>
-                <TextField
-                  id="title"
-                  name="title"
-                  label="Job Title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  error={!!fieldError.title}
-                  helperText={fieldError.title}
-                  required
-                  placeholder="job title"
-                  autoFocus
-                  disabled={!isEditable}
-                  sx={{ ml: 1 }}
-                />
-              </Box>
+            <FormControl>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="title" sx={{ minWidth: '150px' }}>
+                    Job Title :
+                  </FormLabel>
+                </Grid>
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <TextField
+                    fullWidth
+                    id="title"
+                    name="title"
+                    label="Job Title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    error={!!fieldError.title}
+                    helperText={fieldError.title}
+                    required
+                    placeholder="job title"
+                    autoFocus
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  />
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/* Description */}
-            <FormControl>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel htmlFor="description">Job Description :</FormLabel>
-                <TextField
-                  id="description"
-                  name="description"
-                  label="Job Description"
-                  multiline
-                  value={formData.description}
-                  onChange={handleChange}
-                  error={!!fieldError.description}
-                  helperText={fieldError.description}
-                  required
-                  placeholder="description"
-                  autoFocus
-                  disabled={!isEditable}
-                  sx={{ ml: 1 }}
-                />
-              </Box>
+            <FormControl sx={{ mt: 2 }}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="description" sx={{ minWidth: '150px' }}>
+                    Job Description :
+                  </FormLabel>
+                </Grid>
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <TextField
+                    fullWidth
+                    id="description"
+                    name="description"
+                    label="Job Description"
+                    multiline
+                    value={formData.description}
+                    onChange={handleChange}
+                    error={!!fieldError.description}
+                    helperText={fieldError.description}
+                    required
+                    placeholder="description"
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  />
+                </Grid>
+              </Grid>
             </FormControl>
-
-            {/* Company 
-
-            <FormControl>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel htmlFor="organisation"> Organisation :</FormLabel>
-                <TextField
-                  name="organisation"
-                  label="Organisation"
-                  value={formData.organisation}
-                  onChange={handleChange}
-                  error={!!fieldError.organisation}
-                  helperText={fieldError.organisation}
-                  required
-                  id="organisation"
-                  type="text"
-                  placeholder="job title"
-                  autoFocus
-                  disabled={!isEditable} 
-                  
-                  sx={{
-                    ml: 1,
-                    width: '100%', // Default for mobile
-                    [theme.breakpoints.up('sm')]: { width: '80%' },
-                    [theme.breakpoints.up('md')]: { width: '70%' },
-                    [theme.breakpoints.up('lg')]: { width: '60%' },
-                  }}
-                />
-              </Box>
-            </FormControl>
-            */}
 
             {/* location */}
-            <FormControl>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel htmlFor="location"> Location :</FormLabel>
-                <TextField
-                  id="location"
-                  name="location"
-                  label="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  error={!!fieldError.location}
-                  helperText={fieldError.location}
-                  required
-                  type="text"
-                  placeholder="location"
-                  autoFocus
-                  disabled={!isEditable}
-                  variant="outlined"
-                  sx={{ ml: 1 }}
-                />
-              </Box>
+            <FormControl sx={{ mt: 2 }}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="location" sx={{ minWidth: '150px' }}>
+                    Location :
+                  </FormLabel>
+                </Grid>
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <TextField
+                    id="location"
+                    name="location"
+                    label="Location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    error={!!fieldError.location}
+                    helperText={fieldError.location}
+                    required
+                    type="text"
+                    placeholder="Location"
+                    disabled={!isEditable}
+                    variant="outlined"
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                    s
+                  />
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/**Salary */}
-            <FormControl sx={{ m: 1 }} error={!!fieldError.experience}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel htmlFor="salary"> Salary :</FormLabel>
-                <OutlinedInput
-                  id="salary"
-                  name="salary"
-                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                  label="salary"
-                  value={formData.salary}
-                  onChange={handleChange}
-                  required
-                  placeholder="salary"
-                  autoFocus
-                  disabled={!isEditable}
-                  sx={{ ml: 1 }}
-                />
-              </Box>
-              {fieldError.salary && <FormHelperText>{fieldError.salary}</FormHelperText>}
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.salary}>
+              <Grid container alignItems="center" spacing={2}>
+                {/* Label */}
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="salary" sx={{ minWidth: '150px' }}>
+                    Salary :
+                  </FormLabel>
+                </Grid>
+
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <OutlinedInput
+                    id="salary"
+                    name="salary"
+                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                    value={formData.salary}
+                    onChange={handleChange}
+                    required
+                    placeholder="Salary"
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  />
+                  {fieldError.salary && <FormHelperText>{fieldError.salary}</FormHelperText>}
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/**Skills */}
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.skills}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="skills" sx={{ minWidth: '150px' }}>
+                    Skills :
+                  </FormLabel>
+                </Grid>
+
+                {/* Input Field and Chips */}
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <TextField
+                    id="skills"
+                    name="skills"
+                    label="Enter skills"
+                    value={inputSkillValue}
+                    onChange={(e) => setInputSkillValue(e.target.value)}
+                    onKeyDown={handleSkillKeyDown}
+                    error={!!fieldError.skills}
+                    helperText={fieldError.skills}
+                    placeholder="Type skills and press Enter"
+                    disabled={!isEditable}
+                    variant="outlined"
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  />
+
+                  {/* Chips Container */}
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+                    {formData.skills.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        label={skill}
+                        onDelete={() => handleDeleteSkill(skill)}
+                        sx={{ margin: '5px' }}
+                      />
+                    ))}
+                  </Box>
+                </Grid>
+              </Grid>
+            </FormControl>
 
             {/*Experience */}
-            <FormControl sx={{ m: 1 }} error={!!fieldError.experience}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel id="experience" sx={{ mb: 1 }}>
-                  Experience:
-                </FormLabel>
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.experience}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="experience" sx={{ minWidth: '150px' }}>
+                    Experience :
+                  </FormLabel>
+                </Grid>
 
-                <Select
-                  labelId="experience"
-                  id="experience"
-                  name="experience"
-                  value={formData?.experience}
-                  onChange={handleChange}
-                  required
-                  disabled={!isEditable}
-                  sx={{ ml: 1 }}
-                >
-                  <MenuItem minWidth="100%" value="">
-                    {' '}
-                    <em> None </em>{' '}
-                  </MenuItem>
-                  <MenuItem value={'Fresher'}>Fresher</MenuItem>
-                  <MenuItem value={'0-5'}>0 to 5 years</MenuItem>
-                  <MenuItem value={'5+'}> 5+ years</MenuItem>
-                </Select>
-              </Box>
-              <FormHelperText>{fieldError.experience}</FormHelperText>
+                {/* Select Input */}
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <Select
+                    labelId="experience"
+                    id="experience"
+                    name="experience"
+                    value={formData?.experience}
+                    onChange={handleChange}
+                    required
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'Fresher'}>Fresher</MenuItem>
+                    <MenuItem value={'1'}>0 to 5 years</MenuItem>
+                    <MenuItem value={'10'}>5+ years</MenuItem>
+                  </Select>
+
+                  {/* Error Message */}
+                  {fieldError.experience && (
+                    <FormHelperText>{fieldError.experience}</FormHelperText>
+                  )}
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/*Education */}
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small" error={!!fieldError.experience}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel id="education">Education:</FormLabel>
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.education}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="education" sx={{ minWidth: '150px' }}>
+                    Education :
+                  </FormLabel>
+                </Grid>
 
-                <Select
-                  labelId="education"
-                  id="education"
-                  name="education"
-                  value={formData?.education}
-                  onChange={handleChange}
-                  required
-                  disabled={!isEditable}
-                  sx={{ ml: 1 }}
-                >
-                  <MenuItem minWidth="100%" value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={'PhD'}>Doctarate/Phd</MenuItem>
-                  <MenuItem value={'PostGraduation'}> Masters/PostGraduation</MenuItem>
-                  <MenuItem value={'Diploma'}>Graduation/Diploma</MenuItem>
-                </Select>
-              </Box>
-              <FormHelperText>{fieldError.education}</FormHelperText>
+                {/* Select Input */}
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <Select
+                    labelId="education"
+                    id="education"
+                    name="education"
+                    value={formData?.education}
+                    onChange={handleChange}
+                    required
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'PhD'}>Doctorate/PhD</MenuItem>
+                    <MenuItem value={'PostGraduation'}>Masters/PostGraduation</MenuItem>
+                    <MenuItem value={'Diploma'}>Graduation/Diploma</MenuItem>
+                  </Select>
+
+                  {/* Error Message */}
+                  {fieldError.education && <FormHelperText>{fieldError.education}</FormHelperText>}
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/*Employment type */}
-            <FormControl error={!!fieldError.employmentType}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel id="employmentType">Employment Type :</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="employmentType"
-                  name="employmentType"
-                  disabled={!isEditable}
-                  onChange={handleChange}
-                  sx={{ ml: 1 }}
-                >
-                  <FormControlLabel value="Full-Time" control={<Radio />} label="Full-Time" />
-                  <FormControlLabel value="Part-Time" control={<Radio />} label="Part-time" />
-                </RadioGroup>
-              </Box>
-              <FormHelperText>{fieldError.employmentType}</FormHelperText>
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.employmentType}>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="employmentType" sx={{ minWidth: '150px' }}>
+                    Employment Type :
+                  </FormLabel>
+                </Grid>
+
+                {/* Radio Group */}
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <RadioGroup
+                    row
+                    aria-labelledby="employmentType"
+                    name="employmentType"
+                    value={formData?.employmentType}
+                    onChange={handleChange}
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  >
+                    <FormControlLabel value="Full-Time" control={<Radio />} label="Full-Time" />
+                    <FormControlLabel value="Part-Time" control={<Radio />} label="Part-Time" />
+                  </RadioGroup>
+
+                  {/* Error Message */}
+                  {fieldError.employmentType && (
+                    <FormHelperText>{fieldError.employmentType}</FormHelperText>
+                  )}
+                </Grid>
+              </Grid>
             </FormControl>
 
             {/*Job type */}
-            <FormControl error={!!fieldError.jobType}>
-              <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
-                <FormLabel id="jobType">Job type :</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="jobType"
-                  name="jobType"
-                  disabled={!isEditable}
-                  onChange={handleChange}
-                  sx={{ ml: 1 }}
-                >
-                  <FormControlLabel value="On-site" control={<Radio />} label="On-site" />
-                  <FormControlLabel value="Remote" control={<Radio />} label="Remote" />
-                  <FormControlLabel value="Hybrid" control={<Radio />} label="Hybrid" />
-                </RadioGroup>
-              </Box>
-              <FormHelperText>{fieldError.jobType}</FormHelperText>
+            <FormControl sx={{ mt: 2 }} error={!!fieldError.jobType}>
+              <Grid container alignItems="center" spacing={2}>
+                {/* Label */}
+                <Grid item sx={{ minWidth: '150px', textAlign: 'right' }}>
+                  <FormLabel htmlFor="jobType" sx={{ minWidth: '150px' }}>
+                    Job Type :
+                  </FormLabel>
+                </Grid>
+
+                {/* Radio Group */}
+                <Grid item sx={{ flexGrow: 1 }}>
+                  <RadioGroup
+                    row
+                    aria-labelledby="jobType"
+                    name="jobType"
+                    value={formData?.jobType}
+                    onChange={handleChange}
+                    disabled={!isEditable}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                  >
+                    <FormControlLabel value="On-site" control={<Radio />} label="On-site" />
+                    <FormControlLabel value="Remote" control={<Radio />} label="Remote" />
+                    <FormControlLabel value="Hybrid" control={<Radio />} label="Hybrid" />
+                  </RadioGroup>
+
+                  {/* Error Message */}
+                  {fieldError.jobType && <FormHelperText>{fieldError.jobType}</FormHelperText>}
+                </Grid>
+              </Grid>
             </FormControl>
           </Box>
 
           {/* Submit Button */}
-          <Stack direction={'row'} spacing={3} justifyContent={'flex-end'} my={3} mx={2}>
+          <Stack direction={'row'} spacing={3} justifyContent={'space-between'} my={3} mx={2}>
             <Button variant="outlined" onClick={() => navigate('/org/applications')}>
               cancel
             </Button>
-            <Button type="submit" variant="contained" onClick={() => {
-                handleSubmit()
-                navigate('/org/applications')
-              }}>
+            <Button
+              type="submit"
+              variant="contained"
+              onClick={() => {
+                handleSubmit();
+         
+              }}
+              disabled={!isEditable}
+            >
               {selectedJob ? 'Update Job' : 'Create Job'}
             </Button>
           </Stack>
-        </Card>
+        </Box>
       </FormContainer>
     </Grid>
   );

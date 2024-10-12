@@ -133,7 +133,7 @@ const renderContent = (
           sx={{
             height: '100vh', // Full height
             position: 'fixed', // Fixed position
-            position: 'sticky',
+            // position: 'sticky',
             top:0,
             width: NAV.WIDTH,
             borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,

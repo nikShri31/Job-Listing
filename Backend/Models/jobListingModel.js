@@ -59,7 +59,7 @@ const jobListingSchema = new Schema({
     acceptedCandidates : [{
         type : Schema.Types.ObjectId,
         ref : 'User'
-    }]
+    }]  
 })
 
 const JobListing = mongoose.model('JobListing', jobListingSchema)

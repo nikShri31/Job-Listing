@@ -14,6 +14,7 @@ import { ColorPreview } from '../../components/color-utils';
 import { useDispatch, useSelector } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 import { setSelectedJob } from '../../../store/createJobSlice';
+import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -78,7 +79,8 @@ export default function ApplicationsCard({application}) {
   // );
 
   return (
-    <Card onClick={handleApplicants} sx={{ cursor: 'pointer' }}>
+    // <Card onClick={handleApplicants} sx={{ cursor: 'pointer' }}>
+    <Card sx={{ cursor: 'pointer' }}>
     <Box sx={{ pt: '100%', position: 'relative' }}>
       <Typography> {application?.title || 'No Title'}</Typography>
       <Typography> {application?.organisation || 'No Org'}</Typography>

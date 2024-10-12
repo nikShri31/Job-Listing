@@ -91,7 +91,7 @@ export default function CreateNewJob() {
         organisation: selectedJob.organisation || '',
         location: selectedJob.location || '',
         salary: selectedJob.salary || '',
-        skills: selectedJob.skills || [], 
+        skills: selectedJob.skills || [],
         experience: selectedJob.experience || '',
         education: selectedJob.education || '',
         employmentType: selectedJob.employmentType || '',
@@ -137,15 +137,17 @@ export default function CreateNewJob() {
   // Validation function
   const validateInputs = () => {
     const newErrors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if ( key !== 'skills' && !value.trim().length){
-        newErrors[key] = `${key} is required`;
-      }
-    });
-
     // Add custom validations
     if (formData.salary && isNaN(formData.salary)) {
       newErrors.salary = 'Salary must be a number';
+    } else if (formData.experience && isNaN(formData.experience)) {
+      newErrors.salary = 'Salary must be a number';
+    } else {
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'skills' && !value.toString().trim().length) {
+          newErrors[key] = `${key} is required`;
+        }
+      });
     }
 
     setFieldError(newErrors);
@@ -155,17 +157,16 @@ export default function CreateNewJob() {
   // Handle form submit
   const handleSubmit = async (event) => {
     // event.preventDefault();
-      const isValid = validateInputs();
+    const isValid = validateInputs();
     if (!isValid) {
       return;
     }
 
     try {
-      const result =  dispatch(createApplication(formData));
+      const result = dispatch(createApplication(formData));
 
       if (createApplication.fulfilled.match(result)) {
         console.log('Application created successfully:', result.payload);
-        // Redirect to applications page and fetch applications
         navigate('/org/applications');
       } else if (createApplication.rejected.match(result)) {
         setFieldError({ general: result.payload });
@@ -396,7 +397,22 @@ export default function CreateNewJob() {
 
                 {/* Select Input */}
                 <Grid item sx={{ flexGrow: 1 }}>
-                  <Select
+                  <FormControl sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}>
+                    <TextField
+                      id="experience"
+                      placeholder="Experience in Years"
+                      // label="Experience in Years"
+                      type="number"
+                      value={formData?.experience}
+                      name="experience"
+                      onChange={handleChange}
+                      disabled={!isEditable}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </FormControl>
+                  {/* <Select
                     labelId="experience"
                     id="experience"
                     name="experience"
@@ -412,7 +428,7 @@ export default function CreateNewJob() {
                     <MenuItem value={'Fresher'}>Fresher</MenuItem>
                     <MenuItem value={'1'}>0 to 5 years</MenuItem>
                     <MenuItem value={'10'}>5+ years</MenuItem>
-                  </Select>
+                  </Select> */}
 
                   {/* Error Message */}
                   {fieldError.experience && (
@@ -532,7 +548,6 @@ export default function CreateNewJob() {
               variant="contained"
               onClick={() => {
                 handleSubmit();
-         
               }}
               disabled={!isEditable}
             >

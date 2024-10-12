@@ -20,6 +20,11 @@ export const createApplication = createAsyncThunk(
     //   return rejectWithValue(' first logged in as an employer to create an application.');
     // }
     try {
+      formData.requirements = {
+        skills : formData.skills,
+        experience : formData.experience,
+        education : formData.education
+      }
       console.log(formData);
         const response = await axios.post('http://localhost:5000/api/job', formData, {
             headers: {

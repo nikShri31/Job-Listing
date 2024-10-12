@@ -16,8 +16,6 @@ export default function DashboardLayout({ children }) {
 
   return (
     <>
-     
-
       <Box
         sx={{
           minHeight: 1,
@@ -26,14 +24,12 @@ export default function DashboardLayout({ children }) {
         }}
       >
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
-
         <Main>
-        <Box sx={{mt:{lg:-6}}}>
-        <Outlet/>
-        </Box>
+          <Box sx={{ mt: { lg: -6 } }}>
+            <Outlet />
+          </Box>
         </Main>
       </Box>
-     
     </>
   );
 }
@@ -41,6 +37,5 @@ export default function DashboardLayout({ children }) {
 DashboardLayout.propTypes = {
   children: PropTypes.node,
 };
-
 
 // <Header onOpenNav={() => setOpenNav(true)} />

@@ -57,12 +57,12 @@ const router = createBrowserRouter(
       <Route path="profile" element={<ProfilePage />} />
       <Route path="org" element={<DashboardLayout />}>
         <Route index element={<AppPage />} />
-        <Route path='user' element={<UserPage />} />
-        <Route path='applications' element={<ProductsPage />} />
-        <Route path='create-job-form' element={<CreateNewJob />} />
+        <Route path="user" element={<UserPage />} />
+        <Route path="applications" element={<ProductsPage />} />
+        <Route path="create-job-form" element={<CreateNewJob />} />
       </Route>
-     <Route path='404' element={<NotFoundPage/>}  />
-     <Route path="*" element={<NotFoundPage />} /> 
+      <Route path="404" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
 );
@@ -71,9 +71,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
       <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider router={router} />
-      </PersistGate>
+        <PersistGate loading={null} persistor={persistor}>
+          <RouterProvider router={router} />
+        </PersistGate>
       </Provider>
     </HelmetProvider>
   </React.StrictMode>

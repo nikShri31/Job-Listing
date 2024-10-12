@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 
 import Nav from './Nav';
 import Main from './Main';
-import Header from './Header';
-import Footer from '../../../Footer/Foooter';
 import { Outlet } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
@@ -25,9 +23,14 @@ export default function DashboardLayout({ children }) {
           flexDirection: { xs: 'column', lg: 'row' },
         }}
       >
-        <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
+        <Nav 
+        openNav={openNav} 
+        onCloseNav={() => setOpenNav(false)}
+        />
 
-        <Main>
+        <Main
+     
+        >
         <Box sx={{mt:{lg:-6}}}>
         <Outlet/>
         </Box>
@@ -43,4 +46,3 @@ DashboardLayout.propTypes = {
 };
 
 
-// <Header onOpenNav={() => setOpenNav(true)} />

@@ -3,7 +3,7 @@ import './App.css';
 
 import './global.css';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Header_2 from './Header/Header_2';
 import Footer from './Footer/Foooter';
 //import { Box, CircularProgress, Container, Typography } from '@mui/material';
@@ -18,6 +18,7 @@ import Header from './Org_Dashboard/layouts/dashboard/Header';
 
 function App() {
   useScrollToTop();
+  const [onOpenNav, setOpenNav] = useState(false); 
 
   //const role = useSelector((state) => state.auth.role);
 

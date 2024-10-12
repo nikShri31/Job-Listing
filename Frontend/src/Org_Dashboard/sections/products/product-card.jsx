@@ -5,6 +5,7 @@ import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { fCurrency } from '../../../utils/format-number';
 
@@ -24,7 +25,8 @@ export default function ApplicationsCard({application}) {
 
   const handleViewDetails = () => {
     dispatch(setSelectedJob(application)); // Save the application data in Redux
-    navigate('/org/create-job-form'); // Redirect to Create Job form
+    //navigate(`/org/create-job-form/${application?.id}`);
+    navigate(`/org/create-job-form`);
   };
 
   // const renderStatus = (
@@ -76,7 +78,7 @@ export default function ApplicationsCard({application}) {
   // );
 
   return (
-    <Card>
+    <Card onClick={handleApplicants} sx={{ cursor: 'pointer' }}>
     <Box sx={{ pt: '100%', position: 'relative' }}>
       <Typography> {application?.title || 'No Title'}</Typography>
       <Typography> {application?.organisation || 'No Org'}</Typography>
@@ -84,7 +86,12 @@ export default function ApplicationsCard({application}) {
       <Typography> {application?.salary || 'No salary'}</Typography>
     </Box>
     <Stack direction={'row'}>
-      <Button onClick={handleViewDetails}>View Details</Button>
+       <Button onClick={(e) => { 
+          e.stopPropagation(); 
+          handleViewDetails(); 
+        }}> 
+      View Details
+      </Button>
       <DeleteIcon />
     </Stack>
   </Card>

@@ -22,11 +22,11 @@ import { authError, authLoading, logout } from '../store/authSlice';
 import { useResponsive, useWidth } from '../hooks/use-responsive';
 
 const useNoOutlineStyles = () => ({
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "none", // Removes TextField outline
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none', // Removes TextField outline
   },
-  "&:focus": {
-    outline: "none", // Removes outline on focus for buttons
+  '&:focus': {
+    outline: 'none', // Removes outline on focus for buttons
   },
 });
 
@@ -34,8 +34,8 @@ const pages = ['Home', 'My Jobs', ''];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const headingStyles = {
   my: 2,
-  mx:1,
-   fontSize: "1.1rem",
+  mx: 1,
+  fontSize: '1.1rem',
   textDecoration: 'none',
   display: 'block',
   transition: 'box-shadow 0.3s ease-in-out',
@@ -51,14 +51,13 @@ const headingStyles = {
 function Header_2() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const { isAuthenticated, role, user } = useSelector((state) => state.auth);
   const isLoading = useSelector(authLoading);
   const error = useSelector(authError);
-  
 
   //console.log('Auth State:', { isAuthenticated, role, user });
 
@@ -67,11 +66,8 @@ function Header_2() {
   const isLargeScreen = useResponsive('up', 'md'); // Large screens
   const currentWidth = useWidth(); // Get the current width of the screen
 
-
   const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
 
-
- 
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
@@ -91,9 +87,9 @@ function Header_2() {
         position="sticky"
         sx={{
           boxShadow: 0,
-          bgcolor:'white',
+          bgcolor: 'white',
           pt: currentWidth < 400 ? 0.5 : 1,
-          width: isMobile ? '100%':'100%'
+          width: isMobile ? '100%' : '100%',
         }}
       >
         <Container maxWidth="xl">
@@ -104,7 +100,7 @@ function Header_2() {
               alignItems: 'center',
               justifyContent: 'space-between',
               flexShrink: 0,
-              borderRadius:'99px',
+              borderRadius: '99px',
               bgcolor: '#E3F0FE',
               backdropFilter: 'blur(30px)',
               maxHeight: 40,
@@ -135,58 +131,73 @@ function Header_2() {
               </Typography>
             </Box>
 
-           {/* Drawer for Small Screens */}
-           {isMobile && (
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton size="large" aria-label="menu" onClick={toggleDrawer} color="inherit">
-                <MenuIcon />
-              </IconButton>
-              <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
-                <List sx={{ width: 250 }}>
-                  <ListItem button onClick={() => { navigate('/jobs'); toggleDrawer(); }}>
-                    <ListItemText primary="Jobs" />
-                  </ListItem>
-                  <ListItem button onClick={() => { navigate('/dashboard'); toggleDrawer(); }}>
-                    <ListItemText primary="My Jobs" />
-                  </ListItem>
-                </List>
-              </Drawer>
-            </Box>
-          )}
+            {/* Drawer for Small Screens */}
+            {isMobile && (
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton size="large" aria-label="menu" onClick={toggleDrawer} color="inherit">
+                  <MenuIcon />
+                </IconButton>
+                <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
+                  <List sx={{ width: 250 }}>
+                    <ListItem
+                      button
+                      onClick={() => {
+                        navigate('/jobs');
+                        toggleDrawer();
+                      }}
+                    >
+                      <ListItemText primary="Jobs" />
+                    </ListItem>
+                    <ListItem
+                      button
+                      onClick={() => {
+                        navigate('/dashboard');
+                        toggleDrawer();
+                      }}
+                    >
+                      <ListItemText primary="My Jobs" />
+                    </ListItem>
+                  </List>
+                </Drawer>
+              </Box>
+            )}
 
-          {/* Main Logo for Small Screens */}
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 'bold',
-              letterSpacing: '.3rem',
-              textDecoration: 'none',
-              color: 'black',
-            }}
-          >
-            JOBS
-          </Typography>
+            {/* Main Logo for Small Screens */}
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                letterSpacing: '.3rem',
+                textDecoration: 'none',
+                color: 'black',
+              }}
+            >
+              JOBS
+            </Typography>
 
-           {/* Buttons and User Menu for Large Screens */}
-           {isLargeScreen && (
-            <Box sx={{ flexGrow: 1, display: 'flex',px:1 }}>
-              <Button sx={headingStyles} onClick={() => navigate('/jobs')}>Home</Button>
-              <Button sx={headingStyles} onClick={() => navigate('/dashboard')}>My Jobs</Button>
-              <Button sx={headingStyles} onClick={() => navigate('/org')}>OrgHome</Button>
-            
-            </Box>
-          )}
+            {/* Buttons and User Menu for Large Screens */}
+            {isLargeScreen && (
+              <Box sx={{ flexGrow: 1, display: 'flex', px: 1 }}>
+                <Button sx={headingStyles} onClick={() => navigate('/jobs')}>
+                  Home
+                </Button>
+                <Button sx={headingStyles} onClick={() => navigate('/dashboard')}>
+                  My Jobs
+                </Button>
+                <Button sx={headingStyles} onClick={() => navigate('/org')}>
+                  OrgHome
+                </Button>
+              </Box>
+            )}
 
-        
-            {/* Authentication Controls */}
             {!isAuthenticated ? (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <LoginBtn role="employee" variant="outlined" bgColor="primary" />
@@ -200,7 +211,10 @@ function Header_2() {
                       <NotificationMenu />
                     </MenuItem>
                     <Tooltip title="Open settings">
-                      <IconButton onClick={handleOpenUserMenu} sx={[useNoOutlineStyles(),{ p: 0 }]}>
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={[useNoOutlineStyles(), { p: 0 }]}
+                      >
                         <Avatar alt={user?.name} src={user?.avatar} />
                       </IconButton>
                     </Tooltip>
@@ -212,10 +226,20 @@ function Header_2() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <MenuItem onClick={() => {navigate('/profile'); handleCloseUserMenu();}}>
+                      <MenuItem
+                        onClick={() => {
+                          navigate('/profile');
+                          handleCloseUserMenu();
+                        }}
+                      >
                         <Typography textAlign="center">Profile</Typography>
                       </MenuItem>
-                      <MenuItem onClick={() => {navigate('/dashboard'); handleCloseUserMenu();}}>
+                      <MenuItem
+                        onClick={() => {
+                          navigate('/dashboard');
+                          handleCloseUserMenu();
+                        }}
+                      >
                         <Typography textAlign="center">My Jobs</Typography>
                       </MenuItem>
                       <MenuItem onClick={handleLogout}>
@@ -226,7 +250,6 @@ function Header_2() {
                 </Box>
               </React.Fragment>
             )}
-            
           </Toolbar>
         </Container>
       </AppBar>
@@ -234,9 +257,6 @@ function Header_2() {
   );
 }
 export default Header_2;
-
-
-
 
 // <Box>
 //    <AppBar
@@ -411,16 +431,7 @@ export default Header_2;
 //         </React.Fragment>
 //       )}
 
-      
 //     </Toolbar>
 //   </Container>
 // </AppBar>
 // </Box>
-
-
-
-
-
-
-
-

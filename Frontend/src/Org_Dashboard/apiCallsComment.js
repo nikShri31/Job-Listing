@@ -76,3 +76,11 @@
 //         Authorization: `Bearer ${localStorage.getItem('token')}`
 //     }
 // })
+
+//get all applications for a particular organisation
+//organisation needs login
+// const data = await axios.get("http://localhost:5000/api/organisation/applications", {
+//     headers : {
+//         Authorization : `Bearer ${localStorage.getItem('token')}`
+//     }
+// })

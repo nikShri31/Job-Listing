@@ -1,4 +1,5 @@
 const Organisation = require('../Models/organisationModel')
+const Application  = require('../Models/applicationModel')
 const expressError = require('../utils/expressError');
 const {uploadToCloudinary} = require('../utils/utilityFunctions');
 
@@ -45,4 +46,10 @@ module.exports.uploadProfilePic = async (req, res, next) => {
     const updatedOrganisation = await org.save();
 
     res.status(200).json({ status: 'success', organisationData: updatedOrganisation });
+}
+
+module.exports.getAllApplications = async(req, res, next) => {
+    const { organisationId } = req.user.id;
+    const applications = await Application.find({ organisation: organisationId }).populate('job applicant');
+    res.status(200).json({ applications });
 }

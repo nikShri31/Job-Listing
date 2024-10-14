@@ -85,7 +85,6 @@ const appliedJobsSlice = createSlice({
       .addCase(applyJob.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.error('Error applying for job:', action.payload);
       })
 
       // Fetching applied jobs after login

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { logout } from './authSlice';
 
 
 const initialState={
@@ -25,7 +26,7 @@ export const createApplication = createAsyncThunk(
         experience : formData.experience,
         education : formData.education
       }
-      console.log(formData);
+      console.log("Form Data :",formData);
         const response = await axios.post('http://localhost:5000/api/job', formData, {
             headers: {
           'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ export const fetchApplications = createAsyncThunk(
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         });
-  
+        
         return response.data; // Assuming API returns the list of applications
       } catch (error) {
         return rejectWithValue(error.response?.data?.message || error.message);
@@ -92,11 +93,18 @@ const newJobsSlice = createSlice({
         .addCase(fetchApplications.fulfilled, (state, action) => {
           state.isLoading = false;
           state.applications = action.payload;
+          console.log("Fetch Applications :", state.applications)
         })
         .addCase(fetchApplications.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.payload;
-        });
+        })
+        .addCase(logout, (state) => {
+          state.applications = [];
+          state.selectedJob = null;
+          state.isLoading = false;
+          state.error = null;
+        })
     },
   });
 

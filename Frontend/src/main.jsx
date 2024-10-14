@@ -57,7 +57,7 @@ const router = createBrowserRouter(
       <Route path="profile" element={<ProfilePage />} />
       <Route path="org" element={<DashboardLayout />}>
         <Route index element={<AppPage />} />
-        <Route path="user" element={<UserPage />} />
+        <Route path="applicants" element={<UserPage />} />
         <Route path="applications" element={<ProductsPage />} />
         <Route path="create-job-form" element={<CreateNewJob />} />
       </Route>

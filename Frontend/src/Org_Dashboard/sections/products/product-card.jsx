@@ -16,17 +16,21 @@ import {  useNavigate } from 'react-router-dom';
 import { setSelectedJob } from '../../../store/createJobSlice';
 import { Button } from '@mui/material';
 
+import PlaceIcon from '@mui/icons-material/Place';
+import BusinessIcon from '@mui/icons-material/Business';
+import { fDate } from '../../../utils/format-time';
+
 // ----------------------------------------------------------------------
 
 export default function ApplicationsCard({application}) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+ console.log("Card Application Data :", application);
 
   const handleViewDetails = () => {
     dispatch(setSelectedJob(application)); // Save the application data in Redux
-    //navigate(`/org/create-job-form/${application?.id}`);
+
     navigate(`/org/create-job-form`);
   };
 
@@ -80,21 +84,32 @@ export default function ApplicationsCard({application}) {
 
   return (
     // <Card onClick={handleApplicants} sx={{ cursor: 'pointer' }}>
-    <Card sx={{ cursor: 'pointer' }}>
-    <Box sx={{ pt: '100%', position: 'relative' }}>
-      <Typography> {application?.title || 'No Title'}</Typography>
-      <Typography> {application?.organisation || 'No Org'}</Typography>
-      <Typography> {application?.location || 'No location'}</Typography>
-      <Typography> {application?.salary || 'No salary'}</Typography>
+    <Card sx={{ cursor: 'pointer' }} elevation={6} onClick={()=> navigate('/org/applicants')} >
+    <Box sx={{ p:2  }}>
+      <Typography variant='h5' sx={{fontWeight:'bold'}}> {application?.job?.title || 'No Title'}</Typography>
+      <Stack direction={'row'} justifyContent={'space-between'}  sx={{mt:1}}>
+      <Stack direction={'row'} spacing={1}><PlaceIcon/>  <Typography variant='body1'> {application?.job?.location || 'No location'}</Typography></Stack>
+       </Stack>
+      <Stack direction={'row'} justifyContent={'space-between'} sx={{mt:1}}>
+      <Stack direction={'row'} spacing={1}> <Typography variant='body2'> {application?.job?.employmentType || 'No EmpType'}</Typography></Stack>
+      <Stack direction={'row'} spacing={1}>  <Typography variant='body2'> {application?.job?.jobType || 'No JobType'}</Typography></Stack>
+       </Stack>
+       <Stack sx={{mt:1}}>
+       <Typography textAlign={'left'}> Salary : {fCurrency(application.job?.salary) || 'No salary'}</Typography>
+       </Stack>
+       <Stack sx={{mt:1}}>
+       <Typography textAlign={'left'}> Posted on : {fDate(application?.job?.postedDate) || 'No Posted Date'}</Typography>
+       </Stack>
     </Box>
-    <Stack direction={'row'}>
-       <Button onClick={(e) => { 
-          e.stopPropagation(); 
+    <Stack direction={'row'} sx={{p:1}} justifyContent={'space-between'}>
+       <Button 
+       variant='outlined'
+       onClick={(e) => { 
           handleViewDetails(); 
         }}> 
       View Details
       </Button>
-      <DeleteIcon />
+      <DeleteIcon color='error' />
     </Stack>
   </Card>
   );

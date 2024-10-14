@@ -64,7 +64,8 @@ export default function CreateNewJob() {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const selectedJob = useSelector((state) => state.applications.selectedJob); // Assuming selectedJob contains job data
+  const selectedJob = useSelector((state) => state.applications.selectedJob); 
+  console.log(selectedJob);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -78,30 +79,30 @@ export default function CreateNewJob() {
     jobType: '',
   });
   const [inputSkillValue, setInputSkillValue] = useState('');
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   const [fieldError, setFieldError] = useState({});
 
   //organisation :not from selectedJob but from userData - id
-
   useEffect(() => {
-    if (selectedJob) {
+    if (selectedJob && isEditing) {
       setFormData({
-        title: selectedJob.title || '',
-        description: selectedJob.description || '',
-        organisation: selectedJob.organisation || '',
-        location: selectedJob.location || '',
-        salary: selectedJob.salary || '',
-        skills: selectedJob.skills || [],
-        experience: selectedJob.experience || '',
-        education: selectedJob.education || '',
-        employmentType: selectedJob.employmentType || '',
-        jobType: selectedJob.jobType || '',
-      });
-      setIsEditable(false); // Disable fields initially when loading a job
-    } else {
-      setIsEditable(true); // Enable fields for new job creation
-    }
-  }, [selectedJob]);
+        title: selectedJob?.job?.title || '',
+        description: selectedJob?.job?.description || '',
+        location: selectedJob?.job?.location || '',
+        salary: selectedJob?.job?.salary || '',
+        skills: selectedJob?.job?.requirements?.skills || [],
+        experience: selectedJob?.job?.requirements?.experience || '',
+        education: selectedJob?.job?.requirements?.education || '',
+        employmentType: selectedJob?.job?.employmentType || '',
+        jobType: selectedJob?.job?.jobType || '',
+      })}
+   
+     
+    
+  }, [selectedJob, isEditing]);
+
+
 
   // Handle input change dynamically
   const handleChange = (event) => {
@@ -165,9 +166,9 @@ export default function CreateNewJob() {
     try {
       const result = dispatch(createApplication(formData));
 
-      if (createApplication.fulfilled.match(result)) {
+      if (createApplication.fulfilled) {
         console.log('Application created successfully:', result.payload);
-        navigate('/org/applications');
+        navigate('/org/applications')
       } else if (createApplication.rejected.match(result)) {
         setFieldError({ general: result.payload });
       }
@@ -175,6 +176,8 @@ export default function CreateNewJob() {
       setFieldError({ general: 'An error occurred while creating the job.' });
     }
   };
+
+
 
   return (
     <Grid sx={{ backgroundColor: '#F9FAFB' }}>
@@ -193,20 +196,6 @@ export default function CreateNewJob() {
             zIndex: 1, // Set to 0 to place it behind other elements
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              px: 3,
-              pt: 1,
-              opacity: 1,
-              zIndex: 'auto',
-            }}
-          >
-            <Button onClick={() => setIsEditable((prev) => !prev)}>
-              {isEditable ? '' : 'Edit'}
-            </Button>
-          </Box>
           <Typography
             component="h1"
             variant="h3"
@@ -218,7 +207,7 @@ export default function CreateNewJob() {
               zIndex: 'auto',
             }}
           >
-            {selectedJob ? 'Edit Job' : 'Create Job'}
+        Create Job
           </Typography>
           <Box
             component="form"
@@ -254,7 +243,7 @@ export default function CreateNewJob() {
                     required
                     placeholder="job title"
                     autoFocus
-                    disabled={!isEditable}
+            
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   />
                 </Grid>
@@ -282,7 +271,7 @@ export default function CreateNewJob() {
                     helperText={fieldError.description}
                     required
                     placeholder="description"
-                    disabled={!isEditable}
+                 
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   />
                 </Grid>
@@ -309,7 +298,7 @@ export default function CreateNewJob() {
                     required
                     type="text"
                     placeholder="Location"
-                    disabled={!isEditable}
+                   
                     variant="outlined"
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                     s
@@ -337,7 +326,7 @@ export default function CreateNewJob() {
                     onChange={handleChange}
                     required
                     placeholder="Salary"
-                    disabled={!isEditable}
+                  
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   />
                   {fieldError.salary && <FormHelperText>{fieldError.salary}</FormHelperText>}
@@ -363,10 +352,9 @@ export default function CreateNewJob() {
                     value={inputSkillValue}
                     onChange={(e) => setInputSkillValue(e.target.value)}
                     onKeyDown={handleSkillKeyDown}
-                    error={!!fieldError.skills}
-                    helperText={fieldError.skills}
+                
                     placeholder="Type skills and press Enter"
-                    disabled={!isEditable}
+               
                     variant="outlined"
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   />
@@ -382,6 +370,7 @@ export default function CreateNewJob() {
                       />
                     ))}
                   </Box>
+                 { !formData.skills && <FormHelperText>Skills are required</FormHelperText>}
                 </Grid>
               </Grid>
             </FormControl>
@@ -406,7 +395,7 @@ export default function CreateNewJob() {
                       value={formData?.experience}
                       name="experience"
                       onChange={handleChange}
-                      disabled={!isEditable}
+                   
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -419,7 +408,7 @@ export default function CreateNewJob() {
                     value={formData?.experience}
                     onChange={handleChange}
                     required
-                    disabled={!isEditable}
+               
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   >
                     <MenuItem value="">
@@ -456,7 +445,7 @@ export default function CreateNewJob() {
                     value={formData?.education}
                     onChange={handleChange}
                     required
-                    disabled={!isEditable}
+                
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   >
                     <MenuItem value="">
@@ -490,7 +479,7 @@ export default function CreateNewJob() {
                     name="employmentType"
                     value={formData?.employmentType}
                     onChange={handleChange}
-                    disabled={!isEditable}
+                
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   >
                     <FormControlLabel value="Full-Time" control={<Radio />} label="Full-Time" />
@@ -523,7 +512,7 @@ export default function CreateNewJob() {
                     name="jobType"
                     value={formData?.jobType}
                     onChange={handleChange}
-                    disabled={!isEditable}
+             
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   >
                     <FormControlLabel value="On-site" control={<Radio />} label="On-site" />
@@ -549,9 +538,9 @@ export default function CreateNewJob() {
               onClick={() => {
                 handleSubmit();
               }}
-              disabled={!isEditable}
+             
             >
-              {selectedJob ? 'Update Job' : 'Create Job'}
+            {isEditing ? 'Update Job' : 'Create Job'}
             </Button>
           </Stack>
         </Box>

@@ -9,12 +9,28 @@ import { useResponsive, useWidth } from "../../hooks/use-responsive";
 export default function Heading() {
   const [login, setLogin] = useState(false)
   const [displayedText, setDisplayedText] = useState('');
+  const [role, setRole] = useState('employee');
   const fullText ='!!Get Your DREAM JOB!!'
 
   const isSmallScreen = useResponsive('down', 'sm');
   const isMediumScreen = useResponsive('between', 'sm', 'md');
   const isLargeScreen = useResponsive('up', 'md');
   const width = useWidth();
+
+  const getRoleBasedText = () => {
+    if (role === 'employer') {
+      return {
+        title: '!!Hire the BEST TALENT!!',
+        description1: 'Find the top talent to boost your organization....',
+        description2: 'Join Us to find the perfect candidates for your company!',
+      };
+    }
+    return {
+      title: '!!Get Your DREAM JOB!!',
+      description1: 'We have 100000+ great Job Offers for every Domain....',
+      description2: 'Join Us to get Hired and achieve your Career Goals!!',
+    };
+  };
 
   useEffect(()=>{
     let index =0;

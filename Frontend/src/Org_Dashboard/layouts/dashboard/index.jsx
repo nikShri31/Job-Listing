@@ -13,10 +13,11 @@ export default function DashboardLayout({ children }) {
   const [openNav, setOpenNav] = useState(false);
 
   return (
-    <>
+    <Box  sx={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
       <Box
         sx={{
-          minHeight: 1,
+          flexGrow: 1,
+         // position:'relative',
           display: 'flex',
           flexDirection: { xs: 'column', lg: 'row' },
         }}
@@ -28,7 +29,7 @@ export default function DashboardLayout({ children }) {
           </Box>
         </Main>
       </Box>
-    </>
+    </Box>
   );
 }
 

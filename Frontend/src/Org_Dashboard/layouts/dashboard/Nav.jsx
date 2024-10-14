@@ -68,35 +68,7 @@ export default function Nav({ openNav, onCloseNav }) {
     </Stack>
   );
 
- {
-//   const renderUpgrade = (
-//     <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-//       <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-//         <Box
-//           component="img"
-//           src="/assets/illustrations/illustration_avatar.png"
-//           sx={{ width: -0, position: 'absolute', top: -50 }}
-//         />
 
-// <Box sx={{ textAlign: 'center', display: 'none' }}>
-//   <Typography variant="h6">Get more?</Typography>
-//   <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-//     From only $69
-//   </Typography>
-// </Box>
-//  <Button
-//           href=""
-//           target="_white"
-//           variant="contained"
-//           color="inherit"
-//           sx={{ display: 'none' }}
-//         >
-//           -
-//         </Button>
-//       </Stack>
-//     </Box>
-//   );
-}
 
 const renderContent = (
     <Scrollbar
@@ -131,10 +103,10 @@ const renderContent = (
       {upLg ? (
         <Box
           sx={{
-            height: '100vh', // Full height
-            position: 'fixed', // Fixed position
-            // position: 'sticky',
-            top:0,
+            height: '100vh', // Full height for fixed navigation
+            position: 'fixed',
+            top: 80,
+            left: 0,
             width: NAV.WIDTH,
             borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           }}
@@ -203,3 +175,34 @@ function NavItem({ item }) {
 NavItem.propTypes = {
   item: PropTypes.object,
 };
+
+
+{
+  //   const renderUpgrade = (
+  //     <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
+  //       <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
+  //         <Box
+  //           component="img"
+  //           src="/assets/illustrations/illustration_avatar.png"
+  //           sx={{ width: -0, position: 'absolute', top: -50 }}
+  //         />
+  
+  // <Box sx={{ textAlign: 'center', display: 'none' }}>
+  //   <Typography variant="h6">Get more?</Typography>
+  //   <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
+  //     From only $69
+  //   </Typography>
+  // </Box>
+  //  <Button
+  //           href=""
+  //           target="_white"
+  //           variant="contained"
+  //           color="inherit"
+  //           sx={{ display: 'none' }}
+  //         >
+  //           -
+  //         </Button>
+  //       </Stack>
+  //     </Box>
+  //   );
+  }

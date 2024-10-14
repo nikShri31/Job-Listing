@@ -122,9 +122,10 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: 'company', label: 'Education' },
+                  { id: 'role', label: 'Experiance' },
+                  { id: '', label: 'Applied Date' },
+                  { id: 'isVerified', label: 'Resume', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}

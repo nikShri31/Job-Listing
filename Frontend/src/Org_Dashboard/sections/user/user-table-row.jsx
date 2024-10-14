@@ -21,8 +21,11 @@ export default function UserTableRow({
   name,
   avatarUrl,
   company,
+  education,
+  experiance,
+  resume,
+  appliedDate,
   role,
-  isVerified,
   status,
   handleClick,
 }) {
@@ -47,19 +50,20 @@ export default function UserTableRow({
           <Stack direction="row" alignItems="center" spacing={2}>
             <Avatar alt={name} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {name}  {/** applicants name */}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{company}</TableCell>    {/**education */}
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{role}</TableCell>  {/** experiance*/}
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+       {/** applied date */}
+        {/** resume */}
 
         <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+          <Label color={(status === 'Rejected' && 'error') || 'success'}>{status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -79,9 +83,9 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleCloseMenu} color='success'>
           <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-          Edit
+        Accept
         </MenuItem>
 
         <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>

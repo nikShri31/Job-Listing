@@ -1,16 +1,15 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import LoginBtn from "../../Authentication/LoginBtn"
-import { useResponsive, useWidth } from "../../hooks/use-responsive";
+import LoginBtn from '../../Authentication/LoginBtn';
+import { useResponsive, useWidth } from '../../hooks/use-responsive';
+import { useSelector } from 'react-redux';
 
 export default function Heading() {
-  const [login, setLogin] = useState(false)
   const [displayedText, setDisplayedText] = useState('');
-  const [role, setRole] = useState('employee');
-  const fullText ='!!Get Your DREAM JOB!!'
+  const {role, isAuthenticated} = useSelector((state) => state.auth);
 
   const isSmallScreen = useResponsive('down', 'sm');
   const isMediumScreen = useResponsive('between', 'sm', 'md');
@@ -18,149 +17,123 @@ export default function Heading() {
   const width = useWidth();
 
   const getRoleBasedText = () => {
-    if (role === 'employer') {
+    if (isAuthenticated && role === 'employee') {
       return {
-        title: '!!Hire the BEST TALENT!!',
+        title: '  Get Your DREAM JOB !!',
+        description1: 'We have 100000+ great Job Offers for every Domain....',
+        description2: 'Join Us to get Hired and achieve your Career Goals!!',
+      };
+    }
+    else if (isAuthenticated && role === 'Organisation') {
+      return {
+        title: '  Hire The BEST TALENT',
         description1: 'Find the top talent to boost your organization....',
         description2: 'Join Us to find the perfect candidates for your company!',
       };
     }
     return {
-      title: '!!Get Your DREAM JOB!!',
-      description1: 'We have 100000+ great Job Offers for every Domain....',
-      description2: 'Join Us to get Hired and achieve your Career Goals!!',
+      title: '  Welcome on JOBBER !! ',
+      description1: 'Explore a world of opportunities and find your dream job!',
+      description2: 'Sign up to get started and take your career to the next level!',
     };
   };
 
-  useEffect(()=>{
-    let index =0;
-    const typingInterval = setInterval(()=>{
-      if(index < fullText.length){
-        setDisplayedText((prev)=>prev + fullText[index]);
+  const { title, description1, description2 } = getRoleBasedText();
+
+  useEffect(() => {
+    let index = 0;
+    const typingInterval = setInterval(() => {
+      if (index < title.length - 1) {
+        setDisplayedText((prev) => prev + title[index]);
         index++;
-      }
-      else {
+      } else {
         clearInterval(typingInterval);
       }
-    },100);
+    }, 100);
     return () => clearInterval(typingInterval);
-  },[])
-
-  const firstPart = displayedText.slice(1, 9); 
-  const secondPart = displayedText.slice(9,19);
+  }, [title.length]);
 
   return (
-    <Box sx={{bgcolor:'white', height: '100vh',}}>
-    <Box
-      id="hero"
-      sx={{
-       
-        backgroundImage:'url(https://www.zimyo.com/wp-content/uploads/2023/08/NA_October_10-1-768x439.jpg)',
-        backgroundSize: isSmallScreen ? '100% 100%' : '50% 100%',
-        backgroundRepeat: 'no-repeat',
-        backdropFilter:'blur(20px)',
-        opacity: isSmallScreen && '0.8',
-        zIndex: 0,
-       
-        overflowX: 'hidden',
-      }}
-    >
-      <Container
+    <Box sx={{ bgcolor: 'white', height: '100vh' }}>
+      <Box
+        id="hero"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-         
-          zIndex: 1,
-          alignItems: isSmallScreen ? 'center' : 'flex-end',
-          pt: isSmallScreen ? 14 : isMediumScreen ? 18 : 25,
-          pb: isSmallScreen ? 8 : 12,
-          px: width === 'xs' || width === 'sm' ? 2 : 4, // Padding control to prevent x-overflow
-          // overflowX: 'hidden', 
-          // Ensure no x-overflow inside the container
-          overflowX: isSmallScreen && 'hidden', // Ensure no x-overflow inside the container
+          backgroundImage:
+            'url(https://www.zimyo.com/wp-content/uploads/2023/08/NA_October_10-1-768x439.jpg)',
+          backgroundSize: isSmallScreen ? '100% 100%' : '50% 100%',
+          backgroundRepeat: 'no-repeat',
+          backdropFilter: 'blur(20px)',
+          opacity: isSmallScreen && '0.8',
+          zIndex: 0,
+          overflowX: 'hidden',
         }}
       >
-        <Stack
-         spacing={2} 
-         useFlexGap 
-         sx={{
-          width: isSmallScreen ? '100%' : '70%',
-          alignItems: 'center',
-          px: width === 'xs' || width === 'sm' ? 1 : 2, // Additional padding control for content
-        
-        
-        }}
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            zIndex: 1,
+            alignItems: isSmallScreen ? 'center' : 'flex-end',
+            pt: isSmallScreen ? 14 : isMediumScreen ? 18 : 25,
+            pb: isSmallScreen ? 8 : 12,
+            px: width === 'xs' || width === 'sm' ? 2 : 4,
+            overflowX: isSmallScreen && 'hidden',
+          }}
         >
-          <Typography
-            variant= {isSmallScreen ? 'h3' : 'h1'}
+          <Stack
+            spacing={2}
+            useFlexGap
             sx={{
-              display: 'flex',
-              flexDirection:  'row',
-             
-              alignSelf: 'center',
-              textAlign: 'center',
-              fontSize: isSmallScreen ? '2.5rem' : 'clamp(3.5rem, 10vw, 4rem)',
-              color: 'lightslategrey',
+              width: isSmallScreen ? '100%' : '70%',
+              alignItems: 'center',
+              px: width === 'xs' || width === 'sm' ? 1 : 2,
             }}
           >
-           {firstPart}&nbsp;
             <Typography
-              component="span"
-              variant="h1"
-              
+              variant={isSmallScreen ? 'h3' : 'h1'}
               sx={{
-                fontWeight: 'bold',
-                fontSize: isSmallScreen ? '2.5rem' : 'clamp(3rem, 10vw, 4rem)',
-                color: '#032B53',
+                display: 'flex',
+                flexDirection: 'row',
+                alignSelf: 'center',
+                textAlign: 'center',
+                fontSize: isSmallScreen ? '2.5rem' : 'clamp(3.5rem, 10vw, 4rem)',
+                color: 'lightslategrey',
               }}
             >
-         {secondPart}
-           
+              {displayedText}
             </Typography>
-          </Typography>
-          <Typography
-           component="div"
-           variant= {isMediumScreen || isLargeScreen && 'h5'}
-            textAlign="center"
-            color="text.secondary"
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '90%' }, px: width === 'xs' || width === 'sm' ? 1 : 4 }}
-          >
-          We have 100000+ great Job Offers for every Domain....
-         
-          </Typography>
-          <Typography
-           component="div"
-           variant= {isMediumScreen || isLargeScreen && 'h5'}
-            textAlign="center"
-            color="text.secondary"
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' }, px: width === 'xs' || width === 'sm' ? 1 : 2 }}
-          >
-        
-          Join Us to get Hired and achive your Career Goals !!
-          </Typography>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignSelf="center"
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2,
-               width: isSmallScreen ? '100%' : 'auto',
-               px: width === 'xs' || width === 'sm' ? 1 : 2, // Ensure responsive padding for buttons
-                }}
-          >
-          {// <LoginBtn role="Login to get started" variant={"outlined"}/>
-            }
-            login here
+            <Typography
+              component="div"
+              variant={isMediumScreen || (isLargeScreen && 'h5')}
+              textAlign="center"
+              color="text.secondary"
+              sx={{
+                alignSelf: 'center',
+                width: { sm: '100%', md: '90%' },
+                px: width === 'xs' || width === 'sm' ? 1 : 4,
+              }}
+            >
+              {description1}
+            </Typography>
+            <Typography
+              component="div"
+              variant={isMediumScreen || (isLargeScreen && 'h5')}
+              textAlign="center"
+              color="text.secondary"
+              sx={{
+                alignSelf: 'center',
+                width: { sm: '100%', md: '80%' },
+                px: width === 'xs' || width === 'sm' ? 1 : 2,
+              }}
+            >
+              {description2}
+            </Typography>
           </Stack>
-         
-        </Stack>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
     </Box>
   );
 }
-
-
 
 /**
    <Box

@@ -6,6 +6,7 @@ import {
   Alert,
   Box,
   Button,
+  Card,
   CircularProgress,
   Grid,
   InputAdornment,
@@ -15,11 +16,14 @@ import {
   Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
+
 import JobDrawer from "./JobDrawer";
 //import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserSelectedJobId } from "../store/appliedJobsSlice";
 import { fetchAllJobs } from "../store/allJobsSlice";
+
 
 
 // ----------------------------------------------------------------------
@@ -327,11 +331,20 @@ const Home = () => {
             </Box>
             ) 
             : error ? (
-              <Typography color="error">
+              <Card sx={{ p: 2, backgroundColor: '#fff5f5', borderRadius: 2, boxShadow: 3 }}>
+                  <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ mb: 2, alignItems: 'center', justifyContent: 'center' }}
+                    icon={<ErrorOutlinedIcon fontSize="large" />}
+                  >
+                    <Typography variant='h6'>
                   {typeof error === "object" && error.error && error.error.message 
                     ? error.error.message 
                     : JSON.stringify(error)}
                   </Typography>
+                  </Alert>
+                </Card>
             ) 
             : paginatedJobs.length > 0 ? (
               paginatedJobs.map((job) => (

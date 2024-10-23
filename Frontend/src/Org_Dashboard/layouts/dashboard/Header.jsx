@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import AdbIcon from '@mui/icons-material/Adb';
+import PixIcon from '@mui/icons-material/Pix';
 import Iconify from '../../components/iconify';
 import { useResponsive } from '../../../hooks/use-responsive';
 import { bgBlur } from '../../../theme/css';
@@ -21,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authError, authLoading, logout } from '../../../store/authSlice';
 import { Button, Divider, Typography } from '@mui/material';
 import LoginBtn from '../../../Authentication/LoginBtn';
+import { CircularProgress } from '@mui/material';
 // import NotificationMenu from '../../../Components/Notification/Notification_Menu';
 
 // ----------------------------------------------------------------------
@@ -78,7 +80,11 @@ export default function Header({ onOpenNav }) {
   // };
 
   if (isLoading) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
 
   const renderButtons = () => {
@@ -110,7 +116,7 @@ export default function Header({ onOpenNav }) {
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
       )}
-      <AdbIcon sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, mr: 1 }} />
+      <PixIcon sx={{ display: { xs: 'none', md: 'flex', lg: 'flex' }, mr: 1 }} />
       <Typography
         variant="h4"
         noWrap
@@ -118,11 +124,11 @@ export default function Header({ onOpenNav }) {
         href="/"
         sx={{
           mr: 2,
-          display: { xs: 'none', md: 'flex', lg: 'flex' },
+          display: { xs: 'flex', md: 'flex', lg: 'flex' },
           fontFamily: 'monospace',
-
           fontWeight: 'bold',
-          letterSpacing: '.3rem',
+          fontSize: { xs: '0.5rem', sm: '1.5rem', lg: '2.5rem' },
+          letterSpacing: '.2rem',
           color: 'black',
           textDecoration: 'none',
         }}

@@ -20,11 +20,15 @@ import { account } from '../../../_mock/account';
 import Logo from '../../components/logo';
 import { RouterLink } from '../../../routes/components';
 import { usePathname } from '../../../routes/hooks/use-pathname';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
+
   const pathname = usePathname();
+
+const user = useSelector(state=> state.auth.user);
 
   const upLg = useResponsive('up', 'lg');
 
@@ -32,7 +36,6 @@ export default function Nav({ openNav, onCloseNav }) {
     if (openNav) {
       onCloseNav();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderAccount = (
@@ -48,13 +51,14 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Avatar src={account.photoURL} alt="photoURL" />
+      <Avatar src={user.profilePic} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="h5">{user.name}</Typography>
+        <Typography variant="subtitle2">{user.website}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account.role}
+          {user.industry}
         </Typography>
       </Box>
     </Box>
@@ -104,7 +108,7 @@ const renderContent = (
         <Box
           sx={{
             height: '100vh', // Full height for fixed navigation
-            position: 'fixed',
+            position: 'sticky',
             top: 80,
             left: 0,
             width: NAV.WIDTH,

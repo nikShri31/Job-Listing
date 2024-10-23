@@ -53,7 +53,7 @@ const FormContainer = styled(Stack)(({ theme }) => ({
     backgroundImage: 'url(/assets/background/overlay_4.jpg)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    opacity: 0.5, // Set your desired opacity here
+    opacity: 0.3, // Set your desired opacity here
     zIndex: 0, // Set to 0 to place it behind other elements
     inset: 0,
     //backgroundImage: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
@@ -344,7 +344,7 @@ export default function CreateNewJob() {
                 </Grid>
 
                 {/* Input Field and Chips */}
-                <Grid item sx={{ flexGrow: 1 }}>
+                <Grid item sx={{ flexGrow: 1 , display:'flex', flexDirection:'column'}}>
                   <TextField
                     id="skills"
                     name="skills"
@@ -359,20 +359,21 @@ export default function CreateNewJob() {
                     sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
                   />
 
-                  {/* Chips Container */}
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
-                    {formData.skills.map((skill, index) => (
-                      <Chip
-                        key={index}
-                        label={skill}
-                        onDelete={() => handleDeleteSkill(skill)}
-                        sx={{ margin: '5px' }}
-                      />
-                    ))}
-                  </Box>
+                  
                  { !formData.skills && <FormHelperText>Skills are required</FormHelperText>}
                 </Grid>
               </Grid>
+              {/* Chips Container */}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+              {formData.skills.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill}
+                  onDelete={() => handleDeleteSkill(skill)}
+                  sx={{ margin: '5px' }}
+                />
+              ))}
+            </Box>
             </FormControl>
 
             {/*Experience */}
@@ -446,7 +447,7 @@ export default function CreateNewJob() {
                     onChange={handleChange}
                     required
                 
-                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1 }}
+                    sx={{ width: { xs: '100%', sm: '100%', md: '500px' }, ml: 1,  textAlign: 'left'  }}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -540,7 +541,7 @@ export default function CreateNewJob() {
               }}
              
             >
-            {isEditing ? 'Update Job' : 'Create Job'}
+        Create Job
             </Button>
           </Stack>
         </Box>

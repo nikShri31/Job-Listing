@@ -30,14 +30,15 @@ import { persistor } from './store/store';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { Box } from '@mui/system';
-import { CircularProgress } from '@mui/material';
+//import { CircularProgress } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
 import NotFoundPage from './Pages/page-not-found';
 import CreateNewJob from './Org_Dashboard/sections/products/Create_Job_Form';
+import CustomLoading from './utils/CustomLoading';
 
 export const LazyLoader = (
   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <CircularProgress />
+  <CustomLoading/>
   </Box>
 );
 

@@ -43,6 +43,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
+      
         backgroundImage: "linear-gradient(100deg,#5584B4 ,#02294E)",
         backgroundSize: "100% 100%",
         backgroundRepeat: "no-repeat",

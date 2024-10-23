@@ -1,5 +1,5 @@
 import './App.css';
-//import EmployerPage from './Pages/EmployerPage';
+
 
 import './global.css';
 
@@ -23,6 +23,7 @@ function App() {
   //const role = useSelector((state) => state.auth.role);
 
   return (
+    <>
     <ThemeProvider>
     <Header onOpenNav={() => setOpenNav(true)} />
       <main >
@@ -33,7 +34,8 @@ function App() {
       
       </main>
       <Footer />
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

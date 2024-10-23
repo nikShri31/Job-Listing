@@ -63,7 +63,7 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
   // Function for rendering the location filter
   const renderLocation = () => (
     <Stack spacing={1}>
-      <Typography variant="subtitle2">Location</Typography>
+      <Typography variant="subtitle2">Job Type</Typography>
       <FormGroup>
         {LOCATION_OPTIONS.map((item) => (
           <FormControlLabel key={item} control={<Checkbox />} label={item} />
@@ -75,37 +75,7 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
   // Function for rendering the colors filter, set to be invisible
   
 
-  // Function for rendering the rating filter
-  const renderRating = () => (
-    <Stack spacing={1}>
-      <Typography variant="subtitle2">Rating</Typography>
-      <RadioGroup>
-        {RATING_OPTIONS.map((item, index) => (
-          <FormControlLabel
-            key={item}
-            value={item}
-            control={
-              <Radio
-                disableRipple
-                color="default"
-                icon={<Rating readOnly value={0 - index} />}
-                checkedIcon={<Rating readOnly value={0 - index} />}
-                sx={{
-                  '&:hover': { bgcolor: 'transparent' },
-                }}
-              />
-            }
-            label="& Up"
-            sx={{
-              my: 0.5,
-              borderRadius: 1,
-              '&:hover': { opacity: 0.48 },
-            }}
-          />
-        ))}
-      </RadioGroup>
-    </Stack>
-  );
+  
 
   return (
     <>
@@ -150,7 +120,6 @@ export default function ProductFilters({ openFilter, onOpenFilter, onCloseFilter
 
             {renderLocation()}
 
-            {renderRating()}
           </Stack>
         </Scrollbar>
 
@@ -176,3 +145,38 @@ ProductFilters.propTypes = {
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
 };
+
+{
+/**
+ const renderRating = () => (
+  <Stack spacing={1}>
+    <Typography variant="subtitle2">Rating</Typography>
+    <RadioGroup>
+      {RATING_OPTIONS.map((item, index) => (
+        <FormControlLabel
+          key={item}
+          value={item}
+          control={
+            <Radio
+              disableRipple
+              color="default"
+              icon={<Rating readOnly value={0 - index} />}
+              checkedIcon={<Rating readOnly value={0 - index} />}
+              sx={{
+                '&:hover': { bgcolor: 'transparent' },
+              }}
+            />
+          }
+          label="& Up"
+          sx={{
+            my: 0.5,
+            borderRadius: 1,
+            '&:hover': { opacity: 0.48 },
+          }}
+        />
+      ))}
+    </RadioGroup>
+  </Stack>
+)
+ */
+}

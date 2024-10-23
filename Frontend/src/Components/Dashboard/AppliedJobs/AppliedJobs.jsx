@@ -1,145 +1,5 @@
-// {
-//   "applications": [
-//       {
-//           "resume": {
-//               "key": "e04f6b4cba80eb266ea8c007c265a3ba6bf31c71123d6781c60fb58b58ec815c-advJavaE1.png"
-//           },
-//           "_id": "66f5a98192a8cfc2ad7cdd4c",
-//           "job": {
-//               "requirements": {
-//                   "experience": 2,
-//                   "education": "Undergraduate",
-//                   "skills": [
-//                       "mern",
-//                       "firebase",
-//                       "sql"
-//                   ]
-//               },
-//               "_id": "66f5a91892a8cfc2ad7cdd2d",
-//               "title": "tester",
-//               "description": "Faltu ka description",
-//               "location": "delhi",
-//               "salary": 12,
-//               "organisation": "66f5a865384a178ad24149cc",
-//               "applications": [
-//                   "66f6773ae3586ff8b1930309",
-//                   "66f7d9588e80c93e69bbc6d5",
-//                   "66f7cfa5ca7049967ec4ea55",
-//                   "66f7d96fddd02eadeaf6e656",
-//                   "66f7d700703e4f36018536fe",
-//                   "66f8e8f1703e4f36018537bc",
-//                   "66fab5dde4bf6f612843d64b",
-//                   "66fab0d6e4bf6f612843d6a2",
-//                   "66fab691e4bf6f612843d6fa",
-//                   "66fbab34d7fd3280d3785818",
-//                   "66fc3488d960467408222ca2",
-//                   "66fd2f6f2bf417e578935437"
-//               ],
-//               "employmentType": "Full-Time",
-//               "jobType": "Hybrid",
-//               "postedDate": "2024-09-26T18:34:00.073Z",
-//               "__v": 0
-//           },
-//           "applicant": "66f5a80f384a178ad24149c8",
-//           "status": "pending",
-//           "organisation": {
-//               "contactInfo": {
-//                   "phone": 1234567890,
-//                   "email": "testsupport@gmail.com"
-//               },
-//               "_id": "66f5a865384a178ad24149cc",
-//               "name": "Testing Company",
-//               "adminEmail": "testingcompany@gmail.com",
-//               "role": "Organisation",
-//               "website": "dontfindus.com",
-//               "industry": "none",
-//               "jobs": [
-//                   "66f5a91892a8cfc2ad7cdd2d",
-//                   "66f5a92a92a8cfc2ad7cdd31",
-//                   "66f5a93192a8cfc2ad7cdd35",
-//                   "66f5a93592a8cfc2ad7cdd39",
-//                   "66f5a93992a8cfc2ad7cdd3d",
-//                   "66f5a93d92a8cfc2ad7cdd41"
-//               ],
-//               "password": "$2a$10$Zw8iFUavDz1kBeQmba9M/u2Z8GHcy5a0ZwVmZ50MExKO06s0YW5HS",
-//               "createdAt": "2024-09-26T18:31:01.481Z",
-//               "__v": 6
-//           },
-//           "applicationDate": "2024-09-26T18:35:45.066Z",
-//           "__v": 0
-//       },
-//       {
-//           "resume": {
-//               "key": "b0330e14288f2729bb3a9a4f0b186d34026e2bd9d1037d337ea86b7b5805b22c-advJavaE1.png"
-//           },
-//           "_id": "66f5aa1099ee763e755f5686",
-//           "job": {
-//               "requirements": {
-//                   "experience": 2,
-//                   "education": "Undergraduate",
-//                   "skills": [
-//                       "mern",
-//                       "firebase",
-//                       "sql"
-//                   ]
-//               },
-//               "_id": "66f5a92a92a8cfc2ad7cdd31",
-//               "title": "tester2",
-//               "description": "Faltu ka description",
-//               "location": "delhi",
-//               "salary": 12,
-//               "organisation": "66f5a865384a178ad24149cc",
-//               "applications": [
-//                   "66f5aa1099ee763e755f5686",
-//                   "66f6774ee3586ff8b1930312",
-//                   "66f7d9de8e80c93e69bbc6f7",
-//                   "66f7d42bca7049967ec4eaa9",
-//                   "66f7d977ddd02eadeaf6e65f",
-//                   "66f7d974703e4f3601853745",
-//                   "66f8e90c703e4f36018537cd",
-//                   "66fab8ffe4bf6f612843d675",
-//                   "66fab69be4bf6f612843d703",
-//                   "66fba7e3d7fd3280d37857ff",
-//                   "66fbab99d7fd3280d378583b",
-//                   "66fc3496d960467408222cab"
-//               ],
-//               "employmentType": "Full-Time",
-//               "jobType": "Hybrid",
-//               "postedDate": "2024-09-26T18:34:18.868Z",
-//               "__v": 0
-//           },
-//           "applicant": "66f5a80f384a178ad24149c8",
-//           "status": "pending",
-//           "organisation": {
-//               "contactInfo": {
-//                   "phone": 1234567890,
-//                   "email": "testsupport@gmail.com"
-//               },
-//               "_id": "66f5a865384a178ad24149cc",
-//               "name": "Testing Company",
-//               "adminEmail": "testingcompany@gmail.com",
-//               "role": "Organisation",
-//               "website": "dontfindus.com",
-//               "industry": "none",
-//               "jobs": [
-//                   "66f5a91892a8cfc2ad7cdd2d",
-//                   "66f5a92a92a8cfc2ad7cdd31",
-//                   "66f5a93192a8cfc2ad7cdd35",
-//                   "66f5a93592a8cfc2ad7cdd39",
-//                   "66f5a93992a8cfc2ad7cdd3d",
-//                   "66f5a93d92a8cfc2ad7cdd41"
-//               ],
-//               "password": "$2a$10$Zw8iFUavDz1kBeQmba9M/u2Z8GHcy5a0ZwVmZ50MExKO06s0YW5HS",
-//               "createdAt": "2024-09-26T18:31:01.481Z",
-//               "__v": 6
-//           },
-//           "applicationDate": "2024-09-26T18:38:08.336Z",
-//           "__v": 0
-//       }
-//   ]
-// }
-
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -156,57 +16,34 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-
-
+import TablePagination from '@mui/material/TablePagination';
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
-import JobStatus from './JobStatus';
+import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
+
 import { useEffect, useState } from 'react';
-import ThreeDotMenu from './3DotMenu';
-import { useSelector, useDispatch } from 'react-redux';
-//import { setUserSelectedJobId, clearUserSelectedJobView } from '../../../store/appliedJobsSlice';
 import { useNavigate } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { applyJob, fetchAppliedJobs, setUserSelectedJobId } from '../../../store/appliedJobsSlice';
 
+import JobDesc from './JobDesc';
+import CustomLoading from '../../../utils/CustomLoading';
 
 // -----------------------------------------------------------------------------------------------
-
-
-const chipStyle = {
-  mt: 2,
-  mx: 1,
-  py: 0.5,
-  bgcolor: 'lightgrey',
-  fontSize: '1rem',
-  height: 'auto',
-  color: '#032B53',
-  '& .MuiChip-label': {
-    fontSize: '1.1rem',
-  },
-};
-
-
-// -------------------------------------------------------------------------------
-
 
 export default function AppliedJobs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
-  const { isLoading, error, userAppliedJobs, userSelectedJobId } = useSelector(
-    (state) => state.appliedJobs
-  );
+  const { isLoading, error, userAppliedJobs } = useSelector((state) => state.appliedJobs);
   const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-
-  console.log(userAppliedJobs);
   const { applications } = userAppliedJobs;
 
-
-  const [selectedJob, setSelectedJob] = useState(null);
-  const [alignment, setAlignment] = useState('Today'); // togglebutton
-
+  const [selectedJobId, setSelectedJobId] = useState(null);
+  const [alignment, setAlignment] = useState('Today');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     if (isUserAuthenticated && !isLoading) {
@@ -215,17 +52,58 @@ export default function AppliedJobs() {
     }
   }, [isUserAuthenticated, dispatch, userAppliedJobs.length, isLoading]);
 
-
   const handleJobClick = (jobId) => {
-    // Set the selected job ID when a job is clicked
+    setSelectedJobId(jobId);
     dispatch(setUserSelectedJobId(jobId));
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+    setPage(0);
   };
 
+  // Function to filter applications based on the selected time period
+  const filterApplications = (applications, filter) => {
+    const now = new Date();
+    switch (filter) {
+      case 'Today':
+        return applications?.filter(
+          (app) => new Date(app.applicationDate).toDateString() === now.toDateString()
+        );
+      case 'Week':
+        const oneWeekAgo = new Date(now.setDate(now.getDate() - 7));
+        return applications.filter((app) => new Date(app.applicationDate) >= oneWeekAgo);
+      case 'Month':
+        const oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1));
+        return applications.filter((app) => new Date(app.applicationDate) >= oneMonthAgo);
+      case 'Year':
+        const oneYearAgo = new Date(now.setFullYear(now.getFullYear() - 1));
+        return applications.filter((app) => new Date(app.applicationDate) >= oneYearAgo);
+      default:
+        return applications;
+    }
+  };
+
+  // Filter and sort applications based on the selected time period and date
+  const filteredApplications = filterApplications(applications, alignment);
+  const sortedApplications = filteredApplications
+    ?.slice()
+    .sort((a, b) => new Date(b.applicationDate) - new Date(a.applicationDate));
+
+  // Slice the applications array to show only the current page's items
+  const paginatedApplications = sortedApplications?.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   return (
     <Grid
@@ -233,10 +111,9 @@ export default function AppliedJobs() {
       sx={{
         color: '#032340',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex_start',
-        gap: { xs: 2, sm: 4 },
-        py: { xs: 4, sm: 6 },
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+
         textAlign: { sm: 'center', md: 'left' },
         bgcolor: '#E3F0FE',
         // backgroundImage: "linear-gradient(130deg,lightgrey,#CEE5FD)",
@@ -244,21 +121,29 @@ export default function AppliedJobs() {
         // backgroundRepeat: "no-repeat",
       }}
     >
-      {/**My Jobs */}
+      {/**My Jobs side navbar */}
       <Grid
+        item
+        md={3}
         sx={{
-          border: '2px solid red',
+          pt: 2,
+
           backgroundColor: '#FFE7FF',
-          display: 'flex',
+          height: 'calc(100vh - 80px)',
+          position: 'sticky',
+          top: 80,
+          left: 0,
+          display: { xs: 'none', md: 'flex' },
+          flexDirection: 'column',
           justifyContent: 'flex-start',
+          borderRight: (theme) => `solid 2px ${theme.palette.divider}`,
         }}
       >
         <Stack>
-          <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h3" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
             {' '}
             My Jobs
           </Typography>
-
 
           {/**Image */}
           <Box>
@@ -271,179 +156,183 @@ export default function AppliedJobs() {
           </Box>
         </Stack>
 
-
-        <Box ml={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Paper sx={{ p: 4, m: 2, maxHeight: 100 }}>
+        <Box ml={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Card
+            sx={{
+              p: 4,
+              m: 2,
+              maxHeight: 100,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
             <Typography variant="h6" textAlign={'center'} p={1}>
-              700
+              7
             </Typography>
             <Typography variant="body1"> Recruiter's Action</Typography>
-          </Paper>
-          <Paper sx={{ p: 4, m: 2, maxHeight: 100 }}>
+          </Card>
+          <Card
+            sx={{
+              p: 4,
+              m: 2,
+              maxHeight: 100,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
             <Typography variant="h6" textAlign={'center'} p={1}>
-              2000
+              {applications?.length || 0}
             </Typography>
             <Typography> Jobs Applied</Typography>
-          </Paper>
+          </Card>
         </Box>
       </Grid>
 
-
       {/* applied job lists */}
-      <Container sx={{ p: 2, backgroundColor: '#F9FAFB' }}>
-        {/**Toggle list */}
-        <ToggleButtonGroup
-          color="info"
-          value={alignment}
-          exclusive
-          onChange={handleChange}
-          aria-label="Platform"
-        >
-          <ToggleButton value="Today" sx={{ mr: 2 }}>
-            Today
-          </ToggleButton>
-          <ToggleButton value=" Week" sx={{ mr: 2 }}>
-            This Week
-          </ToggleButton>
-          <ToggleButton value=" Month" sx={{ mr: 2 }}>
-            This Month
-          </ToggleButton>
-          <ToggleButton value=" Year">This Year</ToggleButton>
-        </ToggleButtonGroup>
+      <Grid item xs={12} md={9}>
+        <Container sx={{ p: 2, backgroundColor: '#F9FAFB', position: 'relative' }}>
+          {(isLoading || error) && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 10,
+                backgroundColor: '#E3F0FE',
+                zIndex: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {isLoading ? (
+                <CustomLoading />
+              ) : (
+                <Card sx={{ p: 2, backgroundColor: '#fff5f5', borderRadius: 2, boxShadow: 3 }}>
+                  <Alert
+                    severity="error"
+                    variant="filled"
+                    sx={{ mb: 2, alignItems: 'center', justifyContent: 'center' }}
+                    icon={<ErrorOutlinedIcon fontSize="large" />}
+                  >
+                    <Typography variant='h6'>
+                  {typeof error === "object" && error.error && error.error.message 
+                    ? error.error.message 
+                    : JSON.stringify(error)}
+                  </Typography>
+                  </Alert>
+                </Card>
+              )}
+            </Box>
+          )}
 
-
-        {/**Job LIst */}
-
-
-        <Grid
-          sx={{ display: 'flex', justifyContent: 'space-between', my: 5, border: '3px solid red' }}
-        >
-          <Grid item xs={12} md={6} sx={{ px: 2, border: '1px solid black' }}>
-            {isLoading ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <CircularProgress />
-              </Box>
-            ) : /* ERROR Handling */
-            error ? (
-              <Typography color="error">
-                {typeof error === 'object' && error.error && error.error.message
-                  ? error.error.message
-                  : JSON.stringify(error)}
-              </Typography>
-            ) : /* Job Listing Here */
-            applications?.length > 0 ? (
-              applications.map((application) => (
-                <Container
-                  key={application._id}
-                  onClick={() => handleJobClick(application._id)}
-                  sx={{
-                    backgroundImage: 'linear-gradient(130deg,#CEE5FD, #FFF)',
-                    backgroundSize: '100% 100%',
-                    backgroundRepeat: 'no-repeat',
-                    color: '#032340',
-                    p: 1,
-                    my: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    transition: 'box-shadow 0.3s ease-in-out',
-                    '&:hover': {
-                      boxShadow: ` 10px 10px 10px #00000041,
-                         inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
-                    },
-                  }}
-                >
-                  <Stack direction={'row'} justifyContent="space-between" sx={{ width: '95%' }}>
-                    <Box>
-                      {/** Title */}
-                      <Link
-                        variant="h5"
-                        mb={4}
-                        sx={{
-                          fontWeight: 'bold',
-                          cursor: 'pointer',
-                          color: 'grey',
-
-
-                          textDecoration: 'none',
-                          '&:hover': {
-                            color: '#032340',
-                            textDecoration: 'underline',
-                          },
-                        }}
-                      >
-                        {application?.job?.title || 'No Job title'}
-                      </Link>
-
-
-                      {/** company */}
-                      <Stack direction={'row'} spacing={1} py={1}>
-                        <BusinessIcon />
-                        <Typography variant="h6">
-                          {application?.organisation?.name || 'No Org !!!'}
-                        </Typography>
-                      </Stack>
-
-
-                      {/** Location */}
-                      <Stack direction={'row'} spacing={1}>
-                        <PlaceIcon />
-                        <Typography>{application.job?.location}</Typography>
-
-
-                        <Typography color={'text.secondary'} sx={{ px: 3 }}>
-                          Applied on: {new Date(application.applicationDate).toLocaleDateString()}
-                        </Typography>
-                      </Stack>
-
-
-                      {/** applied */}
-                    </Box>
-                  </Stack>
-                </Container>
-              ))
-            ) : (
-              <Typography variant="h3"> No Jobs Applied ....</Typography>
-            )}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{ display: 'flex', justifyContent: 'space-between', border: '1px solid blue' }}
+          <ToggleButtonGroup
+            color="info"
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+            aria-label="Platform"
           >
-            {applications?.map((application) => {
-              if (application._id === userSelectedJobId) {
-                return (
-                  <Box key={application._id}>
-                    <Typography variant="h3" sx={{pt:3, px:3}}> {application.job?.title || 'No Job title'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {application.organisation?.name || 'No Org..!!!'}</Typography>
-                    <Typography variant="h5" sx={{p:2}}> {application.job?.jobType || 'No Job Type..!!!'}</Typography>
-                    <Typography variant="body1" sx={{p:2}}> {application.job?.description || 'No description !!'}</Typography>
-                    <Divider />
-                    
-                    {/** Status */}
-                    <Box m={2}>
-                    <Typography variant="h5" sx={{pb:2}}> Status</Typography>
-                      <JobStatus />
-                    </Box>
-                    <Divider />
-                    <Container>
-                      {application.job.requirements?.skills.map((skill, index) => (
-                        <Chip key={index} label={skill} sx={chipStyle} />
-                      )) || 'No Skills!!!'}
-                    </Container>
-                  </Box>
-                );
-              }
-              return null;
-            })}
+            <ToggleButton value="Today">Today</ToggleButton>
+            <ToggleButton value="Week">This Week</ToggleButton>
+            <ToggleButton value="Month">This Month</ToggleButton>
+            <ToggleButton value="Year">This Year</ToggleButton>
+          </ToggleButtonGroup>
 
-
-            {/** 3 dot Menu */}
-          </Grid>
+          <Grid
+          container
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              my: 5,
+              border: '3px solid red',
+            }}
+          >
+           {/* Job Cards List */}
+            <Grid item xs={12} md={6} sx={{  width: '48%',  px: 2, border: '1px solid black', overflowY: 'auto' }}>
+              {!isLoading && !error && paginatedApplications?.length > 0 ? (
+                paginatedApplications.map((application) => (
+                  <Card
+                    key={application._id}
+                    onClick={() => handleJobClick(application._id)}
+                    sx={{
+                      boxShadow: `2px 2px 2px #00000041`,
+                      color: '#032340',
+                      mt: 1,
+                      backgroundColor: application._id === selectedJobId ? '#d3e0f7' : 'white',
+                      '&:hover': {
+                        boxShadow: `5px 5px 5px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2)`,
+                      },
+                    }}
+                  >
+                    <CardActionArea sx={{ py: 1 }}>
+                      <Stack direction={'row'} justifyContent="space-between" sx={{ width: '95%' }}>
+                        <Box sx={{ p: 2 }}>
+                          <Link
+                            variant="h5"
+                            sx={{
+                              fontWeight: 'bold',
+                              color: 'grey',
+                              textDecoration: 'none',
+                              '&:hover': {
+                                color: '#032340',
+                                textDecoration: 'underline',
+                              },
+                            }}
+                          >
+                            {application?.job?.title || 'No Job title'}
+                          </Link>
+                          <Stack direction={'row'} spacing={1} py={1}>
+                            <BusinessIcon />
+                            <Typography variant="h6">
+                              {application?.organisation?.name || 'No Org'}
+                            </Typography>
+                          </Stack>
+                          <Stack direction={'row'} spacing={1}>
+                            <PlaceIcon />
+                            <Typography>{application.job?.location}</Typography>
+                            <Typography color={'text.secondary'} sx={{ px: 3 }}>
+                              Applied on:{' '}
+                              {new Date(application.applicationDate).toLocaleDateString()}
+                            </Typography>
+                          </Stack>
+                        </Box>
+                      </Stack>
+                    </CardActionArea>
+                  </Card>
+                ))
+              ) : (
+                <Typography variant="h3">No Jobs Applied</Typography>
+              )}
+            </Grid>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <Stack
+            sx={{
+              position: 'sticky',
+              top: 80, // Adjust this value based on your layout
+              alignSelf: 'flex-start', // Ensures it doesn't stretch vertically
+              px: 2,
+              width: '48%',
+            }}
+          >
+          <JobDesc applications={applications} />
+          </Stack>
         </Grid>
-      </Container>
+
+          <TablePagination
+            page={page}
+            component="div"
+            count={filteredApplications?.length || 0}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[5, 10]}
+          />
+        </Container>
+      </Grid>
     </Grid>
   );
 }

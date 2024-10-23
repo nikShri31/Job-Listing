@@ -14,7 +14,9 @@ const initialState={
 export const createApplication = createAsyncThunk(
   'applications/createApplication',
   async (formData, { getState,rejectWithValue }) => {
-    const { auth } = getState();
+    const state = getState();
+    console.log(state);
+    
 
     // Check if the user is logged in and is an employer
     // if (!auth.isAuthenticated || auth.user.role !== 'employer') {
@@ -53,9 +55,9 @@ export const fetchApplications = createAsyncThunk(
           }
         });
         
-        return response.data; // Assuming API returns the list of applications
+        return await response.data; // Assuming API returns the list of applications
       } catch (error) {
-        return rejectWithValue(error.response?.data?.message || error.message);
+        return rejectWithValue(error.response?.data?.message || 'An unexpected error occurred while fetching applications');
       }
     }
   );
@@ -65,7 +67,7 @@ const newJobsSlice = createSlice({
     initialState,
     reducers: {
       setSelectedJob(state, action) {
-        state.selectedJob = action.payload; // Save the selected job details
+        state.selectedJob = action.payload; 
       },
     },
     extraReducers: (builder) => {
@@ -77,15 +79,12 @@ const newJobsSlice = createSlice({
         })
         .addCase(createApplication.fulfilled, (state, action) => {
           state.isLoading = false;
-          state.applications = [...state.applications, action.payload]; // Update with latest applications
+          state.applications.push(action.payload);
         })
         .addCase(createApplication.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.payload;
-        });
-  
-      // Handle fetching applications
-      builder
+        })
         .addCase(fetchApplications.pending, (state) => {
           state.isLoading = true;
           state.error = null;
@@ -93,7 +92,7 @@ const newJobsSlice = createSlice({
         .addCase(fetchApplications.fulfilled, (state, action) => {
           state.isLoading = false;
           state.applications = action.payload;
-          console.log("Fetch Applications :", state.applications)
+         
         })
         .addCase(fetchApplications.rejected, (state, action) => {
           state.isLoading = false;
@@ -104,7 +103,7 @@ const newJobsSlice = createSlice({
           state.selectedJob = null;
           state.isLoading = false;
           state.error = null;
-        })
+        });
     },
   });
 

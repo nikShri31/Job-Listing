@@ -49,7 +49,7 @@ const chipStyle = {
 export default function ApplicationsCard({ application }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log('Card Application Data :', application);
+  // console.log('Card Application Data :', application);
 
   const handleViewDetails = () => {
     dispatch(setSelectedJob(application)); // Save the application data in Redux
@@ -111,33 +111,33 @@ export default function ApplicationsCard({ application }) {
       <Box sx={{ p: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           {' '}
-          {application?.job?.title || 'No Title'}
+          {application?.title || 'No Title'}
         </Typography>
         <Stack direction={'row'} justifyContent={'space-between'} sx={{ mt: 1 }}>
           <Stack direction={'row'} spacing={1}>
             <PlaceIcon />{' '}
-            <Typography variant="body1"> {application?.job?.location || 'No location'}</Typography>
+            <Typography variant="body1"> {application?.location || 'No location'}</Typography>
           </Stack>
         </Stack>
         <Stack direction={'row'} justifyContent={'space-between'} sx={{ mt: 1 }}>
           <Stack direction={'row'} spacing={1}>
-         <Chip label={application?.job?.employmentType || 'No EmpType'} sx={chipStyle} />
+         <Chip label={application?.employmentType || 'No EmpType'} sx={chipStyle} />
           </Stack>
           <Stack direction={'row'} spacing={1}>
-             <Chip label={application?.job?.jobType || 'No JobType'} sx={chipStyle} />
+             <Chip label={application?.jobType || 'No JobType'} sx={chipStyle} />
            
           </Stack>
         </Stack>
         <Stack sx={{ mt: 1 }}>
           <Typography textAlign={'left'}>
             {' '}
-            Salary : {fCurrency(application.job?.salary) || 'No salary'}
+            Salary : {fCurrency(application.salary) || 'No salary'}
           </Typography>
         </Stack>
         <Stack sx={{ mt: 1 }}>
           <Typography textAlign={'left'}>
             {' '}
-            Posted on : {fDate(application?.job?.postedDate) || 'No Posted Date'}
+            Posted on : {fDate(application?.postedDate) || 'No Posted Date'}
           </Typography>
         </Stack>
       </Box>

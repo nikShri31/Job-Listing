@@ -16,7 +16,7 @@ module.exports.apply = async (req, res, next) => {
 
         const jobInfo = await JobListing.findById(jobId).populate('organisation');
         const resume = req.files.resume[0].key;
-        console.log(req.files.resume)
+        // console.log(req.files.resume)
         const application = new Application(
             {
                 job: jobId,

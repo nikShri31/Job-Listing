@@ -49,7 +49,7 @@ module.exports.uploadProfilePic = async (req, res, next) => {
 }
 
 module.exports.getAllApplications = async(req, res, next) => {
-    const { organisationId } = req.user.id;
+    const organisationId  = req.user.id;
     const applications = await Application.find({ organisation: organisationId }).populate('job applicant');
     res.status(200).json({ applications });
 }

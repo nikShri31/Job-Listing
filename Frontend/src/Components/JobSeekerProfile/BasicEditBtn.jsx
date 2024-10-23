@@ -61,7 +61,7 @@ export default function EditBtn({ formData, changeData }) {
       workRole: localFormData.workRole,
     };
 
-    console.log("Submitting data...");
+    // console.log("Submitting data...");
     try {
       await axios.patch(
         "http://localhost:5000/api/users/profile",
@@ -74,7 +74,7 @@ export default function EditBtn({ formData, changeData }) {
         }
       );
       changeData(updatedData); // Update local state in parent component
-      console.log("Closing modal...");
+      // console.log("Closing modal...");
       handleClose(); // Close the modal after update
     } catch (error) {
       console.error("Error updating user data:", error);

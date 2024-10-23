@@ -30,11 +30,14 @@ export default function ProductsView() {
   const role = useSelector((state) => state.auth.role);
   const { applications, isLoading, error } = useSelector((state) => state.applications);
 
+  const applicationArray = applications.jobs;
+  // console.log(applicationArray);
+
  useEffect(() => {
-  if (isUserAuthenticated && role === 'Organisation' && applications.length === 0) {
+  if (isUserAuthenticated && role === 'Organisation' && applicationArray.length === 0) {
     dispatch(fetchApplications());
   }
-}, [isUserAuthenticated,isLoading, applications.length, dispatch]);
+}, [isUserAuthenticated,isLoading, applicationArray.length, dispatch]);
 
 
   const handleOpenFilter = () => {
@@ -70,24 +73,28 @@ export default function ProductsView() {
 
       {isLoading && (
         <Typography variant="body1" align="center">
+          {/* {console.log("Inside Loading")} */}
           Loading applications...
         </Typography>
       )}
 
-      {!isLoading && applications.length === 0 && (
+      {!isLoading && applicationArray.length === 0 && (
         <Typography variant="body1" align="center">
+          {/* {console.log("L + A = 0")} */}
           No applications available.
         </Typography>
       )}
 
       {error && (
         <Typography variant="body1" color="error" align="center">
+          {/* {console.log("Error")} */}
           {error.message}
         </Typography>
       )}
-
-      {!isLoading && applications.length > 0 && (
+      {/* {console.log(applicationArray)} */}
+      {!isLoading && applicationArray.length > 0 && (
         <>
+          {/* {console.log("inside div")} */}
           <Stack
             direction="row"
             alignItems="center"
@@ -106,14 +113,15 @@ export default function ProductsView() {
           </Stack>
 
           <Grid container spacing={3}>
-            {applications.map((application) => (
-              <Grid item key={application.job?._id} xs={12} sm={6} md={4}>
+            {/* {console.log(applications)} */}
+            {applicationArray.map((application) => (
+              <Grid item key={application?._id} xs={12} sm={6} md={4}>
                 <ApplicationsCard application={application} />
               </Grid>
             ))}
           </Grid>
         </>
-      )}
+      )} 
     </Container>
   );
 }

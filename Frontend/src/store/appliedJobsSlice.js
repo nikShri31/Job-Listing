@@ -16,7 +16,7 @@ export const applyJob = createAsyncThunk(
   async ({ jobId, resumeFile }, { getState, rejectWithValue }) => {
     
   const state = getState();
-  console.log(state);
+  // console.log(state);
   
   // const token = state.auth.token;
 
@@ -34,7 +34,7 @@ export const applyJob = createAsyncThunk(
           },
         }
       );
-      console.log('API response:', response.data);
+      // console.log('API response:', response.data);
       return response.data; // Include additional job response data
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: 'An error occurred while applying for the job' });
@@ -55,7 +55,7 @@ export const fetchAppliedJobs = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log( "Fetch Response:",  response.data);
+      // console.log( "Fetch Response:",  response.data);
       return response.data; // Return the fetched applied jobs
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message || 'Failed to fetch applied jobs');
@@ -91,7 +91,7 @@ const appliedJobsSlice = createSlice({
       .addCase(fetchAppliedJobs.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userAppliedJobs = action.payload; // Set the applications array
-        console.log('Fetched applied jobs:', state.userAppliedJobs);
+        // console.log('Fetched applied jobs:', state.userAppliedJobs);
       })
       .addCase(fetchAppliedJobs.rejected, (state, action) => {
         state.isLoading = false;

@@ -27,7 +27,7 @@ export default function ThemeProvider({ children }) {
   );
 
   const theme = createTheme(memoizedValue);
-  console.log('themeProvider: ',theme);
+  // console.log('themeProvider: ',theme);
 
   theme.components = overrides(theme);
 

@@ -4,12 +4,11 @@ const User = require('../Models/userModel');
 
 //Employer 
 exports.createJob = async (req, res, next) => {
-    const { title, description, company, location, salary, requirements, jobType, employmentType } = req.body;
+    const { title, description, location, salary, requirements, jobType, employmentType } = req.body;
     const organisationId = req.user.id;
     const newJob = new JobListing({
         title: title.toLowerCase(),
         description,
-        company,
         location: location.toLowerCase(),
         salary,
         organisation: organisationId,
@@ -61,7 +60,7 @@ exports.getJob = async (req, res, next) => {
 exports.getJobsByOrganisation = async (req, res, next) => {
     const { organisationId } = req.params;
     const jobs = await JobListing.find({ organisation: organisationId });
-    res.status(200).json({ jobs });
+    res.status(200).json( jobs );
 }
 
 exports.getAllJobs = async (req, res, next) => {

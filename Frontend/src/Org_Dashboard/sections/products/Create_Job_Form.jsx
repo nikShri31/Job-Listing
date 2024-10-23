@@ -65,7 +65,7 @@ export default function CreateNewJob() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedJob = useSelector((state) => state.applications.selectedJob); 
-  console.log(selectedJob);
+  // console.log(selectedJob);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -165,7 +165,7 @@ export default function CreateNewJob() {
 
     try {
       const result = dispatch(createApplication(formData));
-
+      console.log(result);
       if (createApplication.fulfilled) {
         console.log('Application created successfully:', result.payload);
         navigate('/org/applications')

@@ -84,3 +84,7 @@
 //         Authorization : `Bearer ${localStorage.getItem('token')}`
 //     }
 // })
+
+
+//to get all applications of a certain job with all the user data
+// const response = await axios.get('/api/application/all/jobId', {header bullshit})

@@ -67,7 +67,7 @@ export default function Header({ onOpenNav }) {
   const { isAuthenticated, role, user } = useSelector((state) => state.auth);
   const isLoading = useSelector(authLoading);
   const error = useSelector(authError);
-  console.log('Auth State:', { isAuthenticated, role, user });
+  // console.log('Auth State:', { isAuthenticated, role, user });
 
   const theme = useTheme();
 

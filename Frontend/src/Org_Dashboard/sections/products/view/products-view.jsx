@@ -19,26 +19,20 @@ import { fetchApplications, setSelectedJob } from '../../../../store/createJobSl
 // ----------------------------------------------------------------------
 
 export default function ProductsView() {
-
-
   const [openFilter, setOpenFilter] = useState(false);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [sortOption, setSortOption] = useState('newest');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const role = useSelector((state) => state.auth.role);
-  const { applications, isLoading, error } = useSelector((state) => state.applications);
+  const { applications = [], isLoading, error } = useSelector((state) => state.applications);
 
-  const applicationArray = applications.jobs;
-  // console.log(applicationArray);
+  useEffect(() => {
+    if (isUserAuthenticated && Array.isArray(applications) && applications.length === 0) {
+      dispatch(fetchApplications());
+    }
+  }, [dispatch, isUserAuthenticated]);
 
- useEffect(() => {
-  if (isUserAuthenticated && role === 'Organisation' && applicationArray.length === 0) {
-    dispatch(fetchApplications());
-  }
-}, [isUserAuthenticated,isLoading, applicationArray.length, dispatch]);
-
+ // console.log('FetchedApplications in ProductsView', applications);
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -53,6 +47,21 @@ export default function ProductsView() {
     dispatch(setSelectedJob(null));
     navigate('/org/create-job-form');
   };
+
+  // Handle sorting
+
+  const handleSortChange = (option) => {
+    setSortOption(option);
+  };
+
+  const sortedApplications = [...applications].sort((a, b) => {
+    if (sortOption === 'newest') {
+      return new Date(b.postedDate) - new Date(a.postedDate);
+    } else if (sortOption === 'oldest') {
+      return new Date(a.postedDate) - new Date(b.postedDate);
+    }
+    return 0; // Default: no sorting
+  });
 
   return (
     <Container sx={{ minHeight: '100vh' }}>
@@ -78,7 +87,7 @@ export default function ProductsView() {
         </Typography>
       )}
 
-      {!isLoading && applicationArray.length === 0 && (
+      {!isLoading && Array.isArray(applications) && applications?.length === 0 && (
         <Typography variant="body1" align="center">
           {/* {console.log("L + A = 0")} */}
           No applications available.
@@ -92,7 +101,7 @@ export default function ProductsView() {
         </Typography>
       )}
       {/* {console.log(applicationArray)} */}
-      {!isLoading && applicationArray.length > 0 && (
+      {!isLoading && Array.isArray(applications) && applications?.length > 0 && (
         <>
           {/* {console.log("inside div")} */}
           <Stack
@@ -108,20 +117,20 @@ export default function ProductsView() {
                 onOpenFilter={handleOpenFilter}
                 onCloseFilter={handleCloseFilter}
               />
-              <ProductSort />
+              <ProductSort onSortChange={handleSortChange} selectedSort={sortOption} />
             </Stack>
           </Stack>
 
           <Grid container spacing={3}>
-            {/* {console.log(applications)} */}
-            {applicationArray.map((application) => (
+            {console.log('Rendering applications:', applications)}
+            {applications.map((application) => (
               <Grid item key={application?._id} xs={12} sm={6} md={4}>
                 <ApplicationsCard application={application} />
               </Grid>
             ))}
           </Grid>
         </>
-      )} 
+      )}
     </Container>
   );
 }

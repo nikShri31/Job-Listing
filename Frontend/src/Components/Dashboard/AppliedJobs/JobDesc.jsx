@@ -15,13 +15,13 @@ import {
   Rating,
   Stack,
   Typography,
-} from "@mui/material";
-import React from "react";
-import PlaceIcon from "@mui/icons-material/Place";
-import {useNavigate} from "react-router-dom"
-import { setUserSelectedJobId } from "../../../store/appliedJobsSlice";
-import JobStatus from "./JobStatus";
-import { useSelector } from "react-redux";
+} from '@mui/material';
+import React from 'react';
+import PlaceIcon from '@mui/icons-material/Place';
+import { useNavigate } from 'react-router-dom';
+import { setUserSelectedJobId } from '../../../store/appliedJobsSlice';
+import JobStatus from './JobStatus';
+import { useSelector } from 'react-redux';
 
 const chipStyle = {
   mt: 2,
@@ -36,64 +36,103 @@ const chipStyle = {
   },
 };
 
+const JobDesc = ({ applications }) => {
+  const { userSelectedJobId } = useSelector((state) => state.appliedJobs);
 
-
-const JobDesc = ({applications}) => {
-
-  const navigate = useNavigate();
-  const {userSelectedJobId} = useSelector( (state) => state.appliedJobs)
   return (
-    <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{ display: 'flex', justifyContent: 'space-between', border: '1px solid blue' ,position:'sticky', height:'100vh'}}
-          >
-            {applications?.map((application) => {
-              if (application._id === userSelectedJobId) {
-                return (
-                  <Box key={application._id}>
-                    <Typography variant="h3" sx={{pt:3, px:3}}> {application.job?.title || 'No Job title'}</Typography>
-                    
-                    <Stack  direction={'row'}>
-                    <Typography variant="body1"  p={1}> {application.organisation?.name || 'No Org..!!!'}</Typography>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Typography variant="body1"  p={1} > {application.job?.location || 'No Org..!!!'}</Typography>
-                     </Stack>
-                     
-                     <Stack direction={'row'}>
-                     <Typography variant="body1" p={1}> {application.job?.employmentType || 'No employement!!!'}</Typography>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                     <Typography variant="body1" p={1} > {application.job?.jobType || 'No Job Type..!!!'}</Typography>
-                    </Stack>
-                    
-                    <Typography variant="body1" p={1}> Description :  {application.job?.description || 'No description !!'}</Typography>
-                   
-                    <Box sx={{my:2}} p={1}>
-                    <Typography variant="h6">Skills required :</Typography>
-                    {application.job.requirements?.skills.map((skill, index) => (
-                        <Chip key={index} label={skill} sx={chipStyle} />
-                      )) || 'No Skills!!!'}
-                    </Box>
-                    
-                    <Divider />
-                    {/** Status */}
-                    <Stack m={2}>
-                    <Typography variant="h5" sx={{pb:2}}>Application Status :</Typography>
-                    <JobStatus />
-                    </Stack>
-                    <Divider />
-                  </Box>
-                );
-              }
-              return null;
-            })}
+    <Box
+      sx={{
+        p: 3,
+        borderRadius: 2,
+        background: 'linear-gradient(135deg, #e0f7fa 30%, #fce4ec 90%)',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+        color: '#333',
+      }}
+    >
+      {applications?.map((application) => {
+        if (application._id === userSelectedJobId) {
+          return (
+            <Box key={application._id}>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 'bold',
+                  mb: 2,
+                  color: '#004d40',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+                }}
+              >
+                {application.job?.title || 'No Job Title'}
+              </Typography>
 
-          </Grid>
+              <Stack direction="row" spacing={2} sx={{ py: 2 }}>
+                <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#00796b' }}>
+                  {application.organisation?.name || 'No Organization'}
+                </Typography>
+                <Divider orientation="vertical" flexItem />
+                <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#00796b' }}>
+                  {application.job?.location || 'No Location'}
+                </Typography>
+              </Stack>
+
+              <Stack direction="row" spacing={2} sx={{ py: 2 }}>
+                <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#00796b' }}>
+                  {application.job?.employmentType || 'No Employment Type'}
+                </Typography>
+                <Divider orientation="vertical" flexItem />
+                <Typography variant="body1" sx={{ fontSize: '1.1rem', color: '#00796b' }}>
+                  {application.job?.jobType || 'No Job Type'}
+                </Typography>
+              </Stack>
+
+              <Typography
+                variant="body1"
+                sx={{
+                  my: 2,
+                  fontSize: '1.05rem',
+                  lineHeight: 1.5,
+                  color: '#004d40',
+                }}
+              >
+               <b>Description : </b>  {application.job?.description || 'No Description'}
+              </Typography>
+
+              <Box sx={{ my: 3}}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#d32f2f' }}>
+                  Skills Required:
+                </Typography>
+                {application.job.requirements?.skills.map((skill, index) => (
+                  <Chip key={index} label={skill} sx={chipStyle} />
+                )) || <Typography>No Skills</Typography>}
+              </Box>
+
+              <Divider sx={{ my: 3, borderColor: '#b0bec5' }} />
+
+              {/* Status */}
+              <Stack m={2}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    pb: 2,
+                    fontWeight: 'bold',
+                    color: '#1565c0',
+                  }}
+                >
+                  Application Status:
+                </Typography>
+                <JobStatus />
+              </Stack>
+            </Box>
+          );
+        }
+        return null;
+      })}
+    </Box>
   );
 };
 
 export default JobDesc;
+
 // posted
 //openings
 //applicants

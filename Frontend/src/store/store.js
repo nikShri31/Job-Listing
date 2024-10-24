@@ -5,6 +5,7 @@ import authReducer from './authSlice';
 import notificationsReducer from './notificationSlice'
 import allJobsReducer from './allJobsSlice';
 import createJobsReducer from './createJobSlice'
+import allApplicationsReducer from './allApplicationsSlice'
 
 /* *** Persist configuration to store data in local storage */
 import { persistStore, persistReducer } from 'redux-persist';
@@ -33,6 +34,7 @@ export const store = configureStore({
 
     //organisation
     applications:persistedApplicationsReducer,
+    allApplications: allApplicationsReducer,
     notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({

@@ -11,17 +11,18 @@ import Label from '../../components/label/label';
 import { ColorPreview } from '../../components/color-utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setSelectedJob } from '../../../store/createJobSlice';
-import { Button, Chip } from '@mui/material';
+import { deleteApplication, setSelectedJob } from '../../../store/createJobSlice';
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import PlaceIcon from '@mui/icons-material/Place';
 import BusinessIcon from '@mui/icons-material/Business';
 import { fDate } from '../../../utils/format-time';
+import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
-const cardStyle={
-  cursor: 'pointer',
+const cardStyle = {
+
   transition: 'box-shadow 0.3s ease-in-out',
   '&:focus': {
     outline: 'none',
@@ -31,83 +32,71 @@ const cardStyle={
     boxShadow: ` 10px 10px 10px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2) `,
     fontWeight: 'bold',
   },
-}
+};
+
 const chipStyle = {
   mt: 2,
   mx: 1,
   py: 0.5,
-  bgcolor:'lightgrey',
-  // Increase padding for a larger chip
-  fontSize: "1rem", // Increase the font size
-  height: "auto", // Allow the height to auto-adjust based on content
-  color: "#032B53",
-  "& .MuiChip-label": {
-    fontSize: "1.1rem", // Increase the font size of the label specifically
+  bgcolor: 'lightgrey',
+  fontSize: '1rem',
+  height: 'auto', // Allow the height to auto-adjust based on content
+  color: '#032B53',
+  '& .MuiChip-label': {
+    fontSize: '1.1rem', // Increase the font size of the label specifically
   },
 };
+
+function ConfirmDeleteDialog({ open, onClose, onConfirm }) {
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle >Confirm Delete</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Are you sure you want to delete this job?</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={onConfirm} color="error">
+          Delete
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+// ----------------------------------------------------------------------
 
 export default function ApplicationsCard({ application }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [openConfirm, setOpenConfirm] = useState(false);
   // console.log('Card Application Data :', application);
 
   const handleViewDetails = () => {
     dispatch(setSelectedJob(application)); // Save the application data in Redux
-
-    navigate(`/org/create-job-form`);
+    navigate(`/org/applicants`);
   };
 
-  // const renderStatus = (
-  //   <Label
-  //     variant="filled"
-  //     color={(product.status === 'sale' && 'error') || 'info'}
-  //     sx={{
-  //       zIndex: 9,
-  //       top: 16,
-  //       right: 16,
-  //       position: 'absolute',
-  //       textTransform: 'uppercase',
-  //     }}
-  //   >
-  //     {product.status}
-  //   </Label>
-  // );
+  const handleDelete = async (jobId) => {
+    dispatch(deleteApplication(jobId));
+    setOpenConfirm(false);
+  };
 
-  // const renderImg = (
-  //   <Box
-  //     component="img"
-  //     alt={product.name}
-  //     src={product.cover}
-  //     sx={{
-  //       top: 0,
-  //       width: 1,
-  //       height: 1,
-  //       objectFit: 'cover',
-  //       position: 'absolute',
-  //     }}
-  //   />
-  // );
-
-  // const renderPrice = (
-  //   <Typography variant="subtitle1">
-  //     <Typography
-  //       component="span"
-  //       variant="body1"
-  //       sx={{
-  //         color: 'text.disabled',
-  //         textDecoration: 'line-through',
-  //       }}
-  //     >
-  //       {product.priceSale && fCurrency(product.priceSale)}
-  //     </Typography>
-  //     &nbsp;
-  //     {fCurrency(product.price)}
-  //   </Typography>
-  // );
+  // const handleDelete = async (jobId) => {
+  //   // Optionally show a confirmation dialog here
+  //   const confirmed = window.confirm('Are you sure you want to delete this application?');
+  //   if (confirmed) {
+  //    dispatch(deleteApplication(jobId));
+  //
+  //     // Example: await dispatch(fetchApplications());  to refetch the list
+  //   }
+  // };
 
   return (
     // <Card onClick={handleApplicants} sx={{ cursor: 'pointer' }}>
-    <Card sx={cardStyle} elevation={6} onClick={() => navigate('/org/applicants')}>
+    <Card sx={cardStyle} elevation={6} >
       <Box sx={{ p: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
           {' '}
@@ -121,17 +110,16 @@ export default function ApplicationsCard({ application }) {
         </Stack>
         <Stack direction={'row'} justifyContent={'space-between'} sx={{ mt: 1 }}>
           <Stack direction={'row'} spacing={1}>
-         <Chip label={application?.employmentType || 'No EmpType'} sx={chipStyle} />
+            <Chip label={application?.employmentType || 'No EmpType'} sx={chipStyle} />
           </Stack>
           <Stack direction={'row'} spacing={1}>
-             <Chip label={application?.jobType || 'No JobType'} sx={chipStyle} />
-           
+            <Chip label={application?.jobType || 'No JobType'} sx={chipStyle} />
           </Stack>
         </Stack>
         <Stack sx={{ mt: 1 }}>
           <Typography textAlign={'left'}>
             {' '}
-            Salary : {fCurrency(application.salary) || 'No salary'}
+            Salary :{fCurrency(application.salary) || 'No Salary'} P.A.
           </Typography>
         </Stack>
         <Stack sx={{ mt: 1 }}>
@@ -142,16 +130,21 @@ export default function ApplicationsCard({ application }) {
         </Stack>
       </Box>
       <Stack direction={'row'} sx={{ p: 1 }} justifyContent={'space-between'}>
-        <Button
-          variant="outlined"
-          onClick={(e) => {
-            handleViewDetails();
-          }}
-        >
+        <Button variant="outlined" onClick={handleViewDetails}>
           View Details
         </Button>
-        <DeleteIcon color="error" />
-      </Stack>
+        <Button onClick={(e) => e.stopPropagation()}>
+        <DeleteIcon color="error" onClick={() => setOpenConfirm(true)} />
+      </Button>
+    </Stack>
+    <ConfirmDeleteDialog
+      open={openConfirm}
+      onClose={() => setOpenConfirm(false)}
+      onConfirm={(e) => {
+        e.stopPropagation(); // Prevent card click event
+        handleDelete(application?._id); // Pass the jobId to the delete handler
+      }}
+    />
     </Card>
   );
 }

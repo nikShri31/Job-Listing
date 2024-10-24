@@ -55,7 +55,7 @@
 // Make sure it is an organisation that is logged in
 
 
-//Delete Job - get jobId from job view card
+// Delete Job - get jobId from job view card
 
 // await axios.delete(`http://localhost:5000/api/job/${jobId}`, {
 //     headers: {
@@ -77,8 +77,8 @@
 //     }
 // })
 
-//get all applications for a particular organisation
-//organisation needs login
+// get all applications for a particular organisation
+// organisation needs login
 // const data = await axios.get("http://localhost:5000/api/organisation/applications", {
 //     headers : {
 //         Authorization : `Bearer ${localStorage.getItem('token')}`
@@ -88,3 +88,4 @@
 
 //to get all applications of a certain job with all the user data
 // const response = await axios.get('/api/application/all/jobId', {header bullshit})
+

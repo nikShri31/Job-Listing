@@ -12,14 +12,14 @@ const steps = [
 
 export default function JobStatus() {
   return (
-    <Box sx={{ width: '150%' }}>
+    <Box>
       <Stepper activeStep={0} alternativeLabel>
         {steps.map((label,index) => (
           <Step key={label}>
             <StepLabel 
             sx={{
               '& .MuiStepLabel-label': {
-                color: index === 0 ? 'green' : 'inherit', // Apply green color to the active step label
+                color: index === 0 ? 'green' : 'green', // Apply green color to the active step label
               },
               '& .MuiStepIcon-root': {
                 color: index === 0 ? 'green' : 'inherit', 

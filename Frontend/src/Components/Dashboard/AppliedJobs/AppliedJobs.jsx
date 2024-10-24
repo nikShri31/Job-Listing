@@ -190,149 +190,140 @@ export default function AppliedJobs() {
         </Box>
       </Grid>
 
-      {/* applied job lists */}
-      <Grid item xs={12} md={9}>
-        <Container sx={{ p: 2, backgroundColor: '#F9FAFB', position: 'relative' }}>
-          {(isLoading || error) && (
-            <Box
+    
+      {/* Applied job lists */}
+<Grid item xs={12} md={9}>
+  <Container sx={{ p: 2, backgroundColor: '#F9FAFB', position: 'relative' }}>
+    {/* Loading and Error Handling */}
+    {(isLoading || error) && (
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#E3F0FE',
+          zIndex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {isLoading ? (
+          <CustomLoading />
+        ) : (
+          <Card sx={{ p: 2, backgroundColor: '#fff5f5', borderRadius: 2, boxShadow: 3 }}>
+            <Alert
+              severity="error"
+              variant="filled"
+              sx={{ mb: 2, alignItems: 'center', justifyContent: 'center' }}
+              icon={<ErrorOutlinedIcon fontSize="large" />}
+            >
+              <Typography variant="h6">
+                {typeof error === "object" && error.error && error.error.message
+                  ? error.error.message
+                  : JSON.stringify(error)}
+              </Typography>
+            </Alert>
+          </Card>
+        )}
+      </Box>
+    )}
+
+    {/* Filter Toggle Buttons */}
+    <ToggleButtonGroup
+      color="info"
+      value={alignment}
+      exclusive
+      onChange={handleChange}
+      aria-label="Filter by time"
+      sx={{ mb: 3 }}
+    >
+      <ToggleButton value="Today">Today</ToggleButton>
+      <ToggleButton value="Week">This Week</ToggleButton>
+      <ToggleButton value="Month">This Month</ToggleButton>
+      <ToggleButton value="Year">This Year</ToggleButton>
+    </ToggleButtonGroup>
+
+    {/* Main Grid Layout for Job List and Job Description */}
+    <Grid container spacing={3}>
+      {/* Job Cards List */}
+      <Grid item xs={12} md={6} sx={{ overflowY: 'auto', height: '80vh' }}>
+        {!isLoading && !error && paginatedApplications?.length > 0 ? (
+          paginatedApplications.map((application) => (
+            <Card
+              key={application._id}
+              onClick={() => handleJobClick(application._id)}
               sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 10,
-                backgroundColor: '#E3F0FE',
-                zIndex: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                boxShadow: `2px 2px 2px #00000041`,
+                color: '#032340',
+                mt: 1,
+                backgroundColor: application._id === selectedJobId ? '#d3e0f7' : 'white',
+                '&:hover': {
+                  boxShadow: `5px 5px 5px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2)`,
+                },
               }}
             >
-              {isLoading ? (
-                <CustomLoading />
-              ) : (
-                <Card sx={{ p: 2, backgroundColor: '#fff5f5', borderRadius: 2, boxShadow: 3 }}>
-                  <Alert
-                    severity="error"
-                    variant="filled"
-                    sx={{ mb: 2, alignItems: 'center', justifyContent: 'center' }}
-                    icon={<ErrorOutlinedIcon fontSize="large" />}
-                  >
-                    <Typography variant='h6'>
-                  {typeof error === "object" && error.error && error.error.message 
-                    ? error.error.message 
-                    : JSON.stringify(error)}
-                  </Typography>
-                  </Alert>
-                </Card>
-              )}
-            </Box>
-          )}
-
-          <ToggleButtonGroup
-            color="info"
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            aria-label="Platform"
-          >
-            <ToggleButton value="Today">Today</ToggleButton>
-            <ToggleButton value="Week">This Week</ToggleButton>
-            <ToggleButton value="Month">This Month</ToggleButton>
-            <ToggleButton value="Year">This Year</ToggleButton>
-          </ToggleButtonGroup>
-
-          <Grid
-          container
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              my: 5,
-              border: '3px solid red',
-            }}
-          >
-           {/* Job Cards List */}
-            <Grid item xs={12} md={6} sx={{  width: '48%',  px: 2, border: '1px solid black', overflowY: 'auto' }}>
-              {!isLoading && !error && paginatedApplications?.length > 0 ? (
-                paginatedApplications.map((application) => (
-                  <Card
-                    key={application._id}
-                    onClick={() => handleJobClick(application._id)}
-                    sx={{
-                      boxShadow: `2px 2px 2px #00000041`,
-                      color: '#032340',
-                      mt: 1,
-                      backgroundColor: application._id === selectedJobId ? '#d3e0f7' : 'white',
-                      '&:hover': {
-                        boxShadow: `5px 5px 5px #00000041, inset 5px 5px 6px rgba(0, 0, 0, 0.2)`,
-                      },
-                    }}
-                  >
-                    <CardActionArea sx={{ py: 1 }}>
-                      <Stack direction={'row'} justifyContent="space-between" sx={{ width: '95%' }}>
-                        <Box sx={{ p: 2 }}>
-                          <Link
-                            variant="h5"
-                            sx={{
-                              fontWeight: 'bold',
-                              color: 'grey',
-                              textDecoration: 'none',
-                              '&:hover': {
-                                color: '#032340',
-                                textDecoration: 'underline',
-                              },
-                            }}
-                          >
-                            {application?.job?.title || 'No Job title'}
-                          </Link>
-                          <Stack direction={'row'} spacing={1} py={1}>
-                            <BusinessIcon />
-                            <Typography variant="h6">
-                              {application?.organisation?.name || 'No Org'}
-                            </Typography>
-                          </Stack>
-                          <Stack direction={'row'} spacing={1}>
-                            <PlaceIcon />
-                            <Typography>{application.job?.location}</Typography>
-                            <Typography color={'text.secondary'} sx={{ px: 3 }}>
-                              Applied on:{' '}
-                              {new Date(application.applicationDate).toLocaleDateString()}
-                            </Typography>
-                          </Stack>
-                        </Box>
-                      </Stack>
-                    </CardActionArea>
-                  </Card>
-                ))
-              ) : (
-                <Typography variant="h3">No Jobs Applied</Typography>
-              )}
-            </Grid>
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <Stack
-            sx={{
-              position: 'sticky',
-              top: 80, // Adjust this value based on your layout
-              alignSelf: 'flex-start', // Ensures it doesn't stretch vertically
-              px: 2,
-              width: '48%',
-            }}
-          >
-          <JobDesc applications={applications} />
-          </Stack>
-        </Grid>
-
-          <TablePagination
-            page={page}
-            component="div"
-            count={filteredApplications?.length || 0}
-            rowsPerPage={rowsPerPage}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10]}
-          />
-        </Container>
+              <CardActionArea sx={{ py: 1 }}>
+                <Stack direction={'row'} justifyContent="space-between" sx={{ width: '95%' }}>
+                  <Box sx={{ p: 2 }}>
+                    <Link
+                      variant="h5"
+                      sx={{
+                        fontWeight: 'bold',
+                        color: 'grey',
+                        textDecoration: 'none',
+                        '&:hover': {
+                          color: '#032340',
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
+                      {application?.job?.title || 'No Job title'}
+                    </Link>
+                    <Stack direction={'row'} spacing={1} py={1}>
+                      <BusinessIcon />
+                      <Typography variant="h6">
+                        {application?.organisation?.name || 'No Org'}
+                      </Typography>
+                    </Stack>
+                    <Stack direction={'row'} spacing={1}>
+                      <PlaceIcon />
+                      <Typography>{application.job?.location}</Typography>
+                      <Typography color={'text.secondary'} sx={{ px: 3 }}>
+                        Applied on: {new Date(application.applicationDate).toLocaleDateString()}
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Stack>
+              </CardActionArea>
+            </Card>
+          ))
+        ) : (
+          <Typography variant="h3">No Jobs Applied</Typography>
+        )}
       </Grid>
+
+      {/* Job Description */}
+      <Grid item xs={12} md={6} sx={{ border: '1px solid blue', overflowY: 'auto', height: '80vh' }}>
+        <JobDesc applications={applications} />
+      </Grid>
+    </Grid>
+
+    {/* Pagination */}
+    <TablePagination
+      page={page}
+      component="div"
+      count={filteredApplications?.length || 0}
+      rowsPerPage={rowsPerPage}
+      onPageChange={handleChangePage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
+      rowsPerPageOptions={[5, 10]}
+    />
+  </Container>
+</Grid>
+
     </Grid>
   );
 }

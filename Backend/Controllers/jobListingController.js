@@ -7,14 +7,14 @@ exports.createJob = async (req, res, next) => {
     const { title, description, location, salary, requirements, jobType, employmentType } = req.body;
     const organisationId = req.user.id;
     const newJob = new JobListing({
-        title: title.toLowerCase(),
+        title,
         description,
-        location: location.toLowerCase(),
+        location,
         salary,
         organisation: organisationId,
         requirements: {
             experience: requirements.experience,
-            skills: requirements.skills.map(skill => skill.toLowerCase()),
+            skills: requirements.skills,
             education: requirements.education
         },
         jobType,

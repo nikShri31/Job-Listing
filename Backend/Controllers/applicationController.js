@@ -75,7 +75,7 @@ module.exports.updateStatus = async (req, res, next) => {
 module.exports.getApplicationsByJob = async (req, res, next) => {
     const { jobId } = req.params;
     const applications = await Application.find({ job: jobId }).populate('applicant');
-    res.status(200).json({ applications });
+    res.status(200).json(applications );
 }
 
 //admin

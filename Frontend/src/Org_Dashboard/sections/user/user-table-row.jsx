@@ -21,8 +21,8 @@ export default function UserTableRow({
   name,
   avatarUrl,
   company,
-  education,
-  experiance,
+  email,
+  experience,
   resume,
   appliedDate,
   role,
@@ -55,9 +55,13 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>    {/**education */}
+        <TableCell>{email}</TableCell>    {/**education */}
+
+        <TableCell>{experience}</TableCell>    {/**education */}
 
         <TableCell>{role}</TableCell>  {/** experiance*/}
+
+        <TableCell>{resume}</TableCell>  {/** experiance*/}
 
        {/** applied date */}
         {/** resume */}

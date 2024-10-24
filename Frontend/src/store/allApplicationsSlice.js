@@ -8,7 +8,7 @@ export const fetchAllApplications = createAsyncThunk(
   'allApplications/fetchAllApplications',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/organisation/applications', {
+      const response = await axios.get('http://localhost:5000/api/application/all/:jobId', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

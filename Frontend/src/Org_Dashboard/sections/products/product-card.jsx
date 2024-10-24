@@ -76,7 +76,7 @@ export default function ApplicationsCard({ application }) {
 
   const handleViewDetails = () => {
     dispatch(setSelectedJob(application)); // Save the application data in Redux
-    navigate(`/org/applicants`);
+    navigate(`/org/applicants`, {state : {jobId : application?._id}});
   };
 
   const handleDelete = async (jobId) => {

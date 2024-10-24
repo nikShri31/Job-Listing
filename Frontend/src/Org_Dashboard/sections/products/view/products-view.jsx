@@ -33,7 +33,6 @@ export default function ProductsView() {
   }, [dispatch, isUserAuthenticated]);
 
  // console.log('FetchedApplications in ProductsView', applications);
-
   const handleOpenFilter = () => {
     setOpenFilter(true);
   };
@@ -60,7 +59,7 @@ export default function ProductsView() {
     } else if (sortOption === 'oldest') {
       return new Date(a.postedDate) - new Date(b.postedDate);
     }
-    return 0; // Default: no sorting
+    return 0; 
   });
 
   return (
@@ -122,7 +121,6 @@ export default function ProductsView() {
           </Stack>
 
           <Grid container spacing={3}>
-            {console.log('Rendering applications:', applications)}
             {applications.map((application) => (
               <Grid item key={application?._id} xs={12} sm={6} md={4}>
                 <ApplicationsCard application={application} />

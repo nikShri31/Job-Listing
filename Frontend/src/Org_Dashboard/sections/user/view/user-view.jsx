@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -19,7 +19,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import { users } from '../../../../_mock/user';
+// import { users } from '../../../../_mock/user';
 import { useSelector } from 'react-redux';
 import { fCurrency } from '../../../../utils/format-number';
 import { fDate } from '../../../../utils/format-time';
@@ -27,6 +27,8 @@ import { Box } from '@mui/system';
 import { Chip } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +46,7 @@ const titleStyle = {
 };
 const detailStyle = {
   fontSize: '1rem',
-  fontWeight:'bold',
+  fontWeight: 'bold',
   color: '#666',
   marginTop: '8px',
 };
@@ -57,7 +59,7 @@ const chipStyle = {
 };
 const infoStyle = {
   display: 'flex',
- 
+
   alignItems: 'center',
   marginTop: '8px',
 };
@@ -80,19 +82,33 @@ const innerCardStyle = {
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
+  const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const location = useLocation();
+  const jobId = location.state.jobId;
 
   const { selectedJob } = useSelector((state) => state.applications);
-  const { allApplications =[], isLoading, error } = useSelector((state) => state.allApplications);
-  
-  console.log('my selected job: ', selectedJob);
-  console.log("all applications :", allApplications);
-  
+  const { allApplications = [], isLoading, error } = useSelector((state) => state.allApplications);
+
+  useEffect(() => {
+    const apiCall = async () => {
+      const response = await axios.get(`http://localhost:5000/api/application/all/${jobId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setUsers(response.data);
+    };
+    apiCall();
+  }, []);
+
+  // console.log('my selected job: ', selectedJob);
+  // console.log("all applications :", allApplications);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -148,15 +164,17 @@ export default function UserPage() {
     comparator: getComparator(order, orderBy),
     filterName,
   });
+  console.log({ msg: 'Hello', dataFiltered });
 
   const notFound = !dataFiltered.length && !!filterName;
 
   const renderApplicationDetails = () => {
-
     return (
-      <Card sx={{ ...cardStyle,...gradientBorderStyle, mb: 3 }}>
+      <Card sx={{ ...cardStyle, ...gradientBorderStyle, mb: 3 }}>
         <Box sx={innerCardStyle}>
-          <Typography variant={'h2'} sx={titleStyle}>{selectedJob.title}</Typography>
+          <Typography variant={'h2'} sx={titleStyle}>
+            {selectedJob.title}
+          </Typography>
           <Typography sx={detailStyle}>
             Location: {selectedJob.location || 'No location'}
           </Typography>
@@ -184,7 +202,6 @@ export default function UserPage() {
   return (
     <Container>
       {renderApplicationDetails()}
-
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
         <Typography variant="h4">Applicant's Data</Typography>
 
@@ -212,12 +229,11 @@ export default function UserPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Education' },
-                  { id: 'role', label: 'Experiance' },
-                  { id: '', label: 'Applied Date' },
-                  { id: 'isVerified', label: 'Resume', align: 'center' },
+                  { id: 'email', label: 'Email' },
+                  { id: 'Experience', label: 'Experience' },
+                  { id: 'Role', label: 'Role' },
+                  { id : 'Resume', label : 'Resume'},
                   { id: 'status', label: 'Status' },
-                  { id: '' },
                 ]}
               />
               <TableBody>
@@ -225,13 +241,16 @@ export default function UserPage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
+                      key={row._id}
+                      name={row.applicant.name}
+                      role={row.applicant.workRole}
                       status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      email={row.applicant.email}
+                      experience={row.applicant.profile?.expereinceData?.experience}
+                      resume={<Button value={row.resume.key}> View </Button>}
+                      // company={row.company}
+                      // avatarUrl={row.avatarUrl}
+                      // isVerified={row.isVerified}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

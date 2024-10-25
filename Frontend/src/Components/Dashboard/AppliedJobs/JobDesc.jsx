@@ -1,25 +1,14 @@
 import {
   Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
   Chip,
   Container,
   Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Rating,
   Stack,
   Typography,
 } from '@mui/material';
 import React from 'react';
 import PlaceIcon from '@mui/icons-material/Place';
-import { useNavigate } from 'react-router-dom';
-import { setUserSelectedJobId } from '../../../store/appliedJobsSlice';
+
 import JobStatus from './JobStatus';
 import { useSelector } from 'react-redux';
 
@@ -36,8 +25,10 @@ const chipStyle = {
   },
 };
 
+
 const JobDesc = ({ applications }) => {
   const { userSelectedJobId } = useSelector((state) => state.appliedJobs);
+  console.log('job desc :', applications);
 
   return (
     <Box
@@ -101,7 +92,7 @@ const JobDesc = ({ applications }) => {
                 <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#d32f2f' }}>
                   Skills Required:
                 </Typography>
-                {application.job.requirements?.skills.map((skill, index) => (
+                {application.job?.requirements?.skills?.map((skill, index) => (
                   <Chip key={index} label={skill} sx={chipStyle} />
                 )) || <Typography>No Skills</Typography>}
               </Box>

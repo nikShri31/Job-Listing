@@ -63,8 +63,11 @@ export default function ProductsView() {
   });
 
   return (
-    <Container sx={{ minHeight: '100vh' }}>
-      <Typography variant="h4" sx={{ mb: 5 }}>
+    <Container sx={{ minHeight: '100vh',
+      backgroundImage: "linear-gradient(175deg, #E3F0FE 40%, #EDEFF1 )",
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat", }}>
+      <Typography variant="h3" sx={{ mb: 5 }}>
         JOBS
       </Typography>
 
@@ -121,7 +124,7 @@ export default function ProductsView() {
           </Stack>
 
           <Grid container spacing={3}>
-            {applications.map((application) => (
+            {sortedApplications.map((application) => (
               <Grid item key={application?._id} xs={12} sm={6} md={4}>
                 <ApplicationsCard application={application} />
               </Grid>

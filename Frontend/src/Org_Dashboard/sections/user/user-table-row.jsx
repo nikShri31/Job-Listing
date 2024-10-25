@@ -39,6 +39,16 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  // view resume
+  const handleViewResume = () => {
+    if (resume) {
+      window.open(resume, '_blank'); 
+    } else {
+      alert('Resume file not available.');
+    }
+    handleCloseMenu();
+  };
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
@@ -61,7 +71,7 @@ export default function UserTableRow({
 
         <TableCell>{role}</TableCell>  {/** experiance*/}
 
-        <TableCell>{resume}</TableCell>  {/** experiance*/}
+        <TableCell  onClick={handleViewResume}>{resume}</TableCell>  {/** experiance*/}
 
        {/** applied date */}
         {/** resume */}

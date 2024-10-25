@@ -233,7 +233,7 @@ export default function AppView() {
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Hi, Welcome back 👋
+        Hi, Welcome back ...
       </Typography>
       {/* Make it equal to total jobs under organisation */}
       <Grid container spacing={3}>
@@ -271,25 +271,7 @@ export default function AppView() {
           />
         </Grid>
 
-        {/* Main Charts and Data */}
-        <Grid xs={12} md={6} lg={8}>
-          <AppWebsiteVisits
-            title="Last Month's Hires"
-            subheader="(+25%) compared to previous month"
-            chart={{
-              labels: [
-                '01/08/2024', '02/08/2024', '03/08/2024', '04/08/2024',
-                '05/08/2024', '06/08/2024', '07/08/2024', '08/08/2024',
-                '09/08/2024', '10/08/2024', '11/08/2024',
-              ],
-              series: [
-                { name: 'UI/UX Designers', type: 'column', fill: 'solid', data: [5, 7, 8, 6, 9, 5, 10, 7, 8, 6, 9] },
-                { name: 'Python Developers', type: 'area', fill: 'gradient', data: [4, 6, 5, 7, 8, 6, 9, 8, 7, 5, 6] },
-                { name: 'Java Developers', type: 'line', fill: 'solid', data: [3, 5, 4, 6, 7, 4, 8, 7, 6, 5, 7] },
-              ],
-            }}
-          />
-        </Grid>
+        
         {/* travserse through organistionData, get the length of the applied job and use it as input or whatever in the graph */}
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentVisits
@@ -319,19 +301,7 @@ export default function AppView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
-          <AppCurrentSubject
-            title="Job Application Timing"
-            chart={{
-              categories: ['Morning', 'Afternoon', 'Evening', 'Night'],
-              series: [
-                { name: 'Job Applications', data: [30, 50, 70, 40] },
-                { name: 'Interviews Scheduled', data: [20, 40, 60, 30] },
-                { name: 'Follow-ups', data: [10, 30, 20, 15] },
-              ],
-            }}
-          />
-        </Grid>
+       
 
         {/* Hidden Components */}
         <Grid xs={12} md={6} lg={4} sx={{ display: 'none' }}>
@@ -347,35 +317,9 @@ export default function AppView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
-          <AppOrderTimeline
-            title="How many applications for the jobs"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: [
-                '10 Applications for Software Engineer',
-                '5 Applications for Data Scientist',
-                '8 Applications for Frontend Developer',
-                '12 Applications for Backend Developer',
-                '7 Applications for UX Designer',
-              ][index],
-              type: `application${index + 1}`,
-              time: faker.date.past(),
-            }))}
-          />
-        </Grid>
+        
 
-        <Grid xs={12} md={6} lg={4}>
-          <AppTrafficBySite
-            title="Traffic by Site"
-            list={[
-              { name: 'FaceBook', value: 323234, icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} /> },
-              { name: 'Google', value: 341212, icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} /> },
-              { name: 'Linkedin', value: 411213, icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} /> },
-              { name: 'Twitter', value: 443232, icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} /> },
-            ]}
-          />
-        </Grid>
+       
 
         <Grid xs={12} md={6} lg={4} sx={{ display: 'none' }}>
           <AppTasks
@@ -393,3 +337,71 @@ export default function AppView() {
     </Container>
   );
 }
+
+{/**
+  
+  <Grid xs={12} md={6} lg={4}>
+  <AppTrafficBySite
+    title="Traffic by Site"
+    list={[
+      { name: 'FaceBook', value: 323234, icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} /> },
+      { name: 'Google', value: 341212, icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} /> },
+      { name: 'Linkedin', value: 411213, icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} /> },
+      { name: 'Twitter', value: 443232, icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} /> },
+    ]}
+  />
+</Grid>
+
+<Grid xs={12} md={6} lg={4}>
+          <AppOrderTimeline
+            title="How many applications for the jobs"
+            list={[...Array(5)].map((_, index) => ({
+              id: faker.string.uuid(),
+              title: [
+                '10 Applications for Software Engineer',
+                '5 Applications for Data Scientist',
+                '8 Applications for Frontend Developer',
+                '12 Applications for Backend Developer',
+                '7 Applications for UX Designer',
+              ][index],
+              type: `application${index + 1}`,
+              time: faker.date.past(),
+            }))}
+          />
+        </Grid>
+
+<Grid xs={12} md={6} lg={8}>
+<AppWebsiteVisits
+  title="Last Month's Hires"
+  subheader="(+25%) compared to previous month"
+  chart={{
+    labels: [
+      '01/08/2024', '02/08/2024', '03/08/2024', '04/08/2024',
+      '05/08/2024', '06/08/2024', '07/08/2024', '08/08/2024',
+      '09/08/2024', '10/08/2024', '11/08/2024',
+    ],
+    series: [
+      { name: 'UI/UX Designers', type: 'column', fill: 'solid', data: [5, 7, 8, 6, 9, 5, 10, 7, 8, 6, 9] },
+      { name: 'Python Developers', type: 'area', fill: 'gradient', data: [4, 6, 5, 7, 8, 6, 9, 8, 7, 5, 6] },
+      { name: 'Java Developers', type: 'line', fill: 'solid', data: [3, 5, 4, 6, 7, 4, 8, 7, 6, 5, 7] },
+    ],
+  }}
+/>
+</Grid>
+
+<Grid xs={12} md={6} lg={4}>
+<AppCurrentSubject
+  title="Job Application Timing"
+  chart={{
+    categories: ['Morning', 'Afternoon', 'Evening', 'Night'],
+    series: [
+      { name: 'Job Applications', data: [30, 50, 70, 40] },
+      { name: 'Interviews Scheduled', data: [20, 40, 60, 30] },
+      { name: 'Follow-ups', data: [10, 30, 20, 15] },
+    ],
+  }}
+/>
+</Grid>
+        
+  
+  */}

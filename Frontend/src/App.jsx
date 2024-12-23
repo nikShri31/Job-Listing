@@ -30,8 +30,6 @@ function App() {
       <Box sx={{mt:10}}>
       <Outlet />
       </Box>
-     
-      
       </main>
       <Footer />
       </ThemeProvider>

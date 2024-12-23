@@ -178,10 +178,10 @@ const Home = () => {
   useEffect(() => {
     return () => {
       dispatch(setUserSelectedJobId(null)); // Clear the selected job ID when leaving the page
+      fetchAllJobs();
     };
   }, [dispatch]);
   
- 
 
   useEffect(() => {
     if (selectedJobId && jobs.length > 0) { // Ensure there are jobs and a valid selectedJobId

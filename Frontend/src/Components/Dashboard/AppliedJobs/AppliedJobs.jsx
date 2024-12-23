@@ -30,6 +30,7 @@ import { applyJob, fetchAppliedJobs, setUserSelectedJobId } from '../../../store
 
 import JobDesc from './JobDesc';
 import CustomLoading from '../../../utils/CustomLoading';
+import customScrollbarStyles from '../../../utils/customScroll';
 
 // -----------------------------------------------------------------------------------------------
 
@@ -51,6 +52,8 @@ export default function AppliedJobs() {
       dispatch(fetchAppliedJobs());
     }
   }, [isUserAuthenticated, dispatch, userAppliedJobs.length, isLoading]);
+
+  
 
   const handleJobClick = (jobId) => {
     setSelectedJobId(jobId);
@@ -104,6 +107,19 @@ export default function AppliedJobs() {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
+ 
+  // default job desc
+  // useEffect(() => {
+  //   if (paginatedApplications && paginatedApplications.length > 0) {
+  //     // Set the latest job's ID as selected by default
+  //     setSelectedJobId(paginatedApplications[0]._id);
+  //     dispatch(setUserSelectedJobId(paginatedApplications[0]._id));
+  //   } else {
+  //     // Clear the selection when no jobs are available
+  //     setSelectedJobId(null);
+  //   }
+  // }, [paginatedApplications, dispatch]);
+
 
   return (
     <Grid
@@ -249,7 +265,7 @@ export default function AppliedJobs() {
     {/* Main Grid Layout for Job List and Job Description */}
     <Grid container spacing={3}>
       {/* Job Cards List */}
-      <Grid item xs={12} md={6} sx={{ overflowY: 'auto', height: '80vh' }}>
+      <Grid item xs={12} md={6} sx={{ overflowY: 'auto', my:2, height: '80vh', ...customScrollbarStyles(), }}>
         {!isLoading && !error && paginatedApplications?.length > 0 ? (
           paginatedApplications.map((application) => (
             <Card
@@ -306,8 +322,10 @@ export default function AppliedJobs() {
       </Grid>
 
       {/* Job Description */}
-      <Grid item xs={12} md={6} sx={{ border: '1px solid blue', overflowY: 'auto', height: '80vh' }}>
+      <Grid item xs={12} md={6} sx={{ overflowY: 'auto', height: '80vh', ...customScrollbarStyles(), }}>
+      {paginatedApplications?.length > 0 ? (
         <JobDesc applications={applications} />
+      ) : null}
       </Grid>
     </Grid>
 

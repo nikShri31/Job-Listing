@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import LoginBtn from '../../Authentication/LoginBtn';
+//import LoginBtn from '../../Authentication/LoginBtn';
 import { useResponsive, useWidth } from '../../hooks/use-responsive';
 import { useSelector } from 'react-redux';
 

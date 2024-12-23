@@ -33,9 +33,10 @@ const JobDesc = ({ applications }) => {
   return (
     <Box
       sx={{
-        p: 3,
+        p:1,
         borderRadius: 2,
-        background: 'linear-gradient(135deg, #e0f7fa 30%, #fce4ec 90%)',
+       // backgroundImage: 'linear-gradient(135deg, #e0f8fa 30%, #fce4ec 90%)',
+        backgroundImage: "linear-gradient(145deg, #e0f7e9 0%, #ffffff 100%, #e0f7e9 0%)",
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
         color: '#333',
       }}

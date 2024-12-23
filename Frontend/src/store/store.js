@@ -42,16 +42,3 @@ export const store = configureStore({
   }),
 });
 export const persistor = persistStore(store);
-
-
-// export const store = configureStore({
-//   reducer: {
-//     auth: authReducer,
-//     allJobs: allJobsReducer,
-//     appliedJobs: appliedJobsReducer, // No redux-persist here
-//     notifications: notificationsReducer,
-//   },
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-//     serializableCheck: false, // Still needed for other potential async actions, but not for redux-persist
-//   }),
-// });

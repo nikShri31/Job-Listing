@@ -31,6 +31,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { applyJob } from "../store/appliedJobsSlice";
+import { fetchAllJobs } from "../store/allJobsSlice";
 
 // ----------------------------------------------------------------------
 
@@ -100,6 +101,7 @@ const JobDrawer = ({ isDrawerOpen, selectedJob, handleDrawerClose,handleApplySuc
 
   useEffect(() => {
     handleDrawerClose(); // Ensure the drawer closes on component mount
+    
   }, [location]); // This runs every time the location (route) changes
 
 
